@@ -1,12 +1,11 @@
 package ADN;
 
-public class Chromosome 
-{
-	private Chromatide[] chromatides;
-	
-	public Chromosome()
-	{
-		this.chromatides = new Chromatide[2];
+public class Chromosome {
+
+	private Chromatide [] chromatides;
+	private Centromere centromere;
+	public Chromosome() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

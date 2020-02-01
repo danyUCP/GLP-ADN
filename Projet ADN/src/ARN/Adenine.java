@@ -1,4 +1,4 @@
-package ADN;
+package ARN;
 
 public class Adenine extends Nucleotide
 {

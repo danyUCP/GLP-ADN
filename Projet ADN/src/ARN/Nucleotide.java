@@ -1,4 +1,4 @@
-package ADN;
+package ARN;
 
 public abstract class Nucleotide 
 {

@@ -1,16 +1,16 @@
 package test;
 
-import ADN.Adenine;
-import ADN.BrinADN;
-import ADN.Cytosine;
-import ADN.Guanine;
-import ADN.Thymine;
+import ARN.Adenine;
+import ARN.BrinADN;
+import ARN.Cytosine;
+import ARN.Guanine;
+import ARN.Thymine;
 
 public class TestDaniel 
 {
 	public static void main(String[] args) 
 	{
-		BrinADN brin = new BrinADN("ACTGATGCTcccccc");
+		BrinADN brin = new BrinADN("ACTGATGCTccaccaccgt");
 		
 		brin.ajouterNucl(new Adenine());
 		brin.ajouterNucl(new Adenine());
@@ -22,7 +22,6 @@ public class TestDaniel
 		
 		System.out.println(brin);
 		
-
 	}
 
 }

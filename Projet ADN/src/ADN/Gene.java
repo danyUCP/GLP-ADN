@@ -1,5 +1,7 @@
 package ADN;
 
+import ARN.BrinADN;
+
 public class Gene 
 {
 	private BrinADN brinCodant;
