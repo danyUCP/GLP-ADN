@@ -17,7 +17,13 @@ public class Adenine extends Nucleotide
 	
 	public Nucleotide getComplementaire()
 	{
-		this.complem = new Thymine(true);
+		this.complem = new Thymine();
+		return complem;
+	}
+	
+	public Nucleotide getComplementaireARN()
+	{
+		this.complem = new Uracile();
 		return complem;
 	}
 }

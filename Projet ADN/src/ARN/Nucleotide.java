@@ -18,6 +18,7 @@ public abstract class Nucleotide
 	}
 	
 	public abstract Nucleotide getComplementaire();
+	public abstract Nucleotide getComplementaireARN();
 	
 	
 	public String toString() 

@@ -46,11 +46,31 @@ public class BrinADN
 	{
 		this.nucleotides.add(nucl);
 	}
+	
+	public BrinADN getBrinComplem()
+	{
+		BrinADN brCompl = new BrinADN();
+		
+		for(int i = 0 ; i < this.nucleotides.size() ; i++)
+			brCompl.ajouterNucl(this.nucleotides.get(i).getComplementaire());
+		
+		return brCompl;
+	}
+	
+	public BrinARN transcrire()
+	{
+		BrinARN brARN = new BrinARN();
+		
+		for(int i = 0 ; i < this.nucleotides.size() ; i++)
+			brARN.ajouterNucl(this.nucleotides.get(i).getComplementaireARN());
+		
+		return brARN;
+	}
 
 
 	public String toString() 
 	{
-		String str = "Brin ADN : ";
+		String str = "";
 		
 		for(int i = 0 ; i < this.nucleotides.size() ; i++)
 			str += this.nucleotides.get(i) + " ";

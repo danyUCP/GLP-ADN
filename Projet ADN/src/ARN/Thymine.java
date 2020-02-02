@@ -13,11 +13,17 @@ public class Thymine extends Nucleotide
 	{
 		super("T", bool);
 	}
-
 	
+
 	public Nucleotide getComplementaire()
 	{
-		this.complem = new Adenine(true);
+		this.complem = new Adenine();
+		return complem;
+	}
+	
+	public Nucleotide getComplementaireARN()
+	{
+		this.complem = new Adenine();
 		return complem;
 	}
 }

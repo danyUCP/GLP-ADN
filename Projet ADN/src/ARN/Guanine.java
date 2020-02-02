@@ -14,9 +14,16 @@ public class Guanine extends Nucleotide
 		super("G", bool);
 	}
 	
+	
 	public Nucleotide getComplementaire()
 	{
-		this.complem = new Cytosine(true);
+		this.complem = new Cytosine();
+		return complem;
+	}
+	
+	public Nucleotide getComplementaireARN()
+	{
+		this.complem = new Cytosine();
 		return complem;
 	}
 }
