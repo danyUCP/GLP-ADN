@@ -2,6 +2,8 @@ package ADN;
 
 import java.util.ArrayList;
 
+import meiose.Centromere;
+
 public class Noyau {
 
 	private ArrayList<Chromosome> chromosomes;

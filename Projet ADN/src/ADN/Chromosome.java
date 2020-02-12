@@ -1,5 +1,7 @@
 package ADN;
 
+import meiose.Centromere;
+
 public class Chromosome {
 
 	private Chromatide [] chromatides;

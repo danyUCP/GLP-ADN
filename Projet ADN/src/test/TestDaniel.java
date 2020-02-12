@@ -8,6 +8,7 @@ import ARN.ChaineAA;
 import ARN.Cytosine;
 import ARN.Guanine;
 import ARN.Thymine;
+import ihm.Fenetre;
 
 public class TestDaniel 
 {
@@ -35,6 +36,8 @@ public class TestDaniel
 		System.out.println("Brin ARN : " + brinARN + "\n");
 		System.out.println("ARN mess : " + messager);
 		System.out.println("Chaine A : " + chaine);
+		
+		Fenetre fen = new Fenetre();
 
 	}
 
