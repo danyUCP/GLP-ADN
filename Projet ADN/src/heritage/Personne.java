@@ -12,6 +12,51 @@ public class Personne {
 	private Chromosome paire2;
 	private Chromosome paire3;
 	private Chromosome paire4;
+	private GametesU ovule;
+	private GametesU spermatozoide;
+	
+	
+	
+	/**
+	 * @param ovule
+	 * @param spermatozoide
+	 */
+	public Personne(GametesU ovule, GametesU spermatozoide) {
+		this.ovule = ovule;
+		this.spermatozoide = spermatozoide;
+		
+		Chromatide c1 = new Chromatide();
+		Chromatide c2 = new Chromatide();
+		Chromatide c3 = new Chromatide();
+		Chromatide c4 = new Chromatide();
+		Chromatide c5 = new Chromatide();
+		Chromatide c6 = new Chromatide();
+		Chromatide c7 = new Chromatide();
+		Chromatide c8 = new Chromatide();
+		
+		c1=ovule.getG().getListe1().get(0);
+		c2=ovule.getG().getListe1().get(1);
+		c3=ovule.getG().getListe1().get(2);
+		c4=ovule.getG().getListe1().get(3);
+		
+		c5=spermatozoide.getG().getListe1().get(0);
+		c6=spermatozoide.getG().getListe1().get(1);
+		c7=spermatozoide.getG().getListe1().get(2);
+		c8=spermatozoide.getG().getListe1().get(3);
+		
+		this.paire1=new Chromosome(c1,c5);
+		this.paire2=new Chromosome(c2,c6);
+		this.paire3=new Chromosome(c3,c7);
+		this.paire4=new Chromosome(c4,c8);
+		
+		
+		
+		
+	}
+
+
+
+
 	/**
 	 * @param paire1
 	 * @param paire2
@@ -24,6 +69,10 @@ public class Personne {
 		this.paire3 = paire3;
 		this.paire4 = paire4;
 	}
+	
+
+
+
 	@Override
 	
 	public String toString() {
@@ -76,11 +125,6 @@ public class Personne {
 	 */
 	public void setPaire4(Chromosome paire4) {
 		this.paire4 = paire4;
-	}
-	public String reunir(Gametes a,Gametes b) {
-		
-		return a.toString()+ b.toString();
-		
 	}
 	
 	

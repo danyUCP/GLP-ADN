@@ -3,7 +3,7 @@
  */
 package heritage;
 
-import java.util.ArrayList;
+
 
 /**
  * @author franc
@@ -46,28 +46,24 @@ public class Test {
 		
 		ChromatideU test = new ChromatideU(pere);
 		
-		Chromatide u = new Chromatide();
-		test.getG1();
+		Gametes ovuleU=new Gametes();
+		Gametes sperU=new Gametes();
 		
+		GametesU ovule= new GametesU(test,ovuleU);
+		GametesU spermatozoide= new GametesU(test,sperU);
 		
-		
+		Personne enfant=new Personne(ovule,spermatozoide);
+				
 	
 	
 		System.out.println(pere);
 		System.out.println(test);
-		System.out.println(test.getG1());
+		System.out.println(ovule);
+		System.out.println(spermatozoide);
+		System.out.println(enfant);
+				
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 	
 	}
