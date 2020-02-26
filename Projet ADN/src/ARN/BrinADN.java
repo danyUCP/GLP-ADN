@@ -66,6 +66,16 @@ public class BrinADN
 		
 		return brARN;
 	}
+	
+	public Nucleotide getNuclAt(int index)
+	{
+		return this.nucleotides.get(index);
+	}
+	
+	public int getTaille()
+	{
+		return this.nucleotides.size();
+	}
 
 
 	public String toString() 

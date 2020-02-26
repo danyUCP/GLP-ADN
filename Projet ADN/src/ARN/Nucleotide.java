@@ -11,6 +11,10 @@ public abstract class Nucleotide
 		this.estExon = bool;
 	}
 
+	public String getLettre() 
+	{
+		return this.lettre;
+	}
 	
 	public void setExonBool(boolean bool)
 	{

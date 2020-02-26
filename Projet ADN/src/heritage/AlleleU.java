@@ -6,14 +6,14 @@ public class AlleleU extends Allele {
 		super(name, name2, dominance);
 		// TODO Auto-generated constructor stub
 	}
-	
+	/*
 	public int pourcentage(String dominance,Boolean pere,Boolean mere) {
 		int p;
 		if(pere==1) {
 			
 		}
 	}
-	
+	*/
 	
 	
 

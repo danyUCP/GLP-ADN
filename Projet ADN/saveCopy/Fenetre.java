@@ -26,7 +26,7 @@ public class Fenetre extends JFrame
 	{
 		this.setTitle("ADN");
 		this.setSize(1200, 800);
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new FlowLayout());
