@@ -20,8 +20,6 @@ public class Fenetre extends JFrame
 	private JPanel global, header, accueil;
 	//private Panneau paneCentre;
 	private JButton bouton1, bouton2, bouton3;
-	private JLabel texte;
-	
 	public Fenetre()
 	{
 		this.setTitle("ADN");
@@ -57,7 +55,7 @@ public class Fenetre extends JFrame
 		accueil.add(bouton2);
 		accueil.add(bouton3);
 		global.add(accueil, BorderLayout.CENTER);
-
+	
 		
 		/*
 		//-------------- PARTIE DROITE CENTRE ------------------//
@@ -68,12 +66,16 @@ public class Fenetre extends JFrame
 		*/
 		
 		
-		bouton2.addActionListener(new BoutonListener());		
-
-
+		bouton2.addActionListener(new BoutonListener());
+		bouton3.addActionListener(new BoutonHeritage());
+		
+	
+	
 		this.setVisible(true);
 		//paneCentre.animer();
 	}
+
+	private JLabel texte;
 	
 	class BoutonListener implements ActionListener
 	{
@@ -86,4 +88,15 @@ public class Fenetre extends JFrame
 		
 	}
 	
+	class BoutonHeritage implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e) 
+		{
+			global.removeAll();
+			global.add(new HeritagePanel(),BorderLayout.CENTER);
+			
+			global.revalidate();	
+		}
+		
+	}
 }

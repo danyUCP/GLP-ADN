@@ -1,15 +1,18 @@
 package heritage;
 
-public class Chromatide 
+public class  Chromatide
 {
 	private Allele g1;
 	private Allele g2;
 	
+	
+		
 	/**
 	 * @param g1
 	 * @param g2
 	 */
 	public Chromatide(Allele g1, Allele g2) {
+		super();
 		this.g1 = g1;
 		this.g2 = g2;
 	}
@@ -18,11 +21,18 @@ public class Chromatide
 	 * @param g1
 	 */
 	public Chromatide(Allele g1) {
+		super();
 		this.g1 = g1;
 	}
+
+	
+	/**
+	 * 
+	 */
 	public Chromatide() {
-		
+		super();
 	}
+
 	/**
 	 * @return the g1
 	 */
@@ -50,10 +60,10 @@ public class Chromatide
 	@Override
 	public String toString() {
 		if (g2	!= null) {
-			return g1.getNameA()  + g2.getNameA() ;
+			return g1.toString() + g2.toString() ;
 		}
 		else {
-			return g1.getNameA() ;
+			return g1.toString() ;
 		}
 	}
 	

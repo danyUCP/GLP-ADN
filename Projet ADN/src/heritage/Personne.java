@@ -14,6 +14,7 @@ public class Personne {
 	private Chromosome paire4;
 	private GametesU ovule;
 	private GametesU spermatozoide;
+	private String nom;
 	
 	
 	
@@ -21,7 +22,8 @@ public class Personne {
 	 * @param ovule
 	 * @param spermatozoide
 	 */
-	public Personne(GametesU ovule, GametesU spermatozoide) {
+	public Personne(GametesU ovule, GametesU spermatozoide,String nom) {
+		this.nom=nom;
 		this.ovule = ovule;
 		this.spermatozoide = spermatozoide;
 		
@@ -63,11 +65,12 @@ public class Personne {
 	 * @param paire3
 	 * @param paire4
 	 */
-	public Personne(Chromosome paire1, Chromosome paire2, Chromosome paire3, Chromosome paire4) {
+	public Personne(Chromosome paire1, Chromosome paire2, Chromosome paire3, Chromosome paire4,String nom) {
 		this.paire1 = paire1;
 		this.paire2 = paire2;
 		this.paire3 = paire3;
 		this.paire4 = paire4;
+		this.nom=nom;
 	}
 	
 
@@ -76,7 +79,7 @@ public class Personne {
 	@Override
 	
 	public String toString() {
-		return "le genome est donc \n" +  paire1.toString() +"\n" + paire2.toString() + "\n" + paire3.toString() + "\n" + paire4.toString();
+		return nom +": \n" +  paire1.toString() +"\n" + paire2.toString() + "\n" + paire3.toString() + "\n" + paire4.toString();
 	}
 	/**
 	 * @return the paire1

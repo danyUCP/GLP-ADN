@@ -11,10 +11,10 @@ public class GametesU {
 	public GametesU(ChromatideU test,Gametes g) {
 		this.g=g;
 		this.test = test;
-		int indiceAuHasard1 = (int) (Math.random() * (test.getG1().size() - 1));
-		int indiceAuHasard2 = (int) (Math.random() * (test.getG2().size() - 1));
-		int indiceAuHasard3 = (int) (Math.random() * (test.getG3().size() - 1));
-		int indiceAuHasard4 = (int) (Math.random() * (test.getG4().size() - 1));
+		int indiceAuHasard1 = (int) (Math.random() * 2);
+		int indiceAuHasard2 = (int) (Math.random() * 2);
+		int indiceAuHasard3 = (int) (Math.random() * 2);
+		int indiceAuHasard4 = (int) (Math.random() * 2);
 		
 		Chromatide n1=new Chromatide();
 		Chromatide n2=new Chromatide();
