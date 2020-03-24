@@ -21,6 +21,11 @@ public abstract class Nucleotide
 		this.estExon = bool;
 	}
 	
+	public boolean estExon() 
+	{
+		return estExon;
+	}
+
 	public abstract Nucleotide getComplementaire();
 	public abstract Nucleotide getComplementaireARN();
 	

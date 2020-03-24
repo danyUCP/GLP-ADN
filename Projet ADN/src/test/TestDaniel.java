@@ -14,7 +14,7 @@ public class TestDaniel
 {
 	public static void main(String[] args) 
 	{
-		BrinADN brin = new BrinADN("TACTGATGCTccaccagccgtGAT");
+		BrinADN brin = new BrinADN("TACTGATGCTccaccagccgtGATTACTGGATC");
 		
 		brin.ajouterNucl(new Adenine());
 		brin.ajouterNucl(new Adenine());
@@ -26,6 +26,8 @@ public class TestDaniel
 		BrinADN brinComp = brin.getBrinComplem();
 		
 		BrinARN brinARN = brin.transcrire();
+		brinARN.genererIntrons();
+		brinARN.retirerIntrons();
 		
 		ARNm messager = new ARNm(brinARN);
 				

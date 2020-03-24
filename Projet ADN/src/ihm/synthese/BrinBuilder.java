@@ -1,4 +1,4 @@
-package ihm;
+package ihm.synthese;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.BrinADN;
+import ihm.NuclComp;
 
 public class BrinBuilder
 {
@@ -54,13 +55,12 @@ public class BrinBuilder
 		this.brinLabel.setSize(nuclList.size() * 36, 88);
 		
 		this.brinLabel.setLocation(x * 36, 330 + (y * 75));
-		//this.brinLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+		this.brinLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
 		
 		for(int i = 0 ; i < nuclList.size() ; i++)
 			this.brinLabel.add(this.nuclList.get(i));
 		
 		System.out.println(brinLabel.getBounds());
-
 		
 		return brinLabel;
 	}
