@@ -30,7 +30,7 @@ public class ARNPanel extends JPanel
 		
 		//-------------- PARTIE HEADER ------------------//
 		header = new JPanel();
-		header.setBackground(Color.CYAN);
+		header.setBackground(new Color(204, 204, 255));
 		header.setPreferredSize(new Dimension(dim.width, 40));
 		header.setLayout(new FlowLayout());
 		this.add(header, BorderLayout.NORTH);
@@ -61,7 +61,7 @@ public class ARNPanel extends JPanel
 		
 		//-------------- PARTIE FOOTER ------------------//
 		footer = new JPanel();
-		footer.setBackground(Color.CYAN);
+		footer.setBackground(new Color(204, 204, 255));
 		footer.setPreferredSize(new Dimension(this.getPreferredSize().width, 60));
 		footer.setLayout(new FlowLayout());
 		this.add(footer, BorderLayout.SOUTH);

@@ -614,7 +614,6 @@ public class ComposantsMitose extends JPanel implements Runnable {
 				/*composants.*/
 				
 				//centri1posX--;
-				repaint();
 				
 			}
 			if (centri2posX!=(centri2posX+370)+165) {
@@ -622,7 +621,6 @@ public class ComposantsMitose extends JPanel implements Runnable {
 				/*composants.*/getCentri2posY();
 				
 				//centri2posX++;
-				repaint();
 				
 			}
 			
@@ -630,41 +628,41 @@ public class ComposantsMitose extends JPanel implements Runnable {
 		}
 		
 		public void deplacemt() {
-			while ((mt1posX!=720)&&(mt1posY!=360)) {
+			if ((mt1posX!=720)&&(mt1posY!=360)) {
 				/*composants.*/setMt1posX(mt1posX+20);
 				/*composants.*/setMt1posY(mt1posY-2);
 				
 			}
 			
-			while ((mt2posX!=700)&&(mt2posY!=450)) {
+			if ((mt2posX!=700)&&(mt2posY!=450)) {
 				/*composants.*/setMt2posX(mt2posX+20);
 				/*composants.*/setMt2posY(mt2posY+5);
 				
 			}
-			while ((mt3posX!=700)&&(mt3posY!=520)) {
+			if ((mt3posX!=700)&&(mt3posY!=520)) {
 				/*composants.*/setMt3posX(mt3posX+20);
 				/*composants.*/setMt3posY(mt3posY+10);
 			}
-			while ((mt4posX!=720)&&(mt4posY!=610)) {
+			if ((mt4posX!=720)&&(mt4posY!=610)) {
 				/*composants.*/setMt4posX(mt4posX+20);
 				/*composants.*/setMt4posY(mt4posY+15);
 			}
 			
 			
-			while ((mt1bisposX!=800)&&(mt1bisposY!=360)) {
+			if ((mt1bisposX!=800)&&(mt1bisposY!=360)) {
 				/*composants.*/setMt1bisposX(mt1posX-20);
 				/*composants.*/setMt1bisposY(mt1posY-2);
 			}
 			
-			while ((mt2bisposX!=820)&&(mt2bisposY!=450)) {
+			if ((mt2bisposX!=820)&&(mt2bisposY!=450)) {
 				/*composants.*/setMt2bisposX(mt2posX-20);
 				/*composants.*/setMt2bisposY(mt2posY+5);
 			}
-			while ((mt3bisposX!=820)&&(mt3bisposY!=520)) {
+			if ((mt3bisposX!=820)&&(mt3bisposY!=520)) {
 				/*composants.*/setMt3bisposX(mt3bisposX-20);
 				/*composants.*/setMt3bisposY(mt3bisposY+10);
 			}
-			while ((mt4bisposX!=800)&&(mt4bisposY!=610)) {
+			if ((mt4bisposX!=800)&&(mt4bisposY!=610)) {
 				/*composants.*/setMt4posX(mt4bisposX-20);
 				/*composants.*/setMt4posY(mt4bisposY+15);
 			}

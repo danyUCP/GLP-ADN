@@ -47,7 +47,7 @@ public class TranscriptionActivity extends JPanel
 
 	public void transcription()
 	{
-		commandes.setBackground(Color.CYAN);
+		commandes.setBackground(new Color(204, 204, 255));
 		
 		//TACTGATGCTccaccagccgtGATAACGTA
 		this.brinCodant = new BrinADN("TACTGATGCTccaccagccgtGATAACG");
