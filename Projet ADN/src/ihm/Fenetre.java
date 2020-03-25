@@ -120,7 +120,7 @@ public class Fenetre extends JFrame
 		public void actionPerformed(ActionEvent e) 
 		{
 			global.removeAll();
-			//global.add(new HeritagePanel(),BorderLayout.CENTER);
+			global.add(new HeritagePanel(),BorderLayout.CENTER);
 			
 			global.revalidate();	
 		}

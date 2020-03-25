@@ -25,6 +25,7 @@ public class TranscriptionActivity extends JPanel
 	private JButton play, suivant;
 	private boolean stop;
 	private JLabel brinL, brinComplL, brinArnL;
+	private CommentLabel comment;
 	private BrinHelice helice1, helice2;
 	private int posADN, posARN, posHelice;
 
@@ -37,12 +38,10 @@ public class TranscriptionActivity extends JPanel
 		
 		this.dim = dim;
 		this.setSize(dim);
-
+		
 		this.setBackground(Color.WHITE);
 		
-		
 		transcription();
-
 	}
 	
 
@@ -82,6 +81,10 @@ public class TranscriptionActivity extends JPanel
 		brinArnL.setSize(brVisible * 36, 88);
 			
 		System.out.println(brinArnL.getBounds());
+		
+		comment = new CommentLabel(0, "Début de la Transcription");
+		//this.add(comment);
+
 		
 		
 		play = new JButton("Lancer l'animation");
@@ -143,9 +146,7 @@ public class TranscriptionActivity extends JPanel
 					e1.printStackTrace();
 				}
 			}
-
 		}
-		
 	}
 	
 	class Animation implements Runnable
@@ -299,10 +300,5 @@ public class TranscriptionActivity extends JPanel
 				}
 			}
 		}
-		
-	}
-		
-	
-	
-
+	}		
 }
