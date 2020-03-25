@@ -85,6 +85,7 @@ public class Fenetre extends JFrame
 			e.printStackTrace();
 		}
 		
+		bouton1.addActionListener(new BoutonListener2());
 		bouton2.addActionListener(new BoutonListener());
 		bouton3.addActionListener(new BoutonHeritage());
 
@@ -126,6 +127,21 @@ public class Fenetre extends JFrame
 		}
 		
 	}
+	
+	class BoutonListener2 implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e) 
+		{
+			global.removeAll();
+			
+			global.add(new CyclePanel(), BorderLayout.CENTER);
+			
+			global.revalidate();
+				
+		}
+	}
+
+	
 
 	
 }
