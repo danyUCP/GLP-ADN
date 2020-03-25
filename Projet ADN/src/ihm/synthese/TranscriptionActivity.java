@@ -1,9 +1,8 @@
-package ihm;
+package ihm.synthese;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,22 +12,24 @@ import javax.swing.JPanel;
 
 import ARN.BrinADN;
 import ARN.BrinARN;
+import ihm.synthese.MaturationActivity.Animation;
+import ihm.synthese.MaturationActivity.PlayListener;
 
-public class ARNActivity extends JPanel
+public class TranscriptionActivity extends JPanel
 {
 	private Dimension dim;
 	private JPanel commandes;
 	private BrinADN brinCodant;
 	private int brVisible;
 	private Thread activityThread;
-	private JButton play;
+	private JButton play, suivant;
 	private boolean stop;
 	private JLabel brinL, brinComplL, brinArnL;
 	private BrinHelice helice1, helice2;
 	private int posADN, posARN, posHelice;
 
 	
-	public ARNActivity(JPanel commandes, int activity, Dimension dim)
+	public TranscriptionActivity(JPanel commandes, Dimension dim)
 	{
 		super(null);
 		this.commandes = commandes;
@@ -39,12 +40,8 @@ public class ARNActivity extends JPanel
 
 		this.setBackground(Color.WHITE);
 		
-		switch(activity)
-		{
-			case 1:
-				transcription();
-				break;
-		}
+		
+		transcription();
 
 	}
 	
@@ -55,7 +52,7 @@ public class ARNActivity extends JPanel
 		
 		//TACTGATGCTccaccagccgtGATAACGTA
 		this.brinCodant = new BrinADN("TACTGATGCTccaccagccgtGATAACG");
-		posHelice = 20;
+		posHelice = 24;
 		
 		helice1 = new BrinHelice(brinCodant, true);
 		helice1.creerHelice(posHelice, 0);
@@ -87,12 +84,14 @@ public class ARNActivity extends JPanel
 		System.out.println(brinArnL.getBounds());
 		
 		
-		play = new JButton("Play");
+		play = new JButton("Lancer l'animation");
 		play.addActionListener(new PlayListener());
-		play.setLocation(10, 10);
 		commandes.add(play);
-
-
+		
+		suivant = new JButton("Suivant");
+		suivant.setEnabled(false);
+		suivant.addActionListener(new PlayListener());
+		commandes.add(suivant);
 
 	}
 	
@@ -110,21 +109,39 @@ public class ARNActivity extends JPanel
 		//System.out.println("On repeint");
 	}
 	
+	public synchronized void relancer() throws InterruptedException
+	{
+		notify();
+	}
+	
+	public synchronized void pause() throws InterruptedException
+	{
+		wait();
+	}
 
 	
 	class PlayListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) 
 		{
-			if(stop)
+			if(e.getSource() == play)
 			{
-				//helice1.deplacerGauche(1);
-				//helice2.deplacerGauche(1);
-
-				
-				stop = false;
-				activityThread = new Thread(new Animation2());
-				activityThread.start();
+				if(stop)
+				{				
+					stop = false;
+					activityThread = new Thread(new Animation2());
+					activityThread.start();
+				}
+			}
+			else if(e.getSource() == suivant)
+			{
+				try {
+					relancer();
+					suivant.setEnabled(false);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 		}
@@ -175,7 +192,6 @@ public class ARNActivity extends JPanel
 					posADN--;
 					brinL.setLocation(posADN * (36 / precision), 330 + (-2 * 75));
 					brinComplL.setLocation(posADN * (36 / precision), 330 + (1 * 75));
-
 				}
 
 				try
@@ -188,7 +204,6 @@ public class ARNActivity extends JPanel
 				}
 			}
 		}
-		
 	}
 	
 	class Animation2 implements Runnable
@@ -206,7 +221,21 @@ public class ARNActivity extends JPanel
 				repaint();
 				
 				//System.out.println(posARN + " " + helice1.getDecalage());
+				
+				if(helice1.getX() == 17 * 36)
+				{
+					suivant.setEnabled(true);
 
+					try 
+					{
+						pause();
+					} 
+					catch (InterruptedException e1) 
+					{
+						e1.printStackTrace();
+					}
+				}
+				
 				if(helice1.getX() < 12 * 36 && brVisible < brinCodant.getTaille())
 				{
 					brVisible = (posARN - helice1.getX()) / 36;
@@ -214,6 +243,8 @@ public class ARNActivity extends JPanel
 					brinArnL.setLocation(brinArnL.getX() - (36 / precision), brinArnL.getY());
 					//System.out.println(brVisible);
 				}
+				
+				
 				
 				try
 				{
@@ -227,14 +258,26 @@ public class ARNActivity extends JPanel
 			
 			posARN = brinArnL.getX();
 			System.out.println(posARN);
-			while(posARN < 36 / 2)
+			
+			suivant.setEnabled(true);
+
+			try 
 			{
-				posARN++;
-				brinArnL.setLocation(posARN + (36 / 2), brinArnL.getY());				
+				pause();
+			} 
+			catch (InterruptedException e1) 
+			{
+				e1.printStackTrace();
+			}
+			
+			while(brinArnL.getX() < 36 / 2)
+			{
+				//posARN++;
+				brinArnL.setLocation(brinArnL.getX() + (36 / 12), brinArnL.getY());				
 
 				try
 				{
-					Thread.sleep(80 / precision);
+					Thread.sleep(20);
 				}
 				catch(Exception e)
 				{
@@ -242,15 +285,13 @@ public class ARNActivity extends JPanel
 				}
 			}
 			
-			posARN = brinArnL.getY();
-			while(posARN < 300 + 1 * 75)
+			while(brinArnL.getY() < 300 + 1 * 75)
 			{
-				posARN++;
-				brinArnL.setLocation(brinArnL.getX(), posARN);
+				brinArnL.setLocation(brinArnL.getX(), brinArnL.getY() + 5);
 
 				try
 				{
-					Thread.sleep(80 / precision);
+					Thread.sleep(50);
 				}
 				catch(Exception e)
 				{

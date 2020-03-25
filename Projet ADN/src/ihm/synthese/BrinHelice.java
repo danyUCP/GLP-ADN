@@ -1,4 +1,4 @@
-package ihm;
+package ihm.synthese;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.BrinADN;
+import ihm.NuclComp;
 
 public class BrinHelice extends JLabel
 {

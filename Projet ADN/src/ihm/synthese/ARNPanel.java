@@ -1,4 +1,4 @@
-package ihm;
+package ihm.synthese;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,7 +30,7 @@ public class ARNPanel extends JPanel
 		
 		//-------------- PARTIE HEADER ------------------//
 		header = new JPanel();
-		header.setBackground(Color.BLUE);
+		header.setBackground(Color.CYAN);
 		header.setPreferredSize(new Dimension(dim.width, 40));
 		header.setLayout(new FlowLayout());
 		this.add(header, BorderLayout.NORTH);
@@ -54,14 +54,14 @@ public class ARNPanel extends JPanel
 		
 		//-------------- PARTIE CONTENU -----------------//
 		contenu = new JPanel();
-		contenu.setBackground(Color.GREEN);
+		contenu.setBackground(Color.WHITE);
 		contenu.setPreferredSize(new Dimension(9 * (1200 / 10), dim.height - (100)));
 		contenu.setLayout(null);
 		section.add(contenu, BorderLayout.CENTER);
 		
 		//-------------- PARTIE FOOTER ------------------//
 		footer = new JPanel();
-		footer.setBackground(Color.RED);
+		footer.setBackground(Color.CYAN);
 		footer.setPreferredSize(new Dimension(this.getPreferredSize().width, 60));
 		footer.setLayout(new FlowLayout());
 		this.add(footer, BorderLayout.SOUTH);
@@ -71,12 +71,19 @@ public class ARNPanel extends JPanel
 	
 	class BoutonListener implements ActionListener
 	{
+		private int activity = 1;
+		
 		public void actionPerformed(ActionEvent e) 
 		{
 			contenu.setBackground(Color.BLACK);
 			footer.setBackground(Color.LIGHT_GRAY);
 			
-			initARNActivity(1);
+			if(e.getSource() == transcription)
+				activity = 1;
+			else if(e.getSource() == maturation)
+				activity = 2;
+			
+			initARNActivity(activity);
 
 			contenu.revalidate();
 			contenu.repaint();
@@ -86,7 +93,7 @@ public class ARNPanel extends JPanel
 	
 	public void initMenu()
 	{
-		menu.setLayout(new GridLayout(3, 1, 0, 100));
+		menu.setLayout(new GridLayout(3, 1, 0, 3));
 		transcription = new JButton("Transcription");
 		maturation = new JButton("Maturation");
 		synthese = new JButton("Synthèse");
@@ -95,6 +102,7 @@ public class ARNPanel extends JPanel
 		menu.add(synthese);	
 		
 		transcription.addActionListener(new BoutonListener());
+		maturation.addActionListener(new BoutonListener());
 	}
 	
 	public void initARNActivity(int activity)
@@ -105,8 +113,22 @@ public class ARNPanel extends JPanel
 		contenu.setLayout(new BorderLayout());
 		footer.setLayout(new FlowLayout());
 		
-		contenu.add(new ARNActivity(footer, activity, contenu.getPreferredSize()), BorderLayout.CENTER);
+		switch(activity)
+		{
+			case 1:
+				contenu.add(new TranscriptionActivity(footer, contenu.getPreferredSize()), BorderLayout.CENTER);
+				break;
+			case 2:
+				contenu.add(new MaturationActivity(footer, contenu.getPreferredSize()), BorderLayout.CENTER);
+				break;
+			case 3:
+				
+				break;
+		
+		}
 	}
+	
+	
 	
 	/*
 	public void paintComponent(Graphics g)

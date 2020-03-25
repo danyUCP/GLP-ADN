@@ -1,5 +1,7 @@
 package ihm;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -7,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -29,6 +32,7 @@ public class NuclComp extends JLabel
 	private int longueur;
 	private boolean orientation, orChange;
 	private Nucleotide nucl;
+	private float alpha = 1.0f;
 	
 	
 	public NuclComp(Nucleotide nucl, int posX, int posY) 
@@ -80,6 +84,8 @@ public class NuclComp extends JLabel
 		this.longueur = iconNucl.getIconHeight();
 		
 		this.setBounds(posX * largeur, (posY + 1) * 75, largeur, longueur);
+		//this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+
 	}
 
 	
@@ -99,8 +105,12 @@ public class NuclComp extends JLabel
 	
 	public void paintComponent(Graphics g)
 	{
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 		super.paintComponent(g);
 		g.drawString(nucl.getLettre(), 14, 48);
+		//System.out.println("On repeint");
+
 	}    
 	
 	
@@ -137,6 +147,18 @@ public class NuclComp extends JLabel
 			this.orChange = false;
 
 		this.orientation = o;		
+	}
+	
+
+	public float getAlpha() 
+	{
+		return alpha;
+	}
+
+	public void setAlpha(float alpha) 
+	{
+		this.alpha = alpha;
+		repaint();
 	}
 
 	public int getPosX() 

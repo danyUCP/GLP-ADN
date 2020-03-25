@@ -39,7 +39,7 @@ public class ARNm
 		String str = "";
 		
 		for(int i = 0 ; i < this.codons.size() ; i++)
-			str += this.codons.get(i) + " - ";
+			str += this.getCodonAt(i) + " - ";
 		
 		str = str.substring(0, str.length()-3);
 		return str;

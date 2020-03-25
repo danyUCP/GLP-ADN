@@ -1,4 +1,4 @@
-package ihm;
+package ihm.synthese;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.BrinARN;
+import ihm.NuclComp;
 
 public class ARNmBuilder 
 {
@@ -43,7 +44,7 @@ public class ARNmBuilder
 			this.nuclList.add(new NuclComp(brin.getNuclAt(i), i, -1, orientation));
 		
 		System.out.println("Liste de nucléotides composantes ARN initialisée");	
-		System.out.println(nuclList);
+		//System.out.println(nuclList);
 	}
 	
 	public JLabel creerARN(int x, int y)
@@ -57,16 +58,39 @@ public class ARNmBuilder
 		for(int i = 0 ; i < nuclList.size() ; i++)
 			this.brinLabel.add(this.nuclList.get(i));
 		
-		System.out.println(brinLabel.getBounds());
-
+		//System.out.println(brinLabel.getBounds());
+		
 		
 		return brinLabel;
+	}
+	
+	public void retirerNuclCp()
+	{
+		for(int i = getTaille() - 1 ; i >= 0 ; i--)
+		{
+			if(this.getNuclCpAt(i).getNucl().estExon() == false)
+				this.nuclList.remove(i);
+		}
 	}
 	
 	public int getTaille()
 	{
 		return this.nuclList.size();
 	}
-
+	
+	public NuclComp getNuclCpAt(int index)
+	{
+		return this.nuclList.get(index);
+	}
+	
+	public String toString()
+	{
+		String str = "";
+		
+		for(int i = 0 ; i < this.nuclList.size() ; i++)
+			str += this.nuclList.get(i) + " ";
+		
+		return str;
+	}
 	
 }
