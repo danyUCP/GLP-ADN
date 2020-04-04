@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.HashMap;
@@ -21,7 +24,7 @@ import ARN.Thymine;
 import ARN.Uracile;
 
 @SuppressWarnings("serial")
-public class NuclComp extends JLabel
+public class NuclComp extends JLabel implements MouseListener
 {
 	private static HashMap<String, ImageIcon> iconMap;
 
@@ -54,8 +57,8 @@ public class NuclComp extends JLabel
 		
 		this.posX = posX;
 		this.posY = posY;
-		this.largeur = iconNucl.getIconWidth();
-		this.longueur = iconNucl.getIconHeight();
+		this.largeur = ParaADN.LARGEUR_NUCL;
+		this.longueur = ParaADN.HAUTEUR_NUCL;
 		
 		this.setBounds(posX * largeur, posY, largeur, longueur);
 	}
@@ -80,12 +83,13 @@ public class NuclComp extends JLabel
 		
 		this.posX = posX;
 		this.posY = posY;
-		this.largeur = iconNucl.getIconWidth();
-		this.longueur = iconNucl.getIconHeight();
+		this.largeur = ParaADN.LARGEUR_NUCL;
+		this.longueur = ParaADN.HAUTEUR_NUCL;
 		
-		this.setBounds(posX * largeur, (posY + 1) * 75, largeur, longueur);
+		this.setBounds(posX * largeur, (posY + 1) * (longueur - 13), largeur, longueur);
 		//this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
-
+		this.addMouseListener(this);
+		
 	}
 
 	
@@ -106,9 +110,11 @@ public class NuclComp extends JLabel
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		super.paintComponent(g);
-		g.drawString(nucl.getLettre(), 14, 48);
+		super.paintComponent(g2d);
+		g2d.drawString(nucl.getLettre(), 14, 48);
 		//System.out.println("On repeint");
 
 	}    
@@ -186,7 +192,7 @@ public class NuclComp extends JLabel
 		this.setPosX(x);
 		this.setPosY(y);
 		
-		this.setLocation(posX * largeur, (posY + 1) * 75);
+		this.setLocation(posX * largeur, (posY + 1) * (longueur - 13));
 	}
 
 	public int getLargeur() 
@@ -223,6 +229,36 @@ public class NuclComp extends JLabel
 	public String toString()
 	{
 		return nucl.getLettre() + "(" + this.posX + " ; " + this.posY + ") " + " -> " + orientation;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	public void mouseEntered(MouseEvent e) 
+	{
+		this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) 
+	{
+		this.setBorder(null);
 	}
 	
 	

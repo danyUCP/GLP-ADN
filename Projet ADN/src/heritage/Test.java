@@ -65,7 +65,7 @@ public class Test {
 		System.out.println(test);
 		System.out.println(spermatozoide);
 		System.out.println(enfant);
-		Fenetre fen=new Fenetre();
+		//Fenetre fen=new Fenetre();
 
 		
 	

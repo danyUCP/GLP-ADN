@@ -136,12 +136,10 @@ public class Arbre extends JPanel implements Runnable  {
 		g.fillRect(160, 170, 9, 5);
 		g.setColor(Color.white);
 			g.drawString("a", 112, 140);
-		if(pere.getPaire1().getPart1().getG1().getName()=="a") {
-			
+		if(pere.getPaire1().getPart1().getG1().getName()=="a") 
+		{	
 			Font fonte = new Font("TimesRoman ",Font.BOLD,30);
-					g.setFont(fonte);
-					
-			
+					g.setFont(fonte);	
 		}
 		
 		

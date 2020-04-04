@@ -6,11 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.BrinADN;
 import ihm.NuclComp;
+import ihm.ParaADN;
 
 public class BrinHelice extends JLabel
 {
@@ -162,9 +162,9 @@ public class BrinHelice extends JLabel
 		placerNucleotides(x);
 		
 		this.setLayout(null);
-		this.setSize((nuclList.size() + decalage) * 36, hauteur * 88);
+		this.setSize((nuclList.size() + decalage) * ParaADN.LARGEUR_NUCL, hauteur * ParaADN.HAUTEUR_NUCL);
 		
-		this.setLocation(x * 36, 330 + ((y - (hauteur / 2)) * 75));
+		this.setLocation(x * ParaADN.LARGEUR_NUCL, 330 + ((y - (hauteur / 2)) * (ParaADN.HAUTEUR_NUCL - 13)));
 				
 		//for(int i = 0 ; i < nuclList.size() ; i++)
 			//this.add(this.nuclList.get(i));
@@ -241,7 +241,7 @@ public class BrinHelice extends JLabel
 				//System.out.println("Dessine lien " + ((i + 3) - ((i + pos) % 3)) + "/" + getTaille() + " : " + n1 + " --- " + n2);
 
 				
-				x1 = n1.getX() + 36;
+				x1 = n1.getX() + ParaADN.LARGEUR_NUCL;
 				y1 = n1.getY() + (n1.getOrientation() ? 3 : 85);
 				x2 = n2.getX();
 				y2 = n2.getY() + (n2.getOrientation() ? 3 : 85);

@@ -1,13 +1,12 @@
 package ihm.synthese;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.BrinARN;
 import ihm.NuclComp;
+import ihm.ParaADN;
 
 public class ARNmBuilder 
 {
@@ -50,9 +49,9 @@ public class ARNmBuilder
 	public JLabel creerARN(int x, int y)
 	{
 		this.brinLabel.setLayout(null);
-		this.brinLabel.setSize(nuclList.size() * 36, 88);
+		this.brinLabel.setSize(nuclList.size() * ParaADN.LARGEUR_NUCL, ParaADN.HAUTEUR_NUCL);
 		
-		this.brinLabel.setLocation(x * 36, 330 + (y * 75));
+		this.brinLabel.setLocation(x * ParaADN.LARGEUR_NUCL, 330 + (y * (ParaADN.HAUTEUR_NUCL - 13)));
 		//this.brinLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
 
 		for(int i = 0 ; i < nuclList.size() ; i++)

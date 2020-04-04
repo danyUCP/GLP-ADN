@@ -1,13 +1,17 @@
 package ihm.synthese;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,7 +19,9 @@ import javax.swing.JPanel;
 import ARN.BrinADN;
 import ARN.BrinARN;
 import ihm.NuclComp;
+import ihm.ParaADN;
 
+@SuppressWarnings("serial")
 public class MaturationActivity extends JPanel
 {
 	private BrinARN brinArn;
@@ -26,6 +32,7 @@ public class MaturationActivity extends JPanel
 	private boolean mature, stop;
 	private Thread activityThread;
 	private ARNmBuilder builder;
+	private Image noyau;
 
 	
 	public MaturationActivity(JPanel commandes, Dimension dim)
@@ -46,6 +53,14 @@ public class MaturationActivity extends JPanel
 
 		this.setBackground(Color.WHITE);
 		
+		try
+		{
+			noyau = ImageIO.read(new File("noyau.png"));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 		
 		maturation();
 
@@ -153,18 +168,9 @@ public class MaturationActivity extends JPanel
 		brinArn.retirerIntrons();
 		System.out.println(brinArn);
 
-		int echelleX = ((dim.width / 2 - brinArn.getTaille()*36 / 2) - brin.getX()) / 12;
+		int echelleX = ((dim.width / 2 - brinArn.getTaille() * ParaADN.LARGEUR_NUCL / 2) - brin.getX()) / 12;
 		int echelleY = (brin.getY() - 330) / 10;
 		
-		/*
-		System.out.println(brin.getX());
-		System.out.println(dim.width / 2 - brinArn.getTaille()*36 / 2);
-		System.out.println(brinArn.getTaille());
-		System.out.println(echelleX);
-
-		System.out.println(brin.getY());
-		System.out.println(echelleY);
-		*/
 		Thread t = new Thread(new LigatureAnimation());
 		t.start();
 
@@ -202,6 +208,8 @@ public class MaturationActivity extends JPanel
 			}
 			
 			epissage();
+			
+			
 		}
 	}
 	
@@ -212,12 +220,12 @@ public class MaturationActivity extends JPanel
 			System.out.println(builder.getTaille());
 			builder.retirerNuclCp();
 			
-			while(builder.getNuclCpAt(builder.getTaille() - 1).getX() > builder.getTaille() * 36)
+			while(builder.getNuclCpAt(builder.getTaille() - 1).getX() > builder.getTaille() * ParaADN.LARGEUR_NUCL)
 			{
 				for(int i = 0 ; i < builder.getTaille() ; i++)
 				{
 					NuclComp tmp = builder.getNuclCpAt(i);
-					int echelleX = (i * 36 - tmp.getX()) / 12;
+					int echelleX = (i * ParaADN.LARGEUR_NUCL - tmp.getX()) / 12;
 					
 					
 					tmp.setLocation(tmp.getX() + echelleX, tmp.getY());
@@ -240,10 +248,23 @@ public class MaturationActivity extends JPanel
 			{
 				NuclComp tmp = builder.getNuclCpAt(i);
 				
-				tmp.setLocation(i * 36, tmp.getY());
+				tmp.setLocation(i * ParaADN.LARGEUR_NUCL, tmp.getY());
 			}
 			
 		}	
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		Graphics2D g2d = (Graphics2D)g;
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+		super.paintComponent(g2d);
+		
+		g2d.drawImage(noyau, -300, -520 + 150, 1800, 1800, this);
+		
+		g2d.setColor(new Color(0, 0, 255, 100));
 	}
 
 }

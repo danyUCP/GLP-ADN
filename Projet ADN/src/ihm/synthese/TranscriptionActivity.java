@@ -1,20 +1,28 @@
 package ihm.synthese;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ARN.BrinADN;
 import ARN.BrinARN;
-import ihm.synthese.MaturationActivity.Animation;
-import ihm.synthese.MaturationActivity.PlayListener;
+import ihm.ParaADN;
 
+@SuppressWarnings("serial")
 public class TranscriptionActivity extends JPanel
 {
 	private Dimension dim;
@@ -28,6 +36,8 @@ public class TranscriptionActivity extends JPanel
 	private CommentLabel comment;
 	private BrinHelice helice1, helice2;
 	private int posADN, posARN, posHelice;
+	private Image noyau, polymerase;
+	private float alpha;
 
 	
 	public TranscriptionActivity(JPanel commandes, Dimension dim)
@@ -35,11 +45,23 @@ public class TranscriptionActivity extends JPanel
 		super(null);
 		this.commandes = commandes;
 		this.stop = true;
+		this.alpha = 0.0f;
 		
 		this.dim = dim;
 		this.setSize(dim);
-		
+
 		this.setBackground(Color.WHITE);
+		
+		try
+		{
+			noyau = ImageIO.read(new File("noyau.png"));
+			polymerase = ImageIO.read(new File("poly.png"));
+
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 		
 		transcription();
 	}
@@ -76,14 +98,13 @@ public class TranscriptionActivity extends JPanel
 		ARNmBuilder builder2 = new ARNmBuilder(brinArn, false);
 		brinArnL = builder2.creerARN(14, -3);
 		this.add(brinArnL);
-		
 
-		brinArnL.setSize(brVisible * 36, 88);
+		brinArnL.setSize(brVisible * ParaADN.LARGEUR_NUCL, ParaADN.HAUTEUR_NUCL);
 			
-		System.out.println(brinArnL.getBounds());
+		System.out.println("ARN visible : " + brinArnL.getBounds());
 		
-		comment = new CommentLabel(0, "Début de la Transcription");
-		//this.add(comment);
+		comment = new CommentLabel("<html>1ère étape : La Transcription</html>", 0);
+		this.add(comment);
 
 		
 		
@@ -101,15 +122,29 @@ public class TranscriptionActivity extends JPanel
 	
 	public void paintComponent(Graphics g)
 	{
-		//Image dbImage = createImage(getWidth(), getHeight());
-		//Graphics dbg = dbImage.getGraphics();
-		//super.paintComponent(dbg);
-		//g.drawImage(dbImage, 0, 0, this);
-		super.paintComponent(g);
-		g.setColor(new Color(0, 0, 255, 100));
-		g.fillOval(7 * 36 + 5, -30, 36 * 13, 88 * 8);
+		Graphics2D g2d = (Graphics2D)g;
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+		super.paintComponent(g2d);
 		
-		//System.out.println("On repeint");
+		g2d.setColor(new Color(255, 255, 255, 200));
+		g2d.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+
+		g2d.drawImage(noyau, -270, -800, 1670, 1670, this);
+		g2d.drawString("Noyau", 10, 30);
+
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g2d.drawImage(polymerase, 6 * 36 + 5, -30, 36 * 16, 88 * 8, this);
+		g2d.drawString("ARN Polymérase", 12 * 36, 4 * 88);
+
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
+
+		
+
+		//g2d.fillOval(7 * 36 + 5, -30, 36 * 13, 88 * 8);
+		
 	}
 	
 	public synchronized void relancer() throws InterruptedException
@@ -138,17 +173,136 @@ public class TranscriptionActivity extends JPanel
 			}
 			else if(e.getSource() == suivant)
 			{
-				try {
+				try 
+				{
 					relancer();
 					suivant.setEnabled(false);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
+				} 
+				catch (InterruptedException e1) 
+				{
 					e1.printStackTrace();
 				}
 			}
 		}
 	}
 	
+	class Animation2 implements Runnable
+	{
+		public void run() 
+		{
+			int precision = 8;
+			posARN = brinArnL.getX();
+			
+			comment.setComment("<html>La transcription commence avec un ARN polymérase vient diviser les deux brins d'ADN</html>", 1);
+			
+			while(helice1.getX() > ParaADN.LARGEUR_NUCL * helice1.getDecalage() - helice1.getWidth())
+			{				
+				helice1.deplacerGauche(precision);
+				helice2.deplacerGauche(precision);
+				
+				if(alpha < 0.9f)
+					alpha += 0.02f;
+				
+				repaint();
+				
+				//System.out.println(posARN + " " + helice1.getDecalage());
+				
+				if(helice1.getX() == 17 * ParaADN.LARGEUR_NUCL)
+				{
+					suivant.setEnabled(true);
+
+					try 
+					{
+						pause();
+					} 
+					catch (InterruptedException e1) 
+					{
+						e1.printStackTrace();
+					}
+					
+					comment.setComment("<html>Le polymérase joint un à un les nucléotides de l'ARN à un brin d'ADN...</html>", 1);
+				}
+				
+				if(helice1.getX() < 12 * ParaADN.LARGEUR_NUCL && brVisible < brinCodant.getTaille())
+				{
+					brVisible = (posARN - helice1.getX()) / ParaADN.LARGEUR_NUCL;
+					brinArnL.setSize(brVisible * ParaADN.LARGEUR_NUCL, ParaADN.HAUTEUR_NUCL);
+					brinArnL.setLocation(brinArnL.getX() - (ParaADN.LARGEUR_NUCL / precision), brinArnL.getY());
+					//System.out.println(brVisible);
+					
+					if(brVisible == brinCodant.getTaille())
+						comment.setComment("<html>... afin de former le brin d'ARN messager correspondant au gène transcrit</html>", 1);
+				}
+				
+				
+				
+				try
+				{
+					Thread.sleep(20);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			posARN = brinArnL.getX();
+			System.out.println(alpha);
+			
+			suivant.setEnabled(true);
+
+			try 
+			{
+				pause();
+			} 
+			catch (InterruptedException e1) 
+			{
+				e1.printStackTrace();
+			}
+			
+			comment.setComment("<html>Le brin d'ARN formé n'est pas encore prêt à quitter le noyau</html>", 0);
+			
+			while(brinArnL.getX() < ParaADN.LARGEUR_NUCL / 2)
+			{
+				//posARN++;
+				brinArnL.setLocation(brinArnL.getX() + (ParaADN.LARGEUR_NUCL / 12), brinArnL.getY());				
+
+				if(alpha > 0.02f)
+					alpha -= 0.02f;
+				else
+					alpha = 0.0f;
+				
+				repaint();
+				
+				try
+				{
+					Thread.sleep(20);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			comment.setComment("<html>Il doit passer par une étape appelée la maturation</html>", 0);
+			
+			while(brinArnL.getY() < ParaADN.POS_MEDIANE + 1 * 75)
+			{
+				brinArnL.setLocation(brinArnL.getX(), brinArnL.getY() + 5);
+
+				try
+				{
+					Thread.sleep(50);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}	
+	
+	/*
 	class Animation implements Runnable
 	{
 		public void run() 
@@ -206,99 +360,6 @@ public class TranscriptionActivity extends JPanel
 			}
 		}
 	}
+	*/
 	
-	class Animation2 implements Runnable
-	{
-		public void run() 
-		{
-			int precision = 8;
-			posARN = brinArnL.getX();
-			
-			while(helice1.getX() > 36 * helice1.getDecalage() - helice1.getWidth())
-			{				
-				helice1.deplacerGauche(precision);
-				helice2.deplacerGauche(precision);
-				
-				repaint();
-				
-				//System.out.println(posARN + " " + helice1.getDecalage());
-				
-				if(helice1.getX() == 17 * 36)
-				{
-					suivant.setEnabled(true);
-
-					try 
-					{
-						pause();
-					} 
-					catch (InterruptedException e1) 
-					{
-						e1.printStackTrace();
-					}
-				}
-				
-				if(helice1.getX() < 12 * 36 && brVisible < brinCodant.getTaille())
-				{
-					brVisible = (posARN - helice1.getX()) / 36;
-					brinArnL.setSize(brVisible * 36, 88);
-					brinArnL.setLocation(brinArnL.getX() - (36 / precision), brinArnL.getY());
-					//System.out.println(brVisible);
-				}
-				
-				
-				
-				try
-				{
-					Thread.sleep(20);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-			
-			posARN = brinArnL.getX();
-			System.out.println(posARN);
-			
-			suivant.setEnabled(true);
-
-			try 
-			{
-				pause();
-			} 
-			catch (InterruptedException e1) 
-			{
-				e1.printStackTrace();
-			}
-			
-			while(brinArnL.getX() < 36 / 2)
-			{
-				//posARN++;
-				brinArnL.setLocation(brinArnL.getX() + (36 / 12), brinArnL.getY());				
-
-				try
-				{
-					Thread.sleep(20);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-			
-			while(brinArnL.getY() < 300 + 1 * 75)
-			{
-				brinArnL.setLocation(brinArnL.getX(), brinArnL.getY() + 5);
-
-				try
-				{
-					Thread.sleep(50);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
-	}		
 }

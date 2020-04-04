@@ -4,15 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,14 +32,14 @@ public class Fenetre extends JFrame
 	private JPanel global, header;
 	private AccueilPanel accueil;
 	//private Panneau paneCentre;
-	private JButton bouton1, bouton2, bouton3;
+	private BoutonMenu cycle, proteine, heritage;
 	private JLabel texte;
 	private Image img;
 	
 	public Fenetre()
 	{
 		this.setTitle("ADN");
-		this.setSize(1200, 800);
+		this.setSize(ParaADN.LARGEUR_FENETRE, ParaADN.HAUTEUR_FENETRE);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +48,7 @@ public class Fenetre extends JFrame
 		
 		//-------------- CONTENT PANE ------------------//
 		global = new JPanel();
-	    global.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
+	    global.setPreferredSize(new Dimension(ParaADN.LARGEUR_FENETRE, ParaADN.HAUTEUR_FENETRE));
 		global.setBackground(Color.CYAN);
 		global.setLayout(new BorderLayout());
 		this.setContentPane(global);
@@ -59,12 +65,12 @@ public class Fenetre extends JFrame
 		accueil = new AccueilPanel();
 		accueil.setBackground(Color.WHITE);
 		accueil.setLayout(new GridLayout(3, 1, 200, 200));
-		bouton1 = new JButton("Cycle cellulaire");
-		bouton2 = new JButton("Synthèse des protéines");
-		bouton3 = new JButton("Héritage génétique");
-		accueil.add(bouton1);
-		accueil.add(bouton2);
-		accueil.add(bouton3);
+		cycle = new BoutonMenu("Cycle cellulaire");
+		proteine = new BoutonMenu("Synthèse des protéines");
+		heritage = new BoutonMenu("Héritage génétique");
+		accueil.add(cycle);
+		accueil.add(proteine);
+		accueil.add(heritage);
 		global.add(accueil, BorderLayout.CENTER);
 
 		
@@ -76,71 +82,114 @@ public class Fenetre extends JFrame
 		paneDroite.add(paneCentre, BorderLayout.CENTER);
 		*/
 		
-		try
-		{
-			img = ImageIO.read(new File("adnfond3"));
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
 		
-		bouton1.addActionListener(new BoutonListener2());
-		bouton2.addActionListener(new BoutonListener());
-		bouton3.addActionListener(new BoutonHeritage());
+		cycle.addActionListener(new BoutonListener());
+		proteine.addActionListener(new BoutonListener());
+		heritage.addActionListener(new BoutonListener());
 
 
 		this.setVisible(true);
-		//paneCentre.animer();
 	}
 	
-	class BoutonListener implements ActionListener
+	public void resetAccueil()
+	{
+		System.out.println("On réinitialise la page d'accueil");
+		global.removeAll();
+		
+		accueil = new AccueilPanel();
+		accueil.setBackground(Color.WHITE);
+		accueil.setLayout(new GridLayout(3, 1, 200, 200));
+		cycle = new BoutonMenu("Cycle cellulaire");
+		proteine = new BoutonMenu("Synthèse des protéines");
+		heritage = new BoutonMenu("Héritage génétique");
+		accueil.add(cycle);
+		accueil.add(proteine);
+		accueil.add(heritage);
+
+		global.add(accueil, BorderLayout.CENTER);
+		
+		cycle.addActionListener(new BoutonListener());
+		proteine.addActionListener(new BoutonListener());
+		heritage.addActionListener(new BoutonListener());
+		
+		this.revalidate();
+	}
+	
+	private class BoutonListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) 
 		{
 			global.removeAll();
-			global.add(new ARNPanel(), BorderLayout.CENTER);
+			
+			if(e.getSource() == cycle)
+				global.add(new CyclePanel(), BorderLayout.CENTER);
+			else if(e.getSource() == proteine)
+				global.add(new ARNPanel(), BorderLayout.CENTER);
+			else if(e.getSource() == heritage)
+				global.add(new HeritagePanel(),BorderLayout.CENTER);
+
 			global.revalidate();	
 		}
 		
 	}
 	
-	
-	class AccueilPanel extends JPanel
+	private class AccueilPanel extends JPanel
 	{
+		private Image img;
+		
+		public AccueilPanel()
+		{
+			try
+			{
+				img = ImageIO.read(new File("adnfond3"));
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
 		public void paintComponent(Graphics g)
 		{
-			super.paintComponent(g);
+			Graphics2D g2d = (Graphics2D)g;
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-			g.drawImage(img, 0, 0, 1200, 800, accueil);
+			super.paintComponent(g2d);
+
+
+			g2d.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), accueil);
 		}
 	}
-	
-	class BoutonHeritage implements ActionListener
+
+	private class BoutonMenu extends JButton implements MouseListener
 	{
-		public void actionPerformed(ActionEvent e) 
+		public BoutonMenu(String nom)
 		{
-			global.removeAll();
-			global.add(new HeritagePanel(),BorderLayout.CENTER);
+			super(nom);
 			
-			global.revalidate();	
+			this.setBorder(null);
+			this.setFocusPainted(false);
+			this.setContentAreaFilled(false);
+			this.setFont(new Font("Comic sans MS", Font.BOLD, 40));
+			this.setForeground(Color.WHITE);
+			
+			this.addMouseListener(this);
 		}
 		
-	}
-	
-	class BoutonListener2 implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e) 
+		public void mouseEntered(MouseEvent e) 
 		{
-			global.removeAll();
-			
-			global.add(new CyclePanel(), BorderLayout.CENTER);
-			
-			global.revalidate();
-				
+			this.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 		}
-	}
 
+		public void mouseExited(MouseEvent e) 
+		{
+			this.setBorder(null);
+		}
+		
+		public void mouseClicked(MouseEvent e) {}
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+	}
 	
 
 	

@@ -6,27 +6,24 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import heritage.Allele;
 import heritage.Chromatide;
 import heritage.Chromosome;
 import heritage.Gene;
 import heritage.Personne;
-import heritage.Test;
 
 
 public class HeritagePanel extends JPanel {
 	private JPanel section, contenu, menu, header, footer,tester;
 	private JButton transcription, arbres , tests; 
+	private JButton mainMenu, aPropos;
 	private Dimension dim;
 	private Personne pere;
 	
@@ -71,6 +68,7 @@ public class HeritagePanel extends JPanel {
 		header.setBackground(Color.BLUE);
 		header.setPreferredSize(new Dimension(dim.width, 40));
 		header.setLayout(new FlowLayout());
+		initNavigateur();
 		this.add(header, BorderLayout.NORTH);
 		
 		//-------------- PARTIE SECTION -----------------//
@@ -123,6 +121,32 @@ public class HeritagePanel extends JPanel {
 		
 	}
 	
+	public void initNavigateur()
+	{
+		header.setLayout(new GridLayout(1, 3, 0, 3));
+		mainMenu = new JButton("Retour à l'accueil");
+		aPropos = new JButton("À propos");
+		header.add(mainMenu);
+		header.add(aPropos);
+		
+		mainMenu.addActionListener(new NavListener());
+	}
+	
+	class NavListener implements ActionListener
+	{	
+		public void actionPerformed(ActionEvent e) 
+		{
+			if(e.getSource() == mainMenu)
+				fermer();
+			else if(e.getSource() == aPropos)
+				
+			
+			contenu.revalidate();
+			contenu.repaint();
+			//contenu.setVisible(true);
+		}
+	}
+	
 	class BoutonListener implements ActionListener {
 		private int activity =0;
 		public void actionPerformed(ActionEvent e) 
@@ -154,5 +178,12 @@ public class HeritagePanel extends JPanel {
 
 	}
 	
-
+	public void fermer()
+	{
+		Fenetre frame = (Fenetre) (SwingUtilities.getRoot(this));
+		
+		this.removeAll();
+		frame.resetAccueil();
+	}
+	
 }

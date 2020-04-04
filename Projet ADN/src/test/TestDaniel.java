@@ -25,18 +25,23 @@ public class TestDaniel
 
 		BrinADN brinComp = brin.getBrinComplem();
 		
+		System.out.println("Brin ADN : " + brin);
+		System.out.println("Br Compl : " + brinComp + "\n");
+		
 		BrinARN brinARN = brin.transcrire();
+		
+		System.out.println("Brin ARN : " + brinARN + "\n");
+		
 		brinARN.genererIntrons();
 		brinARN.retirerIntrons();
 		
 		ARNm messager = new ARNm(brinARN);
+		
+		System.out.println("ARN matu : " + brinARN + "\n");
+		System.out.println("ARN mess : " + messager);
 				
 		ChaineAA chaine = new ChaineAA(messager);
 		
-		System.out.println("Brin ADN : " + brin);
-		System.out.println("Br Compl : " + brinComp + "\n");
-		System.out.println("Brin ARN : " + brinARN + "\n");
-		System.out.println("ARN mess : " + messager);
 		System.out.println("Chaine A : " + chaine);
 		
 		Fenetre fen = new Fenetre();

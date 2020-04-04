@@ -4,22 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class CyclePanel extends JPanel
 {
 	private JPanel section, contenu, menu, header, footer;
 	private JButton mitose, meiose, zoommt; 
+	private JButton mainMenu, aPropos;
 	private Dimension dim;
 
 	public CyclePanel()
@@ -34,6 +31,7 @@ public class CyclePanel extends JPanel
 		header.setBackground(Color.BLUE);
 		header.setPreferredSize(new Dimension(dim.width, 40));
 		header.setLayout(new FlowLayout());
+		initNavigateur();
 		this.add(header, BorderLayout.NORTH);
 		
 		//-------------- PARTIE SECTION -----------------//
@@ -70,6 +68,47 @@ public class CyclePanel extends JPanel
 
 	}
 	
+	public void initMenu()
+	{
+		menu.setLayout(new GridLayout(3, 1, 0, 100));
+		mitose = new JButton("Mitose");
+		meiose = new JButton("Méiose");
+		zoommt = new JButton("Réseau du Cycle cellulaire");
+		menu.add(mitose);
+		menu.add(meiose);
+		menu.add(zoommt);	
+		
+		mitose.addActionListener(new BoutonListener());
+		meiose.addActionListener(new BoutonListener());
+		zoommt.addActionListener(new BoutonListener());
+	}
+	
+	public void initNavigateur()
+	{
+		header.setLayout(new GridLayout(1, 3, 0, 3));
+		mainMenu = new JButton("Retour à l'accueil");
+		aPropos = new JButton("À propos");
+		header.add(mainMenu);
+		header.add(aPropos);
+		
+		mainMenu.addActionListener(new NavListener());
+	}
+	
+	class NavListener implements ActionListener
+	{	
+		public void actionPerformed(ActionEvent e) 
+		{
+			if(e.getSource() == mainMenu)
+				fermer();
+			else if(e.getSource() == aPropos)
+				
+			
+			contenu.revalidate();
+			contenu.repaint();
+			//contenu.setVisible(true);
+		}
+	}
+	
 	class BoutonListener implements ActionListener
 	{
 		
@@ -96,20 +135,6 @@ public class CyclePanel extends JPanel
 		}
 	}
 	
-	public void initMenu()
-	{
-		menu.setLayout(new GridLayout(3, 1, 0, 100));
-		mitose = new JButton("Mitose");
-		meiose = new JButton("Méiose");
-		zoommt = new JButton("Réseau du Cycle cellulaire");
-		menu.add(mitose);
-		menu.add(meiose);
-		menu.add(zoommt);	
-		
-		mitose.addActionListener(new BoutonListener());
-		meiose.addActionListener(new BoutonListener());
-		zoommt.addActionListener(new BoutonListener());
-	}
 	
 	public void initCyclelisten(int activity)
 	{
@@ -119,23 +144,31 @@ public class CyclePanel extends JPanel
 		contenu.setLayout(new BorderLayout());
 		footer.setLayout(new FlowLayout());
 
-		switch (activity) {
-		
+		switch (activity) 
+		{
 		case 1 :
 			//contenu.add(mit);
 			contenu.add(new ComposantsMitose(footer));
 			break;
 		case 2 :
-			
+
 			break;
 		case 3:
-			
+
 			break;
-		//contenu.add(new ComposantsMitose(footer, activity, contenu.getPreferredSize()), BorderLayout.CENTER);
-	}
+			//contenu.add(new ComposantsMitose(footer, activity, contenu.getPreferredSize()), BorderLayout.CENTER);
+		}
 	
 	
 
 	}
+	
+	public void fermer()
+	{
+		Fenetre frame = (Fenetre) (SwingUtilities.getRoot(this));
+		
+		this.removeAll();
+		frame.resetAccueil();
 	}
+}
 
