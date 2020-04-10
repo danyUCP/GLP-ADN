@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import ARN.BrinADN;
 import ARN.BrinARN;
@@ -30,7 +31,7 @@ public class TranscriptionActivity extends JPanel
 	private BrinADN brinCodant;
 	private int brVisible;
 	private Thread activityThread;
-	private JButton play, suivant;
+	private JButton play, suivant, recommencer;
 	private boolean stop;
 	private JLabel brinL, brinComplL, brinArnL;
 	private CommentLabel comment;
@@ -38,6 +39,7 @@ public class TranscriptionActivity extends JPanel
 	private int posADN, posARN, posHelice;
 	private Image noyau, polymerase;
 	private float alpha;
+	private TranscriptionActivity pan = this;
 
 	
 	public TranscriptionActivity(JPanel commandes, Dimension dim)
@@ -107,7 +109,6 @@ public class TranscriptionActivity extends JPanel
 		this.add(comment);
 
 		
-		
 		play = new JButton("Lancer l'animation");
 		play.addActionListener(new PlayListener());
 		commandes.add(play);
@@ -116,6 +117,11 @@ public class TranscriptionActivity extends JPanel
 		suivant.setEnabled(false);
 		suivant.addActionListener(new PlayListener());
 		commandes.add(suivant);
+		
+		recommencer = new JButton("Recommencer");
+		recommencer.setEnabled(false);
+		recommencer.addActionListener(new PlayListener());
+		commandes.add(recommencer);
 
 	}
 	
@@ -183,8 +189,30 @@ public class TranscriptionActivity extends JPanel
 					e1.printStackTrace();
 				}
 			}
+			else if(e.getSource() == recommencer)
+			{
+				recommencer.setEnabled(false);
+				stop = true;
+				resetPanel();
+			}
 		}
 	}
+	
+	public void resetPanel()
+	{		
+		JPanel parent = (JPanel) SwingUtilities.getUnwrappedParent(this);
+		
+		System.out.println(parent);
+		parent.removeAll();
+		commandes.removeAll();
+		
+		parent.add(new TranscriptionActivity(commandes, dim));
+		
+		parent.revalidate();
+		parent.repaint();
+	}
+
+	
 	
 	class Animation2 implements Runnable
 	{
@@ -193,7 +221,8 @@ public class TranscriptionActivity extends JPanel
 			int precision = 8;
 			posARN = brinArnL.getX();
 			
-			comment.setComment("<html>La transcription commence avec un ARN polymérase vient diviser les deux brins d'ADN</html>", 1);
+			comment.setComment("<html>La transcription commence avec un ARN polymérase qui vient diviser les deux brins d'ADN</html>", 1);
+			recommencer.setEnabled(true);
 			
 			while(helice1.getX() > ParaADN.LARGEUR_NUCL * helice1.getDecalage() - helice1.getWidth())
 			{				
@@ -209,8 +238,8 @@ public class TranscriptionActivity extends JPanel
 				
 				if(helice1.getX() == 17 * ParaADN.LARGEUR_NUCL)
 				{
-					suivant.setEnabled(true);
-
+					suivant.setEnabled(true);					
+					
 					try 
 					{
 						pause();
@@ -276,7 +305,7 @@ public class TranscriptionActivity extends JPanel
 				
 				try
 				{
-					Thread.sleep(20);
+					Thread.sleep(30);
 				}
 				catch(Exception e)
 				{

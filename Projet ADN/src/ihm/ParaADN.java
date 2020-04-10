@@ -18,6 +18,16 @@ public class ParaADN
 	public static final int LARGEUR_NUCL = 36;
 	public static final int HAUTEUR_NUCL = 88;
 	
+	public static final int LARGEUR_ACIDE = 72;
+	public static final int HAUTEUR_ACIDE = 72;
+	
+	public static final int LARGEUR_ARNT = 3 * LARGEUR_NUCL;
+	public static final int HAUTEUR_ARNT = 3 * HAUTEUR_NUCL;
+
+	
+
+
+	
 	public static final int POS_MEDIANE = HAUTEUR_CONTENU / 2;
 
 }

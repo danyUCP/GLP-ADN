@@ -32,7 +32,7 @@ public class NuclComp extends JLabel implements MouseListener
 	private int posX;
 	private int posY;
 	private int largeur;
-	private int longueur;
+	private int hauteur;
 	private boolean orientation, orChange;
 	private Nucleotide nucl;
 	private float alpha = 1.0f;
@@ -58,9 +58,9 @@ public class NuclComp extends JLabel implements MouseListener
 		this.posX = posX;
 		this.posY = posY;
 		this.largeur = ParaADN.LARGEUR_NUCL;
-		this.longueur = ParaADN.HAUTEUR_NUCL;
+		this.hauteur = ParaADN.HAUTEUR_NUCL;
 		
-		this.setBounds(posX * largeur, posY, largeur, longueur);
+		this.setBounds(posX * largeur, posY, largeur, hauteur);
 	}
 	
 	public NuclComp(Nucleotide nucl, int posX, int posY, boolean orientation) 
@@ -84,9 +84,9 @@ public class NuclComp extends JLabel implements MouseListener
 		this.posX = posX;
 		this.posY = posY;
 		this.largeur = ParaADN.LARGEUR_NUCL;
-		this.longueur = ParaADN.HAUTEUR_NUCL;
+		this.hauteur = ParaADN.HAUTEUR_NUCL;
 		
-		this.setBounds(posX * largeur, (posY + 1) * (longueur - 13), largeur, longueur);
+		this.setBounds(posX * largeur, (posY + 1) * (hauteur - 13), largeur, hauteur);
 		//this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
 		this.addMouseListener(this);
 		
@@ -167,12 +167,12 @@ public class NuclComp extends JLabel implements MouseListener
 		repaint();
 	}
 
-	public int getPosX() 
+	public int getPosX()
 	{
 		return posX;
 	}
 
-	public int getPosY() 
+	public int getPosY()
 	{
 		return posY;
 	}
@@ -182,7 +182,7 @@ public class NuclComp extends JLabel implements MouseListener
 		this.posX = posX;
 	}
 
-	public void setPosY(int posY) 
+	public void setPosY(int posY)
 	{
 		this.posY = posY;
 	}
@@ -192,7 +192,7 @@ public class NuclComp extends JLabel implements MouseListener
 		this.setPosX(x);
 		this.setPosY(y);
 		
-		this.setLocation(posX * largeur, (posY + 1) * (longueur - 13));
+		this.setLocation(posX * largeur, (posY + 1) * (hauteur - 13));
 	}
 
 	public int getLargeur() 
@@ -202,7 +202,7 @@ public class NuclComp extends JLabel implements MouseListener
 
 	public int getLongueur() 
 	{
-		return longueur;
+		return hauteur;
 	}
 
 	public Nucleotide getNucl() 
@@ -217,7 +217,7 @@ public class NuclComp extends JLabel implements MouseListener
 
 	public void setLongueur(int longueur) 
 	{
-		this.longueur = longueur;
+		this.hauteur = longueur;
 	}
 
 	public void setNucl(Nucleotide nucl) 
@@ -231,31 +231,17 @@ public class NuclComp extends JLabel implements MouseListener
 		return nucl.getLettre() + "(" + this.posX + " ; " + this.posY + ") " + " -> " + orientation;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
+	
+	public void mouseClicked(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
 	
 	public void mouseEntered(MouseEvent e) 
 	{
 		this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 	}
 
-	@Override
 	public void mouseExited(MouseEvent e) 
 	{
 		this.setBorder(null);

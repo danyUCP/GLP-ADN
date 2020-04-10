@@ -12,10 +12,16 @@ public class AcideAmine
 	}
 	
 	
+	public String getNom() 
+	{
+		return nom;
+	}
+
 	public Codon getCodonAssocie()
 	{
 		return this.codonAssocie;
 	}
+	
 	
 	public String toString()
 	{

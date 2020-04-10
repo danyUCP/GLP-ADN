@@ -12,9 +12,9 @@ public class ChaineAA
 	private ArrayList<AcideAmine> chaine;
 	
 	public ChaineAA(ARNm messager)
-	{
-		codeGenetique = new HashMap<String, AcideAmine>();
-		remplirCodeMap();
+	{		
+		if(codeGenetique == null)
+			remplirCodeMap();
 		
 		this.chaine = new ArrayList<AcideAmine>();
 		
@@ -26,16 +26,13 @@ public class ChaineAA
 	}
 	
 	
-	public void ajouterAcide(AcideAmine acide)
-	{
-		this.chaine.add(acide);
-	}
-	
 	public void remplirCodeMap()
 	{
 		BufferedReader br = null;
 		String line = "";
 		String[] donnee = new String[2];
+		codeGenetique = new HashMap<String, AcideAmine>();
+
 		
 		try
 		{
@@ -70,7 +67,21 @@ public class ChaineAA
 	{
 		return ChaineAA.codeGenetique;
 	}
+	
+	public void ajouterAcide(AcideAmine acide)
+	{
+		this.chaine.add(acide);
+	}
+	
+	public AcideAmine getAcideAt(int index)
+	{
+		return this.chaine.get(index);
+	}
 
+	public int getTaille()
+	{
+		return this.chaine.size();
+	}
 	
 	public String toString() 
 	{

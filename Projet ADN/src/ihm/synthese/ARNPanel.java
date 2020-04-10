@@ -181,6 +181,7 @@ public class ARNPanel extends JPanel
 		
 		public ContenuPanel()
 		{
+			super(null);
 			try
 			{
 				img = ImageIO.read(new File("arnfond.png"));

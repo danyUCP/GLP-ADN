@@ -5,6 +5,7 @@ import ARN.Adenine;
 import ARN.BrinADN;
 import ARN.BrinARN;
 import ARN.ChaineAA;
+import ARN.Codon;
 import ARN.Cytosine;
 import ARN.Guanine;
 import ARN.Thymine;
@@ -43,6 +44,7 @@ public class TestDaniel
 		ChaineAA chaine = new ChaineAA(messager);
 		
 		System.out.println("Chaine A : " + chaine);
+		
 		
 		Fenetre fen = new Fenetre();
 

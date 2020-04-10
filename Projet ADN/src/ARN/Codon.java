@@ -50,6 +50,11 @@ public class Codon
 		return this.triplet[index];
 	}
 	
+	public Codon getComplementaire()
+	{
+		return new Codon(triplet[0].getComplementaireARN(), triplet[1].getComplementaireARN(), triplet[2].getComplementaireARN());
+	}
+	
 	
 	public String toString()
 	{

@@ -41,20 +41,20 @@ public class BrinARN
 		ArrayList<Integer> introns = new ArrayList<Integer>();
 		int nbNucl = getTaille(), nbIntrons = 0;
 		
-		if(nbNucl > 18)
-			nbIntrons = nbNucl - 18;
+		if(nbNucl > 21)
+			nbIntrons = nbNucl - 21;
 		else
 			nbIntrons = nbNucl % 3;
 
 		for(int i = 0 ; i < nbIntrons ; i++)
 		{
-			int n = (int) (Math.random() * (nbNucl ));
+			int n = (int) (Math.random() * (nbNucl - 3) + 3);
 			if(!introns.contains(n))
 				introns.add(n);
 			else
 			{
 				while(introns.contains(n))
-					n = (int) (Math.random() * (nbNucl));
+					n = (int) (Math.random() * (nbNucl - 3) + 3);
 				
 				introns.add(n);
 			}
