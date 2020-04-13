@@ -16,4 +16,10 @@ public class Cytosine extends Nucleotide{
 		return compl;
 	}
 
+	public void setCompl(Nucleotide compl) {
+		this.compl = compl;
+	}
+	
+	
+
 }
