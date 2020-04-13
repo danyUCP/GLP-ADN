@@ -28,8 +28,8 @@ public class Test {
 		Allele polyP= new Allele("polydactylie","P",50);
 				
 		Gene albinisme = new Gene ("albinism");
-		Allele aa= new Allele("albinism","a",20);
-		Allele aA= new Allele("albinism","A",60);
+		Allele aa= new Allele("albinism","al",20);
+		Allele aA= new Allele("albinism","Al",60);
 		
 		Chromatide c1c1 = new Chromatide(o,aA);
 		Chromatide c1c2 = new Chromatide(a,aa);
@@ -64,8 +64,8 @@ public class Test {
 		System.out.println(ovule);
 		System.out.println(test);
 		System.out.println(spermatozoide);
-		System.out.println(enfant);
-		//Fenetre fen=new Fenetre();
+		System.out.println(enfant.getPaire1().getPart1());
+		Fenetre fen=new Fenetre();
 
 		
 	

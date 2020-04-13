@@ -60,6 +60,11 @@ public class CommentLabel extends JLabel
 				this.setBounds(0, 50, 1065, 100);
 
 				break;
+			case 3:
+				
+				this.setBounds(0, 0, 1065, 100);
+				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+				break;
 		}
 		
 		this.setOpaque(true);
