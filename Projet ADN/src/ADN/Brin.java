@@ -2,12 +2,6 @@ package ADN;
 
 import java.util.ArrayList;
 
-import ADN.Brin;
-import ADN.Cytosine;
-import ADN.Guanine;
-import ADN.Nucleotide;
-import ADN.Thymine;
-
 public class Brin {
 	private ArrayList<Nucleotide> brin;
 	public static StringBuilder ch = new StringBuilder();
@@ -42,6 +36,10 @@ public class Brin {
 		
 	}
 	
+	public void ajouterNucl(Nucleotide nucl) {
+		this.brin.add(nucl);
+	}
+	
 	
 	public String toString() {
 		String str = "";
@@ -49,11 +47,6 @@ public class Brin {
 				str += this.brin.get(i) + "-";
 				
 		return str;
-	}
-	
-	
-	public void ajouterNucl(Nucleotide nucl) {
-		this.brin.add(nucl);
 	}
 	
 	public Brin getBrinCompl() {
@@ -64,5 +57,6 @@ public class Brin {
 		
 		return brCompl;
 	}
+	
 	
 }
