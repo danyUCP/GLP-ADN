@@ -37,8 +37,8 @@ public class CodonComp extends JLabel implements MouseListener
 		this.orientation = orientation;
 		this.posX = posX;
 		this.posY = posY;
-		this.largeur = 3 * triplet[0].getWidth();
-		this.longueur = triplet[0].getHeight();
+		this.largeur = 3 * ParaADN.LARGEUR_NUCL;
+		this.longueur = ParaADN.HAUTEUR_NUCL;
 		
 		this.setBounds(posX * largeur, posY + 1, largeur, longueur);
 		//System.out.println(this.getBounds());

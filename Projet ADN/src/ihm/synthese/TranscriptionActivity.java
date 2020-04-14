@@ -51,13 +51,15 @@ public class TranscriptionActivity extends JPanel
 		
 		this.dim = dim;
 		this.setSize(dim);
+		
+		//this.setBounds(0, 0, 1080, 700);
 
 		this.setBackground(Color.WHITE);
 		
 		try
 		{
-			noyau = ImageIO.read(new File("noyau.png"));
-			polymerase = ImageIO.read(new File("poly.png"));
+			noyau = ImageIO.read(new File("ressources/synthese/noyau.png"));
+			polymerase = ImageIO.read(new File("ressources/synthese/poly.png"));
 
 		}
 		catch(IOException e)
@@ -131,9 +133,29 @@ public class TranscriptionActivity extends JPanel
 		Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
+        /*
+		//g2d.scale(0.5, 0.5);
+        double zoom = 0.5;
+
+        double width = getWidth();
+        double height = getHeight();
+
+        double zoomWidth = width * zoom;
+        double zoomHeight = height * zoom;
+
+        double anchorx = (width - zoomWidth) / 2;
+        double anchory = (height - zoomHeight) / 2;
+
         
 		super.paintComponent(g2d);
-		
+
+		g2d.translate(anchorx, anchory);
+        g2d.scale(zoom, zoom);
+        */
+        
+		super.paintComponent(g2d);
+
 		g2d.setColor(new Color(255, 255, 255, 200));
 		g2d.setFont(new Font("Comic sans MS", Font.BOLD, 20));
 
@@ -144,13 +166,7 @@ public class TranscriptionActivity extends JPanel
 		g2d.drawImage(polymerase, 6 * 36 + 5, -30, 36 * 16, 88 * 8, this);
 		g2d.drawString("ARN Polymérase", 12 * 36, 4 * 88);
 
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-
-
-		
-
-		//g2d.fillOval(7 * 36 + 5, -30, 36 * 13, 88 * 8);
-		
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		
 	}
 	
 	public synchronized void relancer() throws InterruptedException
@@ -315,9 +331,10 @@ public class TranscriptionActivity extends JPanel
 			
 			comment.setComment("<html>Il doit passer par une étape appelée la maturation</html>", 0);
 			
-			while(brinArnL.getY() < ParaADN.POS_MEDIANE + 1 * 75)
+			while(brinArnL.getY() < ParaADN.HAUTEUR_NUCL * 5)
 			{
 				brinArnL.setLocation(brinArnL.getX(), brinArnL.getY() + 5);
+				repaint();
 
 				try
 				{

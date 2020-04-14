@@ -5,8 +5,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import ARN.AcideAmine;
@@ -19,9 +22,10 @@ public class ARNtManager extends Thread
 	private Codon codon;
 	private AcideAmine aciAmi;
 	private CodonComp codonLu, codonComplem;
+	private JLabel corps;
 	private AcideComp acide;
 	private ARNTComp ARNtLabel;
-	private Graphics2D g2d;
+	private boolean acidePresent;
 	
 	
 	public ARNtManager(CodonComp codonLu, AcideAmine aciAmi)
@@ -33,20 +37,23 @@ public class ARNtManager extends Thread
 		this.codon = codonLu.getCodon();
 
 		this.codonComplem = new CodonComp(codon.getComplementaire(), 0, 0, true);
-
+		this.codonComplem.removeMouseListener(codonComplem);
 		
 		this.aciAmi = aciAmi;
 		this.acide = new AcideComp(aciAmi, 0, 0);
+		this.acidePresent = true;
 		
+		this.corps = new JLabel(new ImageIcon("ressources/synthese/arnt2.png"));
+		this.corps.setBounds(0, 55, ParaADN.LARGEUR_ARNT, 150);
 		this.ARNtLabel = new ARNTComp();
-		g2d = (Graphics2D)(ARNtLabel.getGraphics());
+		this.ARNtLabel.addMouseListener(ARNtLabel);
 
 	}
 	
 	private void placerComposants()
 	{
 		acide.setLocation(ParaADN.LARGEUR_ARNT / 2 - ParaADN.LARGEUR_ACIDE / 2, 0);
-		codonComplem.setLocation(0, ParaADN.HAUTEUR_ARNT - ParaADN.HAUTEUR_NUCL);
+		codonComplem.setLocation(0, ARNtLabel.getHeight() - ParaADN.HAUTEUR_NUCL);
 	}
 	
 	
@@ -63,18 +70,36 @@ public class ARNtManager extends Thread
 		
 		//this.ARNtLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
 
-		this.ARNtLabel.add(codonComplem);
 		this.ARNtLabel.add(acide);
+		
+		this.ARNtLabel.add(corps);
+		
+		this.ARNtLabel.add(codonComplem);
 		
 		
 		System.out.println(this.codonComplem);
 		
 		return ARNtLabel;
 	}
+	
+	public void transfererAcide(ChaineLabel chaine)
+	{
+		System.out.println(this.ARNtLabel.getLocation());
+
+		chaine.ajouterAcide(this.acide);
+		chaine.setLocation(ARNtLabel.getX() + 16 - (chaine.getWidth() - ParaADN.LARGEUR_ACIDE), ARNtLabel.getY());
+
+		this.acidePresent = false;
+	}
 		
 	public ARNTComp getARNtLabel() 
 	{
 		return ARNtLabel;
+	}
+	
+	public boolean isAcidePresent() 
+	{
+		return acidePresent;
 	}
 
 	
@@ -118,7 +143,8 @@ public class ARNtManager extends Thread
 			//System.out.println(pX + " " + pY);
 
 			ARNtLabel.setLocation(pX, pY);
-			
+			ARNtLabel.repaint();
+
 			try
 			{
 				Thread.sleep(30);
@@ -158,7 +184,8 @@ public class ARNtManager extends Thread
 			//System.out.println(pX + " " + pY);
 
 			ARNtLabel.setLocation(pX, pY);
-			
+			ARNtLabel.repaint();
+
 			try
 			{
 				Thread.sleep(30);
@@ -181,7 +208,8 @@ public class ARNtManager extends Thread
 	}
 	
 	
-	private class ARNTComp extends JLabel
+	@SuppressWarnings("serial")
+	private class ARNTComp extends JLabel implements MouseListener
 	{
 		private float alpha = 1.0f;
 
@@ -192,13 +220,6 @@ public class ARNtManager extends Thread
     		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
 			super.paintComponent(g2d);
-
-
-		}
-		
-		public float getAlpha() 
-		{
-			return alpha;
 		}
 
 		public void setAlpha(float alpha) 
@@ -206,6 +227,20 @@ public class ARNtManager extends Thread
 			this.alpha = alpha;
 			codonComplem.setAlpha(this.alpha);
 			repaint();
+		}
+		
+		public void mouseClicked(MouseEvent e) {}
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+		
+		public void mouseEntered(MouseEvent e) 
+		{
+			this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+		}
+
+		public void mouseExited(MouseEvent e) 
+		{
+			this.setBorder(null);
 		}
 	}
 	

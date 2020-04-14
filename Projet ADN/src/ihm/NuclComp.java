@@ -97,11 +97,11 @@ public class NuclComp extends JLabel implements MouseListener
 	{
 		iconMap = new HashMap<String, ImageIcon>();
 		
-		iconMap.put((new Adenine()).toString(), new ImageIcon("adenine.png"));
-		iconMap.put((new Thymine()).toString(), new ImageIcon("thymine.png"));
-		iconMap.put((new Guanine()).toString(), new ImageIcon("guanine.png"));
-		iconMap.put((new Cytosine()).toString(), new ImageIcon("cytosine.png"));
-		iconMap.put((new Uracile()).toString(), new ImageIcon("uracile.png"));
+		iconMap.put((new Adenine()).toString(), new ImageIcon("ressources/nucleotides/adenine.png"));
+		iconMap.put((new Thymine()).toString(), new ImageIcon("ressources/nucleotides/thymine.png"));
+		iconMap.put((new Guanine()).toString(), new ImageIcon("ressources/nucleotides/guanine.png"));
+		iconMap.put((new Cytosine()).toString(), new ImageIcon("ressources/nucleotides/cytosine.png"));
+		iconMap.put((new Uracile()).toString(), new ImageIcon("ressources/nucleotides/uracile.png"));
 		
 		System.out.println("IconMap initialisée");	
 		System.out.println(iconMap);

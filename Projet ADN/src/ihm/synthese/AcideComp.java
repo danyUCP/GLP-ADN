@@ -17,9 +17,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.AcideAmine;
-import ARN.Nucleotide;
 import ihm.ParaADN;
 
+@SuppressWarnings("serial")
 public class AcideComp extends JLabel implements MouseListener
 {
 	private static HashMap<String, Image> acideMap;
@@ -55,31 +55,28 @@ public class AcideComp extends JLabel implements MouseListener
 		
 		try 
 		{
-			acideMap.put("Phe", ImageIO.read(new File("acides/phe.png")));
-			/*
-			acideMap.put("Leu", ImageIO.read(new File("acides/leu.png")));
-			acideMap.put("Ile", ImageIO.read(new File("acides/ile.png")));
-			acideMap.put("Met", ImageIO.read(new File("acides/met.png")));
-			acideMap.put("Val", ImageIO.read(new File("acides/val.png")));
-			acideMap.put("Ser", ImageIO.read(new File("acides/ser.png")));
-			acideMap.put("Pro", ImageIO.read(new File("acides/pro.png")));
-			acideMap.put("Thr", ImageIO.read(new File("acides/thr.png")));
-			acideMap.put("Ala", ImageIO.read(new File("acides/ala.png")));
-			*/
-			acideMap.put("Tyr", ImageIO.read(new File("acides/tyr.png")));
-			/*
-			acideMap.put("Stp", ImageIO.read(new File("acides/stp.png")));
-			acideMap.put("His", ImageIO.read(new File("acides/his.png")));
-			acideMap.put("Gln", ImageIO.read(new File("acides/gln.png")));
-			acideMap.put("Asn", ImageIO.read(new File("acides/asn.png")));
-			acideMap.put("Lys", ImageIO.read(new File("acides/lys.png")));
-			acideMap.put("Asp", ImageIO.read(new File("acides/asp.png")));
-			acideMap.put("Glu", ImageIO.read(new File("acides/glu.png")));
-			acideMap.put("Cys", ImageIO.read(new File("acides/cys.png")));
-			acideMap.put("Trp", ImageIO.read(new File("acides/trp.png")));
-			acideMap.put("Arg", ImageIO.read(new File("acides/arg.png")));
-			acideMap.put("Gly", ImageIO.read(new File("acides/gly.png")));
-			*/
+			acideMap.put("Phe", ImageIO.read(new File("ressources/acides/phe.png")));
+			acideMap.put("Leu", ImageIO.read(new File("ressources/acides/leu.png")));
+			acideMap.put("Ile", ImageIO.read(new File("ressources/acides/ile.png")));
+			acideMap.put("Met", ImageIO.read(new File("ressources/acides/met.png")));
+			acideMap.put("Val", ImageIO.read(new File("ressources/acides/val.png")));
+			acideMap.put("Ser", ImageIO.read(new File("ressources/acides/ser.png")));
+			acideMap.put("Pro", ImageIO.read(new File("ressources/acides/pro.png")));
+			acideMap.put("Thr", ImageIO.read(new File("ressources/acides/thr.png")));
+			acideMap.put("Ala", ImageIO.read(new File("ressources/acides/ala.png")));
+			acideMap.put("Tyr", ImageIO.read(new File("ressources/acides/tyr.png")));
+			acideMap.put("Stp", ImageIO.read(new File("ressources/acides/stp.png")));
+			acideMap.put("His", ImageIO.read(new File("ressources/acides/his.png")));
+			acideMap.put("Gln", ImageIO.read(new File("ressources/acides/gln.png")));
+			acideMap.put("Asn", ImageIO.read(new File("ressources/acides/asn.png")));
+			acideMap.put("Lys", ImageIO.read(new File("ressources/acides/lys.png")));
+			acideMap.put("Asp", ImageIO.read(new File("ressources/acides/asp.png")));
+			acideMap.put("Glu", ImageIO.read(new File("ressources/acides/glu.png")));
+			acideMap.put("Cys", ImageIO.read(new File("ressources/acides/cys.png")));
+			acideMap.put("Trp", ImageIO.read(new File("ressources/acides/trp.png")));
+			acideMap.put("Arg", ImageIO.read(new File("ressources/acides/arg.png")));
+			acideMap.put("Gly", ImageIO.read(new File("ressources/acides/gly.png")));
+			
 		} 
 		catch (IOException e) 
 		{
