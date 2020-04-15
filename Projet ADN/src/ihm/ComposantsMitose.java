@@ -1,6 +1,9 @@
 package ihm;
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,594 +12,580 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ComposantsMitose extends JPanel implements Runnable {
+import ADN.Chromosome;
+
+public class ComposantsMitose extends JLabel implements Runnable {
 	
-	private JPanel commandes;
-	/*----Execution---*/
-	private Thread thread;
-	private JButton play;
-	private boolean stop;
-	
-	/*---Variables des positions de centrioles---*/
-	private int centri1posX = 350;
-    private int centri1posY = 200;
-	private int centri2posX =350;
-	private int centri2posY= 200;
-	
-	/*---Variables des positions des microtubules de gauche---*/
-	private int mt1posX = 450;
-    private int mt1posY = 380;
-	private int mt2posX =450;
-	private int mt2posY= 400;
-	private int mt3posX = 450;
-    private int mt3posY = 420;
-	private int mt4posX =450;
-	private int mt4posY= 440;
-	
-	/*---Variables des positions des microtubules de droite---*/
-	private int mt1bisposX = 1050;
-    private int mt1bisposY = 380;
-	private int mt2bisposX =1050;
-	private int mt2bisposY= 400;
-	private int mt3bisposX = 1050;
-    private int mt3bisposY = 420;
-	private int mt4bisposX =1050;
-	private int mt4bisposY= 440;
-	
-	/*---Variables des postitions de la membrane cellulaire et de la cellule---*/
-	private int membraneposX = 350;
-    private int membraneposY = 200;
-    
-    private int cellposX = 350;
-    private int cellposY = 200;
-    
 	private ComposantsMitose instance=this;
+	private Telophase telophase1= new Telophase();
 	
-	public ComposantsMitose(JPanel commandes) {
+	/*----Execution---*/
+	private boolean stop;
+	private boolean suite;
+	private boolean suite2;
+	private static final int duplicadn = 2000;
+	private static final int timing = 300;
+	
+	/*---Opacité---*/
+	private float alpha = 1.0f;
+    private float delta = 0.01f;
+    
+    private float centriop = 1.0f;
+    private float centriop2 = 0.01f;
+    private float actine = 0.01f;    
+    private float decond1 = 0.01f;
+    private float decond2 = 0.01f;
+    private float membranenuc = 0.01f;
+    private float dchrom = 0.01f;
+    private float microtub = 1.0f;
+    private float indice = 0.01f;
+    
+    public Image img1;
+    public Image img2;
+    
+    public Image img3;
+    
+    public Image img4;
+    public Image img5;
+    
+    public Image img6;
+    public Image img7;
+    
+    public Image img8;
+    public Image img9;
+
+    public Image img10;
+    
+    private Font font = new Font(Font.MONOSPACED, Font.BOLD, 20);
+	
+    
+    
+    Chromosome chromosome1= new Chromosome("Chrom1");
+	//private String cellule = new JLabel("Cellule et sa membrane");
+	private JLabel microtubules = new JLabel("Microtubule");
+	private JLabel centrioles = new JLabel("Centriole");
+	private JLabel nucleaire = new JLabel("Enveloppe nucléaire");
+	
+	public ComposantsMitose() {
 		// TODO Auto-generated constructor stub
-		super(null);
-		
+		super();
+		this.chromosome1=chromosome1;
 		this.stop = true;
-		this.commandes = commandes;
-		commandes.setBackground(Color.CYAN);
-		play = new JButton("Lancement");
-		play.addActionListener(new PlayListener());
-		commandes.add(play);
+		this.suite=false;
+		this.suite2=false;	
+		this.setBounds(0, 0, 1080, 700);
 		
+
 		
-		this.cellposX=cellposX;
-		this.cellposY=cellposY;
-		this.membraneposX=membraneposX;
-		this.membraneposY=membraneposY;
-		
-		this.centri1posX=centri1posX;
-		this.centri1posY=centri1posY;
-		this.centri2posX=centri2posX;
-		this.centri2posY=centri2posY;
-		
-		this.mt1posX=mt1posX;
-		this.mt1posY=mt1posY;
-		this.mt2posX=mt2posX;
-		this.mt2posY=mt2posY;
-		this.mt3posX=mt3posX;
-		this.mt3posY=mt3posY;
-		this.mt4posX=mt4posX;
-		this.mt4posY=mt4posY;
-		
-		this.mt1bisposX=mt1bisposX;
-		this.mt1bisposY=mt1bisposY;
-		this.mt2bisposX=mt2bisposX;
-		this.mt2bisposY=mt2bisposY;
-		this.mt3bisposX=mt3bisposX;
-		this.mt3bisposY=mt3bisposY;
-		this.mt4bisposX=mt4bisposX;
-		this.mt4bisposY=mt4bisposY;
-		
-		
-		
-	}
-	
-	/*public void intAction() {
-	
-		commandes.setBackground(Color.CYAN);
-		play = new JButton("Lancement");
-		play.addActionListener(new PlayListener());
-		commandes.add(play);
-	}*/
-		
-		
-	
-	
-	/**
-	 * @return the centri1posX
-	 */
-	public int getCentri1posX() {
-		return centri1posX;
-	}
-
-	/**
-	 * @param centri1posX the centri1posX to set
-	 */
-	public void setCentri1posX(int centri1posX) {
-		this.centri1posX = centri1posX;
-	}
-
-	/**
-	 * @return the centri1posY
-	 */
-	public int getCentri1posY() {
-		return centri1posY;
-	}
-
-	/**
-	 * @param centri1posY the centri1posY to set
-	 */
-	public void setCentri1posY(int centri1posY) {
-		this.centri1posY = centri1posY;
-	}
-
-	/**
-	 * @return the centri2posX
-	 */
-	public int getCentri2posX() {
-		return centri2posX;
-	}
-
-	/**
-	 * @param centri2posX the centri2posX to set
-	 */
-	public void setCentri2posX(int centri2posX) {
-		this.centri2posX = centri2posX;
-	}
-
-	/**
-	 * @return the centri2posY
-	 */
-	public int getCentri2posY() {
-		return centri2posY;
-	}
-
-	/**
-	 * @param centri2posY the centri2posY to set
-	 */
-	public void setCentri2posY(int centri2posY) {
-		this.centri2posY = centri2posY;
-	}
-
-	/**
-	 * @return the mt1posX
-	 */
-	public int getMt1posX() {
-		return mt1posX;
-	}
-
-	/**
-	 * @param mt1posX the mt1posX to set
-	 */
-	public void setMt1posX(int mt1posX) {
-		this.mt1posX = mt1posX;
-	}
-
-	/**
-	 * @return the mt1posY
-	 */
-	public int getMt1posY() {
-		return mt1posY;
-	}
-
-	/**
-	 * @param mt1posY the mt1posY to set
-	 */
-	public void setMt1posY(int mt1posY) {
-		this.mt1posY = mt1posY;
-	}
-
-	/**
-	 * @return the mt2posX
-	 */
-	public int getMt2posX() {
-		return mt2posX;
-	}
-
-	/**
-	 * @param mt2posX the mt2posX to set
-	 */
-	public void setMt2posX(int mt2posX) {
-		this.mt2posX = mt2posX;
-	}
-
-	/**
-	 * @return the mt2posY
-	 */
-	public int getMt2posY() {
-		return mt2posY;
-	}
-
-	/**
-	 * @param mt2posY the mt2posY to set
-	 */
-	public void setMt2posY(int mt2posY) {
-		this.mt2posY = mt2posY;
-	}
-
-	/**
-	 * @return the mt3posX
-	 */
-	public int getMt3posX() {
-		return mt3posX;
-	}
-
-	/**
-	 * @param mt3posX the mt3posX to set
-	 */
-	public void setMt3posX(int mt3posX) {
-		this.mt3posX = mt3posX;
-	}
-
-	/**
-	 * @return the mt3posY
-	 */
-	public int getMt3posY() {
-		return mt3posY;
-	}
-
-	/**
-	 * @param mt3posY the mt3posY to set
-	 */
-	public void setMt3posY(int mt3posY) {
-		this.mt3posY = mt3posY;
-	}
-
-	/**
-	 * @return the mt4posX
-	 */
-	public int getMt4posX() {
-		return mt4posX;
-	}
-
-	/**
-	 * @param mt4posX the mt4posX to set
-	 */
-	public void setMt4posX(int mt4posX) {
-		this.mt4posX = mt4posX;
-	}
-
-	/**
-	 * @return the mt4posY
-	 */
-	public int getMt4posY() {
-		return mt4posY;
-	}
-
-	/**
-	 * @param mt4posY the mt4posY to set
-	 */
-	public void setMt4posY(int mt4posY) {
-		this.mt4posY = mt4posY;
-	}
-
-	/**
-	 * @return the mt1bisposX
-	 */
-	public int getMt1bisposX() {
-		return mt1bisposX;
-	}
-
-	/**
-	 * @param mt1bisposX the mt1bisposX to set
-	 */
-	public void setMt1bisposX(int mt1bisposX) {
-		this.mt1bisposX = mt1bisposX;
-	}
-
-	/**
-	 * @return the mt1bisposY
-	 */
-	public int getMt1bisposY() {
-		return mt1bisposY;
-	}
-
-	/**
-	 * @param mt1bisposY the mt1bisposY to set
-	 */
-	public void setMt1bisposY(int mt1bisposY) {
-		this.mt1bisposY = mt1bisposY;
-	}
-
-	/**
-	 * @return the mt2bisposX
-	 */
-	public int getMt2bisposX() {
-		return mt2bisposX;
-	}
-
-	/**
-	 * @param mt2bisposX the mt2bisposX to set
-	 */
-	public void setMt2bisposX(int mt2bisposX) {
-		this.mt2bisposX = mt2bisposX;
-	}
-
-	/**
-	 * @return the mt2bisposY
-	 */
-	public int getMt2bisposY() {
-		return mt2bisposY;
-	}
-
-	/**
-	 * @param mt2bisposY the mt2bisposY to set
-	 */
-	public void setMt2bisposY(int mt2bisposY) {
-		this.mt2bisposY = mt2bisposY;
-	}
-
-	/**
-	 * @return the mt3bisposX
-	 */
-	public int getMt3bisposX() {
-		return mt3bisposX;
-	}
-
-	/**
-	 * @param mt3bisposX the mt3bisposX to set
-	 */
-	public void setMt3bisposX(int mt3bisposX) {
-		this.mt3bisposX = mt3bisposX;
-	}
-
-	/**
-	 * @return the mt3bisposY
-	 */
-	public int getMt3bisposY() {
-		return mt3bisposY;
-	}
-
-	/**
-	 * @param mt3bisposY the mt3bisposY to set
-	 */
-	public void setMt3bisposY(int mt3bisposY) {
-		this.mt3bisposY = mt3bisposY;
-	}
-
-	/**
-	 * @return the mt4bisposX
-	 */
-	public int getMt4bisposX() {
-		return mt4bisposX;
-	}
-
-	/**
-	 * @param mt4bisposX the mt4bisposX to set
-	 */
-	public void setMt4bisposX(int mt4bisposX) {
-		this.mt4bisposX = mt4bisposX;
-	}
-
-	/**
-	 * @return the mt4bisposY
-	 */
-	public int getMt4bisposY() {
-		return mt4bisposY;
-	}
-
-	/**
-	 * @param mt4bisposY the mt4bisposY to set
-	 */
-	public void setMt4bisposY(int mt4bisposY) {
-		this.mt4bisposY = mt4bisposY;
-	}
-
-	/**
-	 * @return the membraneposX
-	 */
-	public int getMembraneposX() {
-		return membraneposX;
-	}
-
-	/**
-	 * @param membraneposX the membraneposX to set
-	 */
-	public void setMembraneposX(int membraneposX) {
-		this.membraneposX = membraneposX;
-	}
-
-	/**
-	 * @return the membraneposY
-	 */
-	public int getMembraneposY() {
-		return membraneposY;
-	}
-
-	/**
-	 * @param membraneposY the membraneposY to set
-	 */
-	public void setMembraneposY(int membraneposY) {
-		this.membraneposY = membraneposY;
-	}
-
-	/**
-	 * @return the cellposX
-	 */
-	public int getCellposX() {
-		return cellposX;
-	}
-
-	/**
-	 * @param cellposX the cellposX to set
-	 */
-	public void setCellposX(int cellposX) {
-		this.cellposX = cellposX;
-	}
-
-	/**
-	 * @return the cellposY
-	 */
-	public int getCellposY() {
-		return cellposY;
-	}
-
-	/**
-	 * @param cellposY the cellposY to set
-	 */
-	public void setCellposY(int cellposY) {
-		this.cellposY = cellposY;
-	}
-
-	/**
-	 * @return the instance
-	 */
-	public ComposantsMitose getInstance() {
-		return instance;
-	}
-
-	/**
-	 * @param instance the instance to set
-	 */
-	public void setInstance(ComposantsMitose instance) {
-		this.instance = instance;
-	}
+	}	
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		 Graphics2D g2d = (Graphics2D)g;
+		 
+		 /**--Ensemble des éléments Mitotique--*/		 
+		 
 		/*-------Cellule et sa Membrane--------*/
-		g.setColor(new Color(253, 208, 234));
-		g.fillOval(membraneposX-25, membraneposY-20, membraneposX+550,membraneposY+320);
-		g.setColor(new Color(197,46,163));
-	    g.drawOval(cellposX-25, cellposY-20, cellposX+550, cellposY+320);
+		g2d.setFont(font);
+		
+		/**---Indice Cellule--*/
+		g2d.setColor(Color.BLACK);
+		g2d.drawString("Cellule et sa membrane", MitosePara.membraneposX+50, MitosePara.membraneposY-50);
+		 
+		g2d.setColor(new Color(253, 208, 234));
+		g2d.fillOval(MitosePara.membraneposX-50, MitosePara.membraneposY-20, MitosePara.membraneposX+790,MitosePara.membraneposY+420);
+		g2d.setColor(new Color(197,46,163));
+	    g2d.drawOval(MitosePara.cellposX-50, MitosePara.cellposY-20, MitosePara.cellposX+790, MitosePara.cellposY+420);
 	    
 	    
-	    /*--------Centrioles au centre AU DEPART--------*/
-	    	/*----Centriole1---*/
 	    try {
-	        Image img1 = ImageIO.read(new File("centriole.png"));
-	        g.drawImage(img1, (centri1posX*2)+40, centri1posY+140,80,140, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }      
-	    
-	    	/*---Centriole2---*/
-	    try {
-	        Image img2 = ImageIO.read(new File("centriole2.png"));
-	        g.drawImage(img2, centri2posX+370, (centri2posY*2)+80, 140, 80, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }  
-	    
-	    
-	    /*---Chromosome----**/
-	    
-	 /*   try {
-	        Image img3 = ImageIO.read(new File("chro1.png"));
-	        g.drawImage(img3, mt1posX+380, mt1posY+120,100,50, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }      
-	    
 	    	
-	    try {
-	        Image img4 = ImageIO.read(new File("chro1.png"));
-	        g.drawImage(img4, mt2posX+360, mt1posY+210, 100, 50, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      } 
-	    
-	    try {
-	        Image img5 = ImageIO.read(new File("chro1.png"));
-	        g.drawImage(img5, mt3posX+360, mt1posY+280,100,50, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }      
-	    
+	    	/*---Centrioles---*/
 	    	
-	    try {
-	        Image img6 = ImageIO.read(new File("chro1.png"));
-	        g.drawImage(img6, mt4posX+380, mt1posY+370, 100, 50, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }*/
-	    
-	   /** try {
-	        Image img1 = ImageIO.read(new File("centriole.png"));
-	        g.drawImage(img1, x1+90, y1+140,80,140, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }         
-	    
-	    try {
-	        Image img1 = ImageIO.read(new File("centriole2.png"));
-	        g.drawImage(img1, x1+90, (y1*2)+80, 140, 80, this);
+	    	 img1 = ImageIO.read(new File("centriole.png"));
+	    	 img2 = ImageIO.read(new File("centriole2.png"));
+	    	
+	    	/*---Décondensé---*/
+		    
+	    	/**---Membrane nucléaire---*/
+	    	
+	    	 img3 = ImageIO.read(new File("membnucl.png"));
+	    	
+	    	/**---ADN décondensé---*/
+	    	
+	    	img4 = ImageIO.read(new File("noncond.png"));
+	    	
+	        img5 = ImageIO.read(new File("noncond2.png"));
+	      
+	        /*---Condensé---*/
+	        
+	        /**---Chromosomes gauches---*/
+	        
+	        img6 = ImageIO.read(new File("chro1mit.png"));
+	        img7 = ImageIO.read(new File("crossing1.png"));
+	        
+	        /**---Chromosomes droites---*/
+	        
+	        img8 = ImageIO.read(new File("chro2mit.png"));
+	        img9 = ImageIO.read(new File("crossing2.png"));
+	        
+	        img10 = ImageIO.read(new File("actine.png"));
+	        
 	      } catch (IOException e) {
 	        e.printStackTrace();
 	      }
 	    
-	    try {
-	        Image img1 = ImageIO.read(new File("centriole.png"));
-	        g.drawImage(img1, x1*3, y1+140,80,140, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }         
 	    
-	    try {
-	        Image img1 = ImageIO.read(new File("centriole2.png"));
-	        g.drawImage(img1, x1*3, (y1*2)+80, 140, 80, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }*/
+	    /*--------Centrioles au centre AU DEPART--------*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(centriop));
+	    g2d.drawImage(img1, MitosePara.centri1posX, MitosePara.centri1posY+140,80,140, this);
+	    g2d.drawImage(img2, MitosePara.centri2posX, (MitosePara.centri2posY*2)+180, 140, 80, this);
+	    
+	    /*---Centrioles Répliquées---*/
+	    
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(centriop2));
+	    
+	    	/**--Indice centriole--*/
+	    g2d.setColor(Color.BLACK);
+		g2d.drawString("Centrioles",MitosePara.centri1bisposX+70, MitosePara.centri2bisposY);
+	    	/**---CentriRep 2---*/
+	    g2d.drawImage(img2, MitosePara.centri2bisposX, MitosePara.centri2bisposY, 140, 80, this);
+
+	    	/**---CentriRep1---*/
+	    g2d.drawImage(img1, MitosePara.centri1bisposX, MitosePara.centri1bisposY,80,140, this);        
+	    
+	    /*---Chromosomes décondensés---*/
+	    
+	    	/**---Membrane nucleaire---*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(membranenuc));	
+	    g2d.drawImage(img3, MitosePara.decondensX, MitosePara.decondensY1, this);
+	    
+	    	/**---Décondensé 1---*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(decond1));
+	    g2d.drawImage(img4, MitosePara.decondensX+15, MitosePara.decondensY1+10, this);
+	    
+	     	/**---Décondensé répliqué---*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(decond2));	
+	    g2d.drawImage(img5, MitosePara.decondensX+5, MitosePara.decondensY2, this);
+		      
+	    		/**--Indice ADN non condensé--*/
+	    g2d.setColor(Color.BLACK);
+		g2d.drawString("ADN décondensé", MitosePara.decondensX+330, MitosePara.decondensY2);
+
+		
+	    /*---Chromosomes condensés----**/
+	       
+	    	/**---Chromosomes gauche--*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(dchrom));	    
+	    g2d.drawImage(img6, MitosePara.condensX,MitosePara.alignchro1Y,100,65, this);
+	    g2d.drawImage(img6, MitosePara.condensX2, MitosePara.condensY2,100,65, this);
+	    g2d.drawImage(img7, MitosePara.condensX3, MitosePara.condensY3,100,65, this);
+	    g2d.drawImage(img6, MitosePara.condensX, MitosePara.condensY4,100,65, this);
+	     
+	    
+	    	/**---Chromosomes droite---*/
+	    
+	    g2d.drawImage(img8, MitosePara.condensbisX,MitosePara.condensbY1,100,65, this);
+	    g2d.drawImage(img8, MitosePara.condensbisX2, MitosePara.condensbY2,100,65, this);
+	    g2d.drawImage(img9, MitosePara.condensbisX2, MitosePara.condensbY3,100,65, this);
+	    g2d.drawImage(img8, MitosePara.condensbisX, MitosePara.condensbY4,100,65, this);
+	     
 	    
 	    /*---------Microtubules schematises--------------*/
-	    	    
-	    	/*---Microtubules de gauche---*/
-	    g.drawLine(450, 380, mt1posX, mt1posY);
-	    g.drawLine(450, 400, mt2posX, mt2posY);
-	    g.drawLine(450, 420, mt3posX, mt3posY);
-	    g.drawLine(450, 440, mt4posX, mt4posY);
 	    
 	    
-	    /*---Microtubules de droite---*/
-	    g.setColor(new Color(164, 68, 234));
-	    g.drawLine(1050, 380, mt1bisposX, mt1bisposY);
-	    g.drawLine(1050, 400, mt2bisposX, mt2bisposY);
-	    g.drawLine(1050, 420, mt3bisposX, mt3bisposY);
-	    g.drawLine(1050, 440, mt4bisposX, mt4bisposY);
+	    	/**--Indice microtubule--*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(indice));	
+	    g2d.setColor(Color.BLACK);
+		g2d.drawString("Microtubules", 240, 230);
+		
+		
+	    	/**---Microtubules de gauche---*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(microtub));	
+		g2d.setColor(new Color(197,46,163));
+	    g2d.drawLine(230, 280, MitosePara.mt1posX, MitosePara.mt1posY);
+	    g2d.drawLine(230, 300, MitosePara.mt2posX, MitosePara.mt2posY);
+	    g2d.drawLine(250, 390, MitosePara.mt3posX, MitosePara.mt3posY);
+	    g2d.drawLine(250, 415, MitosePara.mt4posX, MitosePara.mt4posY);
+	    
+	    
+	    	/**---Microtubules de droite---*/
+	    g2d.drawLine(870, 280, MitosePara.mt1bisposX, MitosePara.mt1bisposY);
+	    g2d.drawLine(870, 300, MitosePara.mt2bisposX, MitosePara.mt2bisposY);
+	    g2d.drawLine(850, 390, MitosePara.mt3bisposX, MitosePara.mt3bisposY);
+	    g2d.drawLine(850, 415, MitosePara.mt4bisposX, MitosePara.mt4bisposY);
+
+	    /*------------------Anneau d'actine----------------------*/
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(actine));
+	    
+	    g2d.drawImage(img3, MitosePara.finaltmtchroX-70, MitosePara.finalmtchroY-70, this);
+	    g2d.drawImage(img3, MitosePara.finalbistmtchroX-170, MitosePara.finalbismtchroY-70, this);
+	    g2d.drawImage(img10, MitosePara.actineX+40, MitosePara.actineY-30,80,555, this);
 
 	    
+	    	/**--Indice actine---*/
+	    g2d.setColor(Color.BLACK);
+		g2d.drawString("Actine", MitosePara.actineX+40, MitosePara.actineY-50);
+	    	    	
+	    	/**--Indice nucleaire---*/
+	    g2d.setColor(Color.BLACK);
+		g2d.drawString("Enveloppe nucléire", MitosePara.finaltmtchroX-70, MitosePara.finalmtchroY-90);
 	  } 
+	
+	 
+	public void duplicCentri() {
+		centriop2=alpha;
+		indice=1.0f;
+		repaint();
 		
-	class PlayListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e) 
-		{
-			if (!stop) {
-				stop = true;
-				play.setText(" Lancement ");
-			} else {
-				stop = false;
-				play.setText(" En arrêt ");
-				thread = new Thread(instance);				
-				thread.start();
+	}
+	
+	public void adndecondens() {
+		
+			if (MitosePara.centri1posX==MitosePara.micentriX-45) {	
+				membranenuc=alpha;
+					decond1=alpha;
+					try {
+						Thread.sleep(duplicadn-1000);
+					} catch (InterruptedException e) {
+						System.out.println(e.getMessage());
+					}
 				}
+			
+			if (MitosePara.centri1posX==MitosePara.mi2centriX-60) {
+				decond2=alpha;
+				try {
+					Thread.sleep(duplicadn);
+				} catch (InterruptedException e) {
+					System.out.println(e.getMessage());
+				}
+			 }
+		}
+
+		public void prophase() {
+			decond1=0.01f;
+			decond2=0.01f;
+			dchrom=alpha;
+				
+		}
+
+		
+		public void deplCentrioles() {
+			
+			if (MitosePara.centri1posX!=MitosePara.centri1finalX) {
+				MitosePara.centri1posX=MitosePara.centri1posX-15;
+				adndecondens();
+			}
+			if (MitosePara.centri2posX!=(MitosePara.centri2finalX)) {
+				MitosePara.centri2posX+=11;							
+			}				
+			repaint();
+		}
+		
+		
+		public void deplaceChromosomes() {
+				/*---Chromosomes gauches---*/
+			if((MitosePara.condensX>MitosePara.alignchroX)) {
+				MitosePara.condensX-=10;
+			}
+			
+			if((MitosePara.condensX<=475)&&(MitosePara.condensX>=465)) {
+				membranenuc=0.01f;
+				try {
+					Thread.sleep(duplicadn-1000);
+				} catch (InterruptedException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
+			if((MitosePara.condensX2>MitosePara.alignchroX)) {
+				MitosePara.condensX2-=20;
+			}
+			
+			if((MitosePara.condensX3>MitosePara.alignchroX)) {
+				MitosePara.condensX3-=20;
+			}
+			
+				/*---Chromosomes droites---*/
+			
+			if((MitosePara.condensbisX<=MitosePara.alignchrobisX)) {
+				MitosePara.condensbisX+=10;
+			}
+			
+			if((MitosePara.condensbisX2<=MitosePara.alignchrobisX)) {
+				MitosePara.condensbisX2+=10;
+			}
+			
+				/*---Positions ordonnées---*/
+					
+					/*--gauche--*/
+			if(MitosePara.condensY2>MitosePara.alignchro2Y) {
+				MitosePara.condensY2--;
+			}			
+			
+			if (MitosePara.condensY3<MitosePara.alignchro3Y) {
+				MitosePara.condensY3+=13;				
+			}
+			
+			if(MitosePara.condensY4<MitosePara.alignchro4Y) {
+				MitosePara.condensY4+=5;
+			}
+			
+					/*--Droite--*/
+			if(MitosePara.condensbY2>MitosePara.alignchro2Y) {
+				MitosePara.condensbY2--;
+			}
+			
+			if (MitosePara.condensbY3<MitosePara.alignchro3Y) {
+				MitosePara.condensbY3+=13;				
+			}
+			
+			if(MitosePara.condensbY4<MitosePara.alignchro4Y) {
+				MitosePara.condensbY4+=5;
+			}
+			
+			
+		}
+		
+		public void migreChromosome() {
+			/*---Chromosomes gauches---*/
+			if((MitosePara.condensX>=MitosePara.finaltmtchroX)) {
+				MitosePara.condensX-=10;
+			}
+			
+			if((MitosePara.condensX2>=MitosePara.finalchroX2)) {
+				MitosePara.condensX2-=20;
+			}
+			
+			if((MitosePara.condensX3>=MitosePara.finalchroX2)) {
+				MitosePara.condensX3-=20;
+			}
+			
+			/*---Chromosomes droites---*/
+			
+			if((MitosePara.condensbisX<MitosePara.finalbistmtchroX)) {
+				MitosePara.condensbisX+=20;
+			}
+			
+			if((MitosePara.condensbisX2<MitosePara.finalbischroX2)) {
+				MitosePara.condensbisX2+=10;
+			}
+			
+			/*---Positions ordonnées---*/
+			
+				/*--Gauche--*/
+			
+			if(MitosePara.alignchro1Y<=MitosePara.finalmtchroY) {
+				MitosePara.alignchro1Y+=10;
+			}
+			
+			if(MitosePara.condensY2>=MitosePara.finalmtchroY) {
+				MitosePara.condensY2--;
+			}
+	
+			if (MitosePara.condensY3<=MitosePara.finalmtchroY2) {
+				MitosePara.condensY3+=13;				
+			}
+	
+			if(MitosePara.condensY4!=MitosePara.finalmtchroY2) {
+				MitosePara.condensY4-=10;
+			}
+
+				/*--Droite--*/
+			
+			if(MitosePara.condensbY1<MitosePara.finalbismtchroY) {
+				MitosePara.condensbY1+=10;
+			}
+			
+			if(MitosePara.condensbY2>MitosePara.finalbismtchroY) {
+				MitosePara.condensbY2--;
+			}
+	
+			if (MitosePara.condensbY3<MitosePara.finalbismtchroY2) {
+				MitosePara.condensbY3+=13;				
+			}
+	
+			if(MitosePara.condensbY4!=MitosePara.finalbismtchroY2) {
+				MitosePara.condensbY4-=10;
+			}
+			
+			/**----Passage à la télophase---*/
+			if((MitosePara.condensX<MitosePara.finaltmtchroX)) {
+				centriop=delta;
+				centriop2=delta;
+				actine=alpha;
+				stop=false;
+			}
+			
 
 		}
 		
-	}
-	 
-	
-
-
-	//class AnimationMitose implements Runnable {
+		public void retourMt() {
+			/*--Cote gauche--*/
+			if ((MitosePara.mt1posX>=MitosePara.retourmtposX) ){
+				MitosePara.mt1posX-=20;
+			}
+			if (MitosePara.mt1posY<=MitosePara.retourmtposY1) {
+				MitosePara.mt1posY+=2;
+			}
+			
+			if ((MitosePara.mt2posX>=MitosePara.retourmtposX)) {
+				MitosePara.mt2posX-=20;				
+			}
+			if (MitosePara.mt2posY>=MitosePara.retourmtposY2) {
+				MitosePara.mt2posY-=5;
+			}
+			
+			if ((MitosePara.mt3posX>=MitosePara.retourmt2posX)) {
+				MitosePara.mt3posX-=20;
+			}
+			if (MitosePara.mt3posY>=MitosePara.retourmtposY3) {
+				MitosePara.mt3posY+=2;
+			}
+			
+			if ((MitosePara.mt4posX>=MitosePara.retourmt2posX)) {
+				MitosePara.mt4posX-=20;
+			}
+			if (MitosePara.mt4posY>=MitosePara.retourmtposY4){
+				MitosePara.mt4posY-=5;
+			}
+			
+			/*--Coté droit--*/
 		
-		//private ComposantsMitose composants = new ComposantsMitose();
-		private static final int timing = 1000;
+			if ((MitosePara.mt1bisposX<MitosePara.retourmtbisposX)) {
+				MitosePara.mt1bisposX+=20;
+				
+			}
+			if (MitosePara.mt1bisposY<MitosePara.retourmtposY1) {
+				MitosePara.mt1bisposY+=2;
+			}
+			
+			if ((MitosePara.mt2bisposX<MitosePara.retourmtbisposX)) {
+				MitosePara.mt2bisposX+=20;		
+			}
+			if (MitosePara.mt2bisposY<MitosePara.retourmtposY2) {
+				MitosePara.mt2bisposY-=5;
+			}
+			
+			if ((MitosePara.mt3bisposX<MitosePara.retourmt2bisposX)) {
+				MitosePara.mt3bisposX+=20;
+			}
+			if (MitosePara.mt3bisposY<MitosePara.retourmtposY3) {
+				MitosePara.mt3bisposY+=2;
+			}
+			
+			if ((MitosePara.mt4bisposX<MitosePara.retourmt2bisposX)) {
+				MitosePara.mt4bisposX+=20;
+				
+			}
+			if (MitosePara.mt4bisposY<MitosePara.retourmtposY4) {
+				MitosePara.mt4bisposY-=5;
+			}
+
+			
+			repaint();
+		}
+		
+		public void anaphase() {
+			migreChromosome();
+			retourMt();
+		}
+		
+		public void deplaceMt() {
+			/*--Coté gauche--*/
+			if ((MitosePara.mt1posX<MitosePara.finalmtposX) ){
+				MitosePara.mt1posX+=20;
+			}
+			if (MitosePara.mt1posY>MitosePara.finalmtposY1) {
+				MitosePara.mt1posY-=2;
+			}
+			
+			if ((MitosePara.mt2posX<MitosePara.finalmtposX)) {
+				MitosePara.mt2posX+=20;				
+			}
+			if (MitosePara.mt2posY<MitosePara.finalmtposY2) {
+				MitosePara.mt2posY+=5;
+			}
+			
+			if ((MitosePara.mt3posX<MitosePara.finalmtposX)) {
+				MitosePara.mt3posX+=20;
+			}
+			if (MitosePara.mt3posY>MitosePara.finalmtposY3) {
+				MitosePara.mt3posY-=2;
+			}
+			
+			if ((MitosePara.mt4posX<MitosePara.finalmtposX)) {
+				MitosePara.mt4posX+=20;
+			}
+			if (MitosePara.mt4posY<MitosePara.finalmtposY4){
+				MitosePara.mt4posY+=5;
+			}
+			
+			/*--Coté droit--*/
+		
+			if ((MitosePara.mt1bisposX>MitosePara.finalmtbposX)) {
+				MitosePara.mt1bisposX-=20;
+				
+			}
+			if (MitosePara.mt1bisposY>MitosePara.finalmtposY1) {
+				MitosePara.mt1bisposY-=2;
+			}
+			
+			if ((MitosePara.mt2bisposX>MitosePara.finalmtbposX)) {
+				MitosePara.mt2bisposX-=20;		
+			}
+			if (MitosePara.mt2bisposY<MitosePara.finalmtposY2) {
+				MitosePara.mt2bisposY+=5;
+			}
+			
+			if ((MitosePara.mt3bisposX>MitosePara.finalmtbposX)) {
+				MitosePara.mt3bisposX-=20;
+			}
+			if (MitosePara.mt3bisposY>MitosePara.finalmtposY3) {
+				MitosePara.mt3bisposY-=2;
+			}
+			
+			if ((MitosePara.mt4bisposX>MitosePara.finalmtbposX)) {
+				MitosePara.mt4bisposX-=20;
+				
+			}
+			if (MitosePara.mt4bisposY<MitosePara.finalmtposY4) {
+				MitosePara.mt4bisposY+=5;
+			}
+			
+			/**---Permet le passage à l'anaphase---*/
+			if (MitosePara.mt1posY<=MitosePara.finalmtposY1) {
+				indice=0.01f;
+				microtub=0.01f;
+				suite=true;
+			}
+			repaint();
+			
+		}
+		
+		
 		
 		public void run() {
 			
-			while(!stop) {
-				deplcentrisome();
-				deplacemt();
+			while(stop) {
+				deplCentrioles();
+				if (MitosePara.centri2posX==MitosePara.centri2finalX) {
+					duplicCentri();
+					prophase();
+					
+					if(dchrom==alpha) {
+						deplaceChromosomes();		
+						deplaceMt();
+						if(suite==true) {
+							anaphase();
+						}
+						
+					}
+				}
 				try {
 					Thread.sleep(timing);
 				} catch (InterruptedException e) {
@@ -605,73 +594,10 @@ public class ComposantsMitose extends JPanel implements Runnable {
 				repaint();
 			
 			}
-
-		}
-		
-		public void deplcentrisome() {
-			if (centri1posX!=((centri1posX*2)-130)) {
-				/*composants.*/setCentri1posX(centri1posX-80);
-				/*composants.*/
-				
-				//centri1posX--;
-				
-			}
-			if (centri2posX!=(centri2posX+370)+165) {
-				/*composants.*/setCentri2posX(centri2posX+140);
-				/*composants.*/getCentri2posY();
-				
-				//centri2posX++;
-				
-			}
-			
-			/*composants.*/repaint();
-		}
-		
-		public void deplacemt() {
-			if ((mt1posX!=720)&&(mt1posY!=360)) {
-				/*composants.*/setMt1posX(mt1posX+20);
-				/*composants.*/setMt1posY(mt1posY-2);
-				
-			}
-			
-			if ((mt2posX!=700)&&(mt2posY!=450)) {
-				/*composants.*/setMt2posX(mt2posX+20);
-				/*composants.*/setMt2posY(mt2posY+5);
-				
-			}
-			if ((mt3posX!=700)&&(mt3posY!=520)) {
-				/*composants.*/setMt3posX(mt3posX+20);
-				/*composants.*/setMt3posY(mt3posY+10);
-			}
-			if ((mt4posX!=720)&&(mt4posY!=610)) {
-				/*composants.*/setMt4posX(mt4posX+20);
-				/*composants.*/setMt4posY(mt4posY+15);
-			}
-			
-			
-			if ((mt1bisposX!=800)&&(mt1bisposY!=360)) {
-				/*composants.*/setMt1bisposX(mt1posX-20);
-				/*composants.*/setMt1bisposY(mt1posY-2);
-			}
-			
-			if ((mt2bisposX!=820)&&(mt2bisposY!=450)) {
-				/*composants.*/setMt2bisposX(mt2posX-20);
-				/*composants.*/setMt2bisposY(mt2posY+5);
-			}
-			if ((mt3bisposX!=820)&&(mt3bisposY!=520)) {
-				/*composants.*/setMt3bisposX(mt3bisposX-20);
-				/*composants.*/setMt3bisposY(mt3bisposY+10);
-			}
-			if ((mt4bisposX!=800)&&(mt4bisposY!=610)) {
-				/*composants.*/setMt4posX(mt4bisposX-20);
-				/*composants.*/setMt4posY(mt4bisposY+15);
-			}
-			repaint();
 			
 		}
 		
 	}
-//}
 	
 
 

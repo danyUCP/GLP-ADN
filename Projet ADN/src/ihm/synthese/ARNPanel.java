@@ -78,7 +78,7 @@ public class ARNPanel extends JPanel
 
 		try 
 		{
-			fond = ImageIO.read(new File("arnfond.png"));
+			fond = ImageIO.read(new File("ressources/synthese/arnfond.png"));
 		} 
 		catch (IOException e) 
 		{
@@ -184,7 +184,7 @@ public class ARNPanel extends JPanel
 			super(null);
 			try
 			{
-				img = ImageIO.read(new File("arnfond.png"));
+				img = ImageIO.read(new File("ressources/synthese/arnfond.png"));
 			}
 			catch(IOException e)
 			{

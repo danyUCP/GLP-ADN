@@ -14,4 +14,10 @@ public class Beta extends Polymere{
 		this.comp= new Alpha();
 		return comp;
 	}
+
+	public void setComp(Polymere comp) {
+		this.comp = comp;
+	}
+	
+	
 }

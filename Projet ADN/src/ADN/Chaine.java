@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Chaine {
 
 	private ArrayList<Polymere> chain;
-	private Polymere c;
+	
 	
 	public Chaine() {
 		// TODO Auto-generated constructor stub
@@ -36,20 +36,6 @@ public class Chaine {
 		this.chain.add(mono);
 	}
 	
-	public Polymere ensemble(Polymere c) {
-		c= c;
-		return c;
-	}
-	
-	public ArrayList<Polymere> getchain() {
-		for (int i=0; i<=13 ; i++) {
-			chain.add(c);
-		}
-		return chain;
-		
-	}
-	
-	
 	public String toString() {
 		String str = "";
 		for(int i = 0 ; i < this.chain.size() ; i++)
@@ -67,10 +53,5 @@ public class Chaine {
 		return mtcomp;
 	}
 	
-	// en cours
-	/**public String mtpostanaphase() {
-		return null;
-	}*/
-
 
 }

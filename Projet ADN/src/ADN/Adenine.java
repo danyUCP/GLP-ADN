@@ -15,5 +15,10 @@ public class Adenine extends Nucleotide{
 		this.compl= new Thymine();
 		return compl;
 	}
+	
+	public void setCompl(Nucleotide compl) {
+		this.compl = compl;
+	}
+
 
 }

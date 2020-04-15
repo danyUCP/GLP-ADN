@@ -33,7 +33,9 @@ public class SyntheseActivity extends JPanel
 	private ChaineAA chaine;
 	private Dimension dim;
 	private JPanel commandes;
-	private JLabel brinARNM, ARNt;
+	private JLabel brinARNM;
+	private ChaineLabel chaineLabel;
+	private CommentLabel comment;
 	private JButton play, suivant, recommencer;
 	private boolean stop;
 	private Thread activityThread;
@@ -64,8 +66,8 @@ public class SyntheseActivity extends JPanel
 		
 		try
 		{
-			cellule = ImageIO.read(new File("cellule.png"));
-			ribosome = ImageIO.read(new File("ribosome.png"));
+			cellule = ImageIO.read(new File("ressources/synthese/cellule.png"));
+			ribosome = ImageIO.read(new File("ressources/synthese/ribosome.png"));
 		}
 		catch(IOException e)
 		{
@@ -90,21 +92,20 @@ public class SyntheseActivity extends JPanel
 		this.add(brinARNM);
 		
 		chaine = new ChaineAA(brinMess);
+		chaineLabel = new ChaineLabel();
+		this.add(chaineLabel);
 		//this.add(new AcideComp(new AcideAmine("Tyr", new Codon("UUU")), 10, 30));
 		
 		System.out.println(builder);
 		System.out.println(chaine);
 
-		/*
-		ARNtManager m0 = new ARNtManager(builder.getCodCpAt(3), chaine.getAcideAt(3));
-		ARNt = m0.creerARNt(0, 0);
-		this.add(ARNt);
-		*/
+
 
 		initManagerList();
 
-		//activityThread = new Thread(new Animation());
 
+		comment = new CommentLabel("<html>3ème étape : La Synthèse</html>", 0);
+		this.add(comment);
 		
 		play = new JButton("Lancer l'animation");
 		play.addActionListener(new PlayListener());
@@ -142,13 +143,15 @@ public class SyntheseActivity extends JPanel
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
+		//g2d.scale(0.5, 0.5);
+
 		super.paintComponent(g2d);
-		
+
 		g2d.setColor(new Color(255, 255, 255, 200));
 		g2d.setFont(new Font("Comic sans MS", Font.BOLD, 20));
 
 		g2d.drawImage(cellule, -700, -200, 2500, 2500, this);
-		g2d.drawString("Noyau", ParaADN.LARGEUR_CONTENU - 250, ParaADN.HAUTEUR_CONTENU - 100);
+		g2d.drawString("Noyau", ParaADN.LARGEUR_CONTENU - 250, ParaADN.HAUTEUR_CONTENU - 110);
 
 		g2d.setColor(new Color(64, 149, 204, 200));
 		g2d.drawString("Cellule", 10, 30);
@@ -173,7 +176,7 @@ public class SyntheseActivity extends JPanel
 	}
 
 	
-	class PlayListener implements ActionListener
+	private class PlayListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) 
 		{
@@ -207,10 +210,11 @@ public class SyntheseActivity extends JPanel
 		}
 	}
 	
-	class Animation implements Runnable
+	private class Animation implements Runnable
 	{
 		public synchronized void run()
 		{
+			comment.setComment("<html>L'assemblage des acides aminés se fait dans un ribosome, constitué de 2 sous-unités. Il se fixe sur l'ARNm</html>", 1);
 			recommencer.setEnabled(true);
 
 			while(brinARNM.getX() > ParaADN.LARGEUR_NUCL * 15)
@@ -236,7 +240,7 @@ public class SyntheseActivity extends JPanel
 			}
 			
 			suivant.setEnabled(true);					
-			
+
 			try 
 			{
 				pause();
@@ -246,6 +250,7 @@ public class SyntheseActivity extends JPanel
 				e1.printStackTrace();
 			}
 			
+			comment.setComment("<html>Pour chacun des codons, le ribosome fixe un ARNt correspondant </html>", 0);
 			
 			for(int i = 0 ; i < managerList.size() + 2 ; i++)
 			{			
@@ -277,21 +282,36 @@ public class SyntheseActivity extends JPanel
 					e.printStackTrace();
 				}
 
+				repaint();
+
 				try
 				{
 					Thread.sleep(2000);
+					
+					if(m1 != null)
+						m1.transfererAcide(chaineLabel);
+					
+					Thread.sleep(500);
 				}
 				catch(Exception e)
 				{
 					e.printStackTrace();
 				}
-		
+				
 				decalageGauche(m1, m2, null);
+				
+				if(i == 3)
+					comment.setComment("<html>Un nouvel acide aminé se joint au précédent</html>", 0);
+				if(i == 5)
+					comment.setComment("<html>La chaîne protéique s'allonge avec de nouveaux acides aminés</html>", 0);
+
+
 			}
 			
 
 			suivant.setEnabled(true);					
-			
+			comment.setComment("<html>La lecture s'interrompt lorsque le ribosome arrive à la terminaison du brin d'ARNm</html>", 1);
+
 			try 
 			{
 				pause();
@@ -302,15 +322,20 @@ public class SyntheseActivity extends JPanel
 			}
 			
 			alpha = 1.0f;
+			comment.setComment("<html>La synthèse est achevée, la protéine est relachée dans la cellule</html>", 0);
+
 			
-			while(brinARNM.getX() > -ParaADN.LARGEUR_ARNT * brinMess.getTaille())
+			while(brinARNM.getX() > -ParaADN.LARGEUR_ARNT * brinMess.getTaille() || chaineLabel.getX() < getWidth() / 2 - chaineLabel.getWidth() / 2)
 			{				
 				
 				if(alpha > 0.0)
 					alpha = alpha - 0.05f;
 				if(alpha < 0.01)
 					alpha = 0.0f;
-								
+							
+				if(chaineLabel.getX() < getWidth() / 2 - chaineLabel.getWidth() / 2)
+					chaineLabel.setLocation(chaineLabel.getX() + 9, chaineLabel.getY());
+				
 				brinARNM.setLocation(brinARNM.getX() - 9, brinARNM.getY());
 				
 				repaint();
@@ -338,6 +363,7 @@ public class SyntheseActivity extends JPanel
 				{
 					l1 = m1.getARNtLabel();
 					l1.setLocation(l1.getX() - pas, l1.getY());
+					chaineLabel.setLocation(chaineLabel.getX() - pas, chaineLabel.getY());
 				}
 
 				if(m2 != null)
@@ -353,6 +379,7 @@ public class SyntheseActivity extends JPanel
 				}
 
 				brinARNM.setLocation(brinARNM.getX() - pas, brinARNM.getY());
+				//chaineLabel.setLocation(chaineLabel.getX() - pas, chaineLabel.getY());
 
 				try
 				{

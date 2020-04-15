@@ -11,6 +11,8 @@ public abstract class Polymere {
 	
 	public abstract Polymere getComp();
 	
+	public abstract void setComp(Polymere comp);
+	
 	public String toString() {
 		return name;
 	}

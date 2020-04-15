@@ -11,6 +11,8 @@ public abstract class Nucleotide {
 	
 	public abstract Nucleotide getCompl();
 	
+	public abstract void setCompl(Nucleotide Compl);
+	
 	public String toString(){
 		return letter;
 	}
