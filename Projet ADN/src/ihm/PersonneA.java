@@ -126,6 +126,7 @@ public class PersonneA extends JLabel implements MouseListener{
 		g.fillRect(223, 170, 15, 9);
 		g.drawString(this.pers.getPaire4().getPart2().getG1().toString(), 240, 180);
 		
+		g.drawString(pers.getNom(), 135, 285);
 		
 		
 	}

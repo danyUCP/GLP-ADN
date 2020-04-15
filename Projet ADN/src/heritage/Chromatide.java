@@ -36,7 +36,7 @@ public class  Chromatide
 	/**
 	 * @return the g1
 	 */
-	public Gene getG1() {
+	public Allele getG1() {
 		return g1;
 	}
 	/**
@@ -48,7 +48,7 @@ public class  Chromatide
 	/**
 	 * @return the g2
 	 */
-	public Gene getG2() {
+	public Allele getG2() {
 		return g2;
 	}
 	/**

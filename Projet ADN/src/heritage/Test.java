@@ -57,14 +57,14 @@ public class Test {
 		
 		Personne enfant=new Personne(ovule,spermatozoide,"enfant");
 				
-	
+		Phenotype bleu=new Phenotype(blue);
 	
 		System.out.println(pere);
 		System.out.println(mere);
 		System.out.println(ovule);
 		System.out.println(test);
 		System.out.println(spermatozoide);
-		System.out.println(enfant.getPaire1().getPart1());
+		System.out.println(bleu);
 		Fenetre fen=new Fenetre();
 
 		

@@ -1,4 +1,4 @@
-package ihm.synthese;
+           package ihm.synthese;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -60,10 +60,17 @@ public class CommentLabel extends JLabel
 				this.setBounds(0, 50, 1065, 100);
 
 				break;
+
 			case 3:
 				
 				this.setBounds(0, 0, 1065, 100);
 				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+				break;
+			case 4:
+				
+				this.setBounds(0, 400, 500, 200);
+				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+				
 				break;
 		}
 		

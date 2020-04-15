@@ -112,6 +112,26 @@ public class Personne {
 		return paire3;
 	}
 	/**
+	 * @return the nom
+	 */
+	public String getNom() {
+		return nom;
+	}
+
+
+
+
+	/**
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+
+
+	/**
 	 * @param paire3 the paire3 to set
 	 */
 	public void setPaire3(Chromosome paire3) {

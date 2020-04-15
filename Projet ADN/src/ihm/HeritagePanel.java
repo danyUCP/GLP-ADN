@@ -33,13 +33,19 @@ import ihm.synthese.CommentLabel;
 public class HeritagePanel extends JPanel {
 	private JPanel section, contenu, menu, header, footer,tester;
 	private JButton arbres ,base,phenotype; 
-	private JButton mainMenu, aPropos,enfanter,Nucleotide;
+	private JButton mainMenu, aPropos,enfanter,Nucleotide,Gene,Chromosome,Homo,gpere,gmere;
 	private Dimension dim;
 	private Personne pere,mere;
 	private CommentLabel resum;
 	private CommentLabel cliquer;
 	
 	private BufferedImage adn;
+	
+	private ChromatideU test ;
+	private ChromatideU testm ;
+	
+	private Gametes ovuleU;
+	private Gametes sperU;
 	
 	public HeritagePanel() {
 		Gene groupeSanguin = new Gene("groupeSanguin");
@@ -136,15 +142,15 @@ public class HeritagePanel extends JPanel {
 		footer.add(Nucleotide);
 		Nucleotide.addActionListener(new NavListener());
 		
-		JButton Gene = new JButton("Gene / Allèle");
+		Gene = new JButton("Gene / Allèle");
 		footer.add(Gene);
 		Gene.addActionListener(new NavListener());
 		
-		JButton Chromosome = new JButton("Chromatide / Chromosome");
+		Chromosome = new JButton("Chromatide / Chromosome");
 		footer.add(Chromosome);
 		Chromosome.addActionListener(new NavListener());
 		
-		JButton Homo = new JButton("Homozygote / Hétérozygote");
+		Homo = new JButton("Homozygote / Hétérozygote");
 		footer.add(Homo);
 		Homo.addActionListener(new NavListener());
 	}
@@ -200,7 +206,115 @@ public class HeritagePanel extends JPanel {
 				contenu.repaint();
 				
 			}	
-			
+			else if(e.getSource() == enfanter) {
+				ChromatideU test = new ChromatideU(pere);
+				ChromatideU testm = new ChromatideU(mere);
+				
+				Gametes ovuleU=new Gametes();
+				Gametes sperU=new Gametes();
+				
+				GametesU ovule= new GametesU(testm,ovuleU);
+				GametesU spermatozoide= new GametesU(test,sperU);
+				
+				GametesA ov= new GametesA(ovule,320,0);
+				GametesA sp= new GametesA(spermatozoide,320,150);
+				
+				Personne enfant=new Personne(ovule,spermatozoide,"enfant");
+				PersonneA enf=new PersonneA(enfant,1,200);
+				CommentLabel expli=new CommentLabel("<html>Les deux gamètes en gris sont formés"
+						+ " grâce à la mitose en se basant sur le génome "
+						+ "respectif des deux parents</html>",1);
+				CommentLabel expliquer=new CommentLabel("<html>Le génome de l'enfant est ensuite formé: les paires de chromosomes(ici chaque"
+						+ " paire a la même couleur) se forment en mettant ensemble les chromatides des gamètes  "
+						+ "</html>",4);
+				contenu.removeAll();
+				contenu.add(expli);
+				contenu.add(expliquer);
+				contenu.add(ov);
+				contenu.add(sp);
+				contenu.add(enf);
+				
+				contenu.revalidate();
+				
+				contenu.repaint();
+				
+				
+				
+			}
+			else if(e.getSource() == gmere) {
+				contenu.removeAll();
+				PersonneA mers=new PersonneA(mere,1,100);
+				CommentLabel expliquer=new CommentLabel("<html>Cependant lors de la mitose, il peut aussi arriver qu'une division se passe mal"
+						+ " et qu'on se retrouve avec une paire de chromosome à la place d'une chromatide dans les gamètes. "
+						+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",4);
+				
+				CommentLabel expli=new CommentLabel("<html>Lors de la mitose,les divisions cellulaires successives permettent une distribution"
+						+ " aléatoire des chromatides dans les gamètes "
+						+ "</html>",1);
+				ChromatideU test = new ChromatideU(pere);
+				ChromatideU testm = new ChromatideU(mere);
+				
+				Gametes ovuleU=new Gametes();
+				Gametes sperU=new Gametes();
+				
+				GametesU ovule= new GametesU(testm,ovuleU);
+				GametesU ovule1= new GametesU(testm,ovuleU);
+				GametesU ovule2= new GametesU(testm,ovuleU);
+				GametesU ovule3= new GametesU(testm,ovuleU);
+				
+				GametesA ov= new GametesA(ovule,320,0);
+				GametesA ov1= new GametesA(ovule1,320,160);
+				GametesA ov2= new GametesA(ovule2,530,0);
+				GametesA ov3= new GametesA(ovule3,530,160);
+				contenu.add(expliquer);
+				contenu.add(expli);
+				contenu.add(ov);
+				contenu.add(ov1);
+				contenu.add(ov2);
+				contenu.add(ov3);
+				contenu.add(mers);
+				
+				contenu.revalidate();
+				
+				contenu.repaint();
+			}
+			else if(e.getSource() == gpere) {
+				contenu.removeAll();
+				PersonneA mers=new PersonneA(pere,1,100);
+				CommentLabel expliquer=new CommentLabel("<html>Cependant lors de la mitose, il peut aussi arriver qu'une division se passe mal"
+						+ " et qu'on se retrouve avec une paire de chromosome à la place d'une chromatide dans les gamètes. "
+						+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",4);
+				
+				CommentLabel expli=new CommentLabel("<html>Lors de la mitose,les divisions cellulaires successives permettent une distribution"
+						+ " aléatoire des chromatides dans les gamètes "
+						+ "</html>",1);
+				ChromatideU test = new ChromatideU(pere);
+				ChromatideU testm = new ChromatideU(mere);
+				
+				Gametes ovuleU=new Gametes();
+				Gametes sperU=new Gametes();
+				
+				GametesU spermatozoide= new GametesU(testm,sperU);
+				GametesU spermatozoide1= new GametesU(testm,sperU);
+				GametesU spermatozoide2= new GametesU(testm,sperU);
+				GametesU spermatozoide3= new GametesU(testm,sperU);
+				
+				GametesA ov= new GametesA(spermatozoide,320,0);
+				GametesA ov1= new GametesA(spermatozoide1,320,160);
+				GametesA ov2= new GametesA(spermatozoide2,530,0);
+				GametesA ov3= new GametesA(spermatozoide3,530,160);
+				contenu.add(expliquer);
+				contenu.add(expli);
+				contenu.add(ov);
+				contenu.add(ov1);
+				contenu.add(ov2);
+				contenu.add(ov3);
+				contenu.add(mers);
+				
+				contenu.revalidate();
+				
+				contenu.repaint();
+			}
 			
 		}
 	}
@@ -220,9 +334,14 @@ public class HeritagePanel extends JPanel {
 				
 				contenu.add(new Arbre(pere,mere));
 				enfanter = new JButton("faire un enfant");
+				gmere=new JButton("afficher les gamètes de la mère");
+				gpere=new JButton("afficher les gamètes du père");
 				footer.add(enfanter);
+				footer.add(gmere);
+				footer.add(gpere);
 				enfanter.addActionListener(new NavListener());
-				
+				gpere.addActionListener(new NavListener());
+				gmere.addActionListener(new NavListener());
 				
 				contenu.revalidate();
 				
@@ -244,19 +363,9 @@ public class HeritagePanel extends JPanel {
 				
 				footer.setBackground(Color.red);
 				footer.add(Nucleotide);
-				Nucleotide.addActionListener(new NavListener());
-				
-				JButton Gene = new JButton("Gene / Allèle");
 				footer.add(Gene);
-				Gene.addActionListener(new NavListener());
-				
-				JButton Chromosome = new JButton("Chromatide / Chromosome");
 				footer.add(Chromosome);
-				Chromosome.addActionListener(new NavListener());
-				
-				JButton Homo = new JButton("Homozygote / Hétérozygote");
 				footer.add(Homo);
-				Homo.addActionListener(new NavListener());
 				
 				contenu.revalidate();
 				

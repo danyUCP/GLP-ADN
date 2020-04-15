@@ -29,7 +29,7 @@ public class Arbre extends JPanel implements Runnable  {
 	
 	private CommentLabel explication;
 	
-	private JButton enfanter;
+	private JButton enfanter,bleu;
 	
 	
 	public Arbre(Personne pere,Personne mere)  {
@@ -49,24 +49,30 @@ public class Arbre extends JPanel implements Runnable  {
 		
 		Personne enfant=new Personne(ovule,spermatozoide,"enfant");
 		
-		CommentLabel resum=new CommentLabel("<html>Après avoir bien lu les bases du mécanisme de l'héritage génétique, "
-				+ "choisissez le génome des parents dans le cadre ci-dessous!  </html>",3);
+		CommentLabel resum=new CommentLabel("<html>Pour une première expérience, "
+				+ "voici le génome de deux parents  </html>",3);
 		this.add(resum);
+		CommentLabel expliquer=new CommentLabel("<html>Chaque personne produit des gamètes: ovule pour les femmes et spermatozoïde pour les hommes"
+				+ " Lors des rapports sexuels, les ovules sont fécondés par les spermatozoides, les paires de chromosomes se forment "
+				+ "en fonction de leurs positions respectifs pour obtenir le génome de l'enfant</html>",4);
+		
+		this.add(expliquer);
 
-		PersonneA pers=new PersonneA(pere,0,0);
+		PersonneA pers=new PersonneA(pere,0,100);
 		PersonneA mers=new PersonneA(mere,1,100);
 		GametesA ov= new GametesA(ovule,100,100);
 		GametesA ov1= new GametesA(ovule1,100,300);
 		
-		Choix merec=new Choix(0,100,"mere");
-		Choix perec=new Choix(360,100,"pere");
+		//Choix merec=new Choix(0,100,"mere");
+		//Choix perec=new Choix(360,100,"pere");
 		//this.add(merec);
-		//this.add(perec);
+		this.add(pers);
 		this.add(mers);
-		this.add(ov);
-		this.add(ov1);
+		//this.add(ov);
+		//this.add(ov1);
 		Dictionnaire dico=new Dictionnaire(750,230);
 		this.add(dico);
+		
 	}
 
 
