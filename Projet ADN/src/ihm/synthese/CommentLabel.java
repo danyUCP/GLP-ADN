@@ -7,6 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import ihm.MitosePara;
 import ihm.ParaADN;
 
 @SuppressWarnings("serial")
@@ -63,6 +64,15 @@ public class CommentLabel extends JLabel
 				break;
 			case 3:
 				this.setBounds(0, 0, 1065, 100);
+				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+				break;
+			case 4:
+				this.setBounds(0, 0, 350, 200);
+				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+				break;
+				
+			case 5:
+				this.setBounds(MitosePara.InitwitdhLabel2, MitosePara.InitheightLabel2, 350, 200);
 				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
 				break;
 			case 20:

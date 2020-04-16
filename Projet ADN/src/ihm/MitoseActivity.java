@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import ihm.synthese.CommentLabel;
+
 
 
 public class MitoseActivity extends JPanel {
@@ -14,7 +16,7 @@ public class MitoseActivity extends JPanel {
 	private JPanel foot;
 	private MitoseActivity instance=this;
 	
-	/*----Execution---*/
+	/**----Execution---*/
 	private Thread thread;
 	private JButton lancement;
 	private boolean stop;
@@ -23,7 +25,9 @@ public class MitoseActivity extends JPanel {
 	
 	private ComposantsMitose mitose1;
 	private Telophase telo1;
+	private CommentLabel commentaire1;
 	
+	/**constructeur instanciant le bouton, et les labels necessaire a l'animation de mitose*/
 	public MitoseActivity(JPanel foot) {
 		// TODO Auto-generated constructor stub
 		super(null);
@@ -34,6 +38,8 @@ public class MitoseActivity extends JPanel {
 		this.stop = true;
 		
 		this.add(mitose1);
+		this.commentaire1=new CommentLabel("<html>Mitose</html>", 4);
+		add(commentaire1);
 		
 		
 		this.foot = foot;
@@ -62,6 +68,7 @@ public class MitoseActivity extends JPanel {
 		
 	}
 	
+	/**Lancement de l'animation et ajout et suppression des labels (parfois runnable, donc animes)*/
 	private class Animation implements Runnable {
 
 		private Thread thread2;

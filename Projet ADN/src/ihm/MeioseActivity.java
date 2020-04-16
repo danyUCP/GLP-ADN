@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import ihm.synthese.CommentLabel;
+
 
 
 public class MeioseActivity extends JPanel {
@@ -14,7 +16,7 @@ public class MeioseActivity extends JPanel {
 	private JPanel foot;
 	private MeioseActivity instance=this;
 	
-	/*----Execution---*/
+	/**----Execution---*/
 	private Thread thread;
 	private JButton lancement;
 	private boolean stop;
@@ -27,6 +29,9 @@ public class MeioseActivity extends JPanel {
 	private ComposantsMeiose2 meiose2;
 	private Telophasesecond telo2;
 	
+	private CommentLabel commentaire1;
+	
+	/**Constructeur instanciant les labels, button, et la variable d'arrêt*/
 	public MeioseActivity(JPanel foot) {
 		// TODO Auto-generated constructor stub
 		super(null);
@@ -40,7 +45,9 @@ public class MeioseActivity extends JPanel {
 		this.stop = true;
 		
 		this.add(mitose1);
-		
+		this.commentaire1=new CommentLabel("<html>Meiose1<br> Pertmet d'avoir des cellules<br> "
+				+ "genetiquement differentes</html>", 4);
+		add(commentaire1);
 		
 		this.foot = foot;
 		foot.setBackground(Color.CYAN);
@@ -49,6 +56,7 @@ public class MeioseActivity extends JPanel {
 		foot.add(lancement);
 	}
 	
+	/**@see ActionListener*/
 	class LanceListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) 
@@ -68,6 +76,7 @@ public class MeioseActivity extends JPanel {
 		
 	}
 	
+	/**Permet lancement animation via ajout et suppression de JLabel animes*/ 
 	private class Animation implements Runnable {
 
 		private Thread thread2;
@@ -84,6 +93,7 @@ public class MeioseActivity extends JPanel {
 			}
 			
 			remove(mitose1);
+			remove(commentaire1);
 			add(telo1);
 			repaint();
 			revalidate();
@@ -93,29 +103,36 @@ public class MeioseActivity extends JPanel {
 				System.out.println(e.getMessage());
 			}
 			remove(telo1);
+			remove(commentaire1);
 			add(meiose1);
+			add(commentaire1);
+			commentaire1.setText("<html>Meiose2 cellule 1</html>");
 			thread2=new Thread(meiose1);
 			thread2.start();
 			while(thread2.isAlive()) {
 				try {
-					Thread.sleep(duplicadn-1000);
+					Thread.sleep(duplicadn+3000);
 				} catch (InterruptedException e) {
 					System.out.println(e.getMessage());
 				}
 				repaint();
 			}
 			remove(meiose1);
+			remove(commentaire1);
 			add(meiose2);
+			add(commentaire1);
+			commentaire1.setText("<html>En parallele<br> Meiose2 cellule 2</html>");
 			thread2=new Thread(meiose2);
 			thread2.start();
 			while(thread2.isAlive()) {
 				try {
-					Thread.sleep(duplicadn-1000);
+					Thread.sleep(duplicadn+3000);
 				} catch (InterruptedException e) {
 					System.out.println(e.getMessage());
 				}
 				repaint();
 			}
+			remove(meiose2);
 			add(telo2);
 			repaint();
 			revalidate(); 
