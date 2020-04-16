@@ -25,6 +25,8 @@ public class GametesA extends JLabel implements MouseListener {
 	private BufferedImage image2;
 	private BufferedImage image3;
 	
+	
+	
 	public GametesA (GametesU gam, int posX, int posY) 
 	{		
 		super();
@@ -92,7 +94,7 @@ public class GametesA extends JLabel implements MouseListener {
 			g.drawImage(image2, 70, 4,this);
 		g.setColor(Color.BLACK);
 		g.fillRect(123, 24, 15, 9);
-		g.drawString(this.gam.getN3().getG1().toString(), 115, 30);
+		g.drawString(this.gam.getN3().getG1().toString(), 110, 35);
 			
 		
 			g.drawImage(image3, 100, 20,this);

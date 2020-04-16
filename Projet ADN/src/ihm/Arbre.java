@@ -50,11 +50,11 @@ public class Arbre extends JPanel implements Runnable  {
 		Personne enfant=new Personne(ovule,spermatozoide,"enfant");
 		
 		CommentLabel resum=new CommentLabel("<html>Pour une première expérience, "
-				+ "voici le génome de deux parents  </html>",3);
+				+ "voici le génome de deux parents  </html>",10);
 		this.add(resum);
 		CommentLabel expliquer=new CommentLabel("<html>Chaque personne produit des gamètes: ovule pour les femmes et spermatozoïde pour les hommes"
 				+ " Lors des rapports sexuels, les ovules sont fécondés par les spermatozoides, les paires de chromosomes se forment "
-				+ "en fonction de leurs positions respectifs pour obtenir le génome de l'enfant</html>",4);
+				+ "en fonction de leurs positions respectifs pour obtenir le génome de l'enfant</html>",11);
 		
 		this.add(expliquer);
 

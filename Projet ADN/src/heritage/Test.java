@@ -21,7 +21,7 @@ public class Test {
 		
 		Gene yeux= new Gene ("yeux");
 		Allele blue = new Allele("yeux","b",20);
-		Allele brown = new Allele("yeux","B",60);
+		Allele brown = new Allele("yeux","M",60);
 		
 		Gene polydactylie = new Gene ("polydactylie");
 		Allele polyp= new Allele("polydactylie","p",20);

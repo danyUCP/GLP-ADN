@@ -31,7 +31,8 @@ import ihm.synthese.CommentLabel;
 
 
 public class HeritagePanel extends JPanel {
-	private JPanel section, contenu, menu, header, footer,tester;
+	private JPanel section, contenu, menu, header, footer;
+	private JLabel tester;
 	private JButton arbres ,base,phenotype; 
 	private JButton mainMenu, aPropos,enfanter,Nucleotide,Gene,Chromosome,Homo,gpere,gmere;
 	private Dimension dim;
@@ -46,6 +47,8 @@ public class HeritagePanel extends JPanel {
 	
 	private Gametes ovuleU;
 	private Gametes sperU;
+	private Color fond;
+	private Color citrouille;
 	
 	public HeritagePanel() {
 		Gene groupeSanguin = new Gene("groupeSanguin");
@@ -55,7 +58,7 @@ public class HeritagePanel extends JPanel {
 		
 		Gene yeux= new Gene ("yeux");
 		Allele blue = new Allele("yeux","b",20);
-		Allele brown = new Allele("yeux","B",60);
+		Allele brown = new Allele("yeux","M",60);
 		
 		Gene polydactylie = new Gene ("polydactylie");
 		Allele polyp= new Allele("polydactylie","p",20);
@@ -85,6 +88,8 @@ public class HeritagePanel extends JPanel {
 		this.setPreferredSize(dim);
 		this.setLayout(new BorderLayout());
 		
+		fond=new Color(151,223,198);
+		citrouille= new Color(223,109,20);
 		//-------------- PARTIE HEADER ------------------//
 		header = new JPanel();
 		header.setBackground(Color.BLUE);
@@ -95,14 +100,13 @@ public class HeritagePanel extends JPanel {
 		
 		//-------------- PARTIE SECTION -----------------//
 		section = new JPanel();
-		section.setBackground(Color.ORANGE);
 		section.setPreferredSize(new Dimension(dim.width, dim.height - (100)));
 		section.setLayout(new BorderLayout());
 		this.add(section, BorderLayout.CENTER);
 		
 		//-------------- PARTIE MENU --------------------//
 		menu = new JPanel();
-		menu.setBackground(Color.DARK_GRAY);
+		menu.setBackground(Color.BLUE);
 		menu.setPreferredSize(new Dimension(1200 / 10, dim.height - (100)));
 		menu.setLayout(new FlowLayout());
 		
@@ -112,14 +116,14 @@ public class HeritagePanel extends JPanel {
 		
 		//-------------- PARTIE CONTENU -----------------//
 		contenu = new JPanel();
-		contenu.setBackground(Color.green);
+		contenu.setBackground(fond);
 		contenu.setPreferredSize(new Dimension(9 * (1200 / 10), dim.height - (100)));
 		contenu.setLayout(null);
 		section.add(contenu, BorderLayout.CENTER);
 		
 		this.resum=new CommentLabel("<html>Le génome, ou rarement génôme, est l'ensemble du matériel génétique d'une espèce "
 				+ "codé dans son acide désoxyribonucléique (ADN). Cette partie permet de comprendre comment le génome d'une "
-				+ "personne est hérité et par quels critères celui-ci est exprimé sur le phénotype</html>",3);
+				+ "personne est hérité et par quels critères celui-ci est exprimé sur le phénotype</html>",10);
 		contenu.add(resum);
 		
 		this.cliquer=new CommentLabel("<html>Cliquer ci-dessous pour mieux comprendre les concepts </html>",0);
@@ -133,7 +137,7 @@ public class HeritagePanel extends JPanel {
 		
 		//-------------- PARTIE FOOTER ------------------//
 		footer = new JPanel();
-		footer.setBackground(Color.red);
+		footer.setBackground(citrouille);
 		footer.setPreferredSize(new Dimension(this.getPreferredSize().width, 60));
 		footer.setLayout(new FlowLayout());
 		this.add(footer, BorderLayout.SOUTH);
@@ -169,6 +173,7 @@ public class HeritagePanel extends JPanel {
 		
 		arbres.addActionListener(new BoutonListener());
 		base.addActionListener(new BoutonListener());
+		phenotype.addActionListener(new BoutonListener());
 	}
 	public void arbres(int activity) {
 		
@@ -199,6 +204,7 @@ public class HeritagePanel extends JPanel {
 				JLabel adn = new JLabel( new ImageIcon( "adn.png"));
 				contenu.removeAll();
 				contenu.setLayout(new BorderLayout());
+				contenu.add(resum);
 				contenu.add(cliquer);
 				contenu.add(adn);
 				contenu.revalidate();
@@ -216,20 +222,23 @@ public class HeritagePanel extends JPanel {
 				GametesU ovule= new GametesU(testm,ovuleU);
 				GametesU spermatozoide= new GametesU(test,sperU);
 				
-				GametesA ov= new GametesA(ovule,320,0);
+				GametesA ov= new GametesA(ovule,400,0);
 				GametesA sp= new GametesA(spermatozoide,320,150);
 				
 				Personne enfant=new Personne(ovule,spermatozoide,"enfant");
-				PersonneA enf=new PersonneA(enfant,1,200);
+				PersonneA enf=new PersonneA(enfant,100,300);
 				CommentLabel expli=new CommentLabel("<html>Les deux gamètes en gris sont formés"
 						+ " grâce à la mitose en se basant sur le génome "
 						+ "respectif des deux parents</html>",1);
 				CommentLabel expliquer=new CommentLabel("<html>Le génome de l'enfant est ensuite formé: les paires de chromosomes(ici chaque"
 						+ " paire a la même couleur) se forment en mettant ensemble les chromatides des gamètes  "
-						+ "</html>",4);
+						+ "</html>",11);
+				PersonneA pereaa=new PersonneA(pere,0,0);
 				contenu.removeAll();
 				contenu.add(expli);
 				contenu.add(expliquer);
+				
+				//contenu.add(pereaa);
 				contenu.add(ov);
 				contenu.add(sp);
 				contenu.add(enf);
@@ -246,11 +255,11 @@ public class HeritagePanel extends JPanel {
 				PersonneA mers=new PersonneA(mere,1,100);
 				CommentLabel expliquer=new CommentLabel("<html>Cependant lors de la mitose, il peut aussi arriver qu'une division se passe mal"
 						+ " et qu'on se retrouve avec une paire de chromosome à la place d'une chromatide dans les gamètes. "
-						+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",4);
+						+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",11);
 				
 				CommentLabel expli=new CommentLabel("<html>Lors de la mitose,les divisions cellulaires successives permettent une distribution"
-						+ " aléatoire des chromatides dans les gamètes "
-						+ "</html>",1);
+						+ " aléatoire des chromatides dans les gamètes. Cette distribution aléatoire entraîne une multitude de combinaisons possibles "
+						+ " lors le la création des gamètes: ceci est la base de la diversité au sein des espèces</html>",12);
 				ChromatideU test = new ChromatideU(pere);
 				ChromatideU testm = new ChromatideU(mere);
 				
@@ -283,11 +292,11 @@ public class HeritagePanel extends JPanel {
 				PersonneA mers=new PersonneA(pere,1,100);
 				CommentLabel expliquer=new CommentLabel("<html>Cependant lors de la mitose, il peut aussi arriver qu'une division se passe mal"
 						+ " et qu'on se retrouve avec une paire de chromosome à la place d'une chromatide dans les gamètes. "
-						+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",4);
+						+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",11);
 				
 				CommentLabel expli=new CommentLabel("<html>Lors de la mitose,les divisions cellulaires successives permettent une distribution"
-						+ " aléatoire des chromatides dans les gamètes "
-						+ "</html>",1);
+						+ " aléatoire des chromatides dans les gamètes. Cette distribution aléatoire entraîne une multitude de combinaisons possibles "
+						+ " lors le la création des gamètes: ceci est la base de la diversité au sein des espèces</html>",12);
 				ChromatideU test = new ChromatideU(pere);
 				ChromatideU testm = new ChromatideU(mere);
 				
@@ -314,6 +323,9 @@ public class HeritagePanel extends JPanel {
 				contenu.revalidate();
 				
 				contenu.repaint();
+footer.revalidate();
+				
+				footer.repaint();
 			}
 			
 		}
@@ -325,8 +337,6 @@ public class HeritagePanel extends JPanel {
 		{
 			if(e.getSource()==arbres) {
 				activity=1;
-				contenu.setBackground(Color.WHITE);
-				footer.setBackground(Color.LIGHT_GRAY);
 				contenu.removeAll();
 				footer.removeAll();
 				contenu.setLayout(new BorderLayout());
@@ -346,13 +356,14 @@ public class HeritagePanel extends JPanel {
 				contenu.revalidate();
 				
 				contenu.repaint();
-			
+				footer.revalidate();
+				
+				footer.repaint();
 				
 			}
 			else if(e.getSource()==base) {
 				activity=2;
 				contenu.removeAll();
-				contenu.setBackground(Color.green);
 				contenu.add(resum);
 				contenu.add(cliquer);
 				Dictionnaire dico=new Dictionnaire(10,140);
@@ -361,24 +372,53 @@ public class HeritagePanel extends JPanel {
 				contenu.setLayout(new BorderLayout());
 				footer.setLayout(new FlowLayout());
 				
-				footer.setBackground(Color.red);
 				footer.add(Nucleotide);
 				footer.add(Gene);
 				footer.add(Chromosome);
 				footer.add(Homo);
 				
+				footer.revalidate();
+				
+				footer.repaint();
 				contenu.revalidate();
 				
 				contenu.repaint();
 				
+			}
+			else if(e.getSource()== phenotype) {
+				activity=3;
+				contenu.removeAll();
+				footer.removeAll();
+				contenu.setLayout(new BorderLayout());
+				footer.setLayout(new FlowLayout());
+				CommentLabel explip=new CommentLabel("<html>Le phénotype répresente l'expression visuelle du génome. C'est l'ensemble des "
+						+ "caractères spécifiques à une personne tel que la couleur des cheveux, des yeux, la taille et bien d'autres. "
+						+ " </html>",12);
+				
+				contenu.add(explip);
+				
+				contenu.revalidate();
+				
+				contenu.repaint();
+				footer.revalidate();
+				
+				footer.repaint();
 			}
 			
 		}
 	}
 	
 	public void paintComponent(Graphics g) {
+		try 
+		{
+			adn = ImageIO.read(new File("ressources/synthese/arnfond.png"));
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 		
-	     g.drawImage(adn, 500, 100, contenu);
+	     g.drawImage(adn, 0,0, contenu);
 	}
 	
 	public void fermer()
