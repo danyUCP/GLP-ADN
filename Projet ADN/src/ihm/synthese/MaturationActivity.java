@@ -21,6 +21,7 @@ import javax.swing.SwingUtilities;
 import ARN.ARNm;
 import ARN.BrinADN;
 import ARN.BrinARN;
+import ARN.ModelSynthese;
 import ihm.NuclComp;
 import ihm.ParaADN;
 
@@ -30,7 +31,7 @@ public class MaturationActivity extends JPanel
 	private BrinARN brinArn;
 	private Dimension dim;
 	private JPanel commandes;
-	private JLabel brin, test;
+	private JLabel brin;
 	private CommentLabel comment;
 	private JButton play, suivant, recommencer;
 	private boolean mature, stop;
@@ -38,24 +39,19 @@ public class MaturationActivity extends JPanel
 	private ARNmBuilder builder, builder2;
 	private Image noyau;
 	private int noyX = -300;
+	private ModelSynthese modele;
 
 	
-	public MaturationActivity(JPanel commandes, Dimension dim)
+	public MaturationActivity(ModelSynthese modele, JPanel commandes)
 	{
 		super(null);
+		this.modele = modele;
 		this.commandes = commandes;
 		
 		this.mature = false;
 		this.stop = true;
 		
-
-		this.dim = dim;
-		this.setSize(dim);
-		System.out.println(this.getBounds());
-
-		System.out.println(dim);
-
-
+		this.setBounds(0, 0, ParaADN.LARGEUR_CONTENU, ParaADN.HAUTEUR_CONTENU);
 		this.setBackground(Color.WHITE);
 		
 		try
@@ -67,8 +63,8 @@ public class MaturationActivity extends JPanel
 			e.printStackTrace();
 		}
 		
+		this.modele.transcription();
 		maturation();
-
 	}
 	
 	public void maturation()
@@ -76,10 +72,9 @@ public class MaturationActivity extends JPanel
 		commandes.setBackground(new Color(204, 204, 255));
 		
 		
-		brinArn = new BrinADN("TACTGATGCTccaccagccgtGATAACG").transcrire();
+		brinArn = modele.getARNmature();
 		
 		builder = new ARNmBuilder(brinArn, false);
-		
 		brin = builder.creerARN(1, 2);
 		this.add(brin);
 		
@@ -152,9 +147,13 @@ public class MaturationActivity extends JPanel
 		
 		if(!mature)
 		{
+			//modele.maturation();
+
+			//brinArn = modele.getARNmature();
 			brinArn.genererIntrons();
-			System.out.println(brinArn);
 			mature = true;
+			System.out.println(brinArn);
+
 		}
 		
 		comment.setComment("<html>La maturation est l'étape au cours de laquelle l'ARN devient ARNm, le brin est alors amputé de ses introns</html>", 1);
@@ -186,13 +185,11 @@ public class MaturationActivity extends JPanel
 	
 	public void epissage()
 	{
-		System.out.println(brinArn);
 		brinArn.retirerIntrons();
-		System.out.println(brinArn);
 
 		comment.setComment("<html>Les séquences non-codantes (les introns) sont retirées pour ne garder que les séquences codantes (les exons)</html>", 1);
 
-		int echelleX = ((dim.width / 2 - brinArn.getTaille() * ParaADN.LARGEUR_NUCL / 2) - brin.getX()) / 12;
+		int echelleX = ((ParaADN.LARGEUR_CONTENU / 2 - brinArn.getTaille() * ParaADN.LARGEUR_NUCL / 2) - brin.getX()) / 12;
 		int echelleY = (brin.getY() - 330) / 10;
 		
 		Thread t = new Thread(new LigatureAnimation());
@@ -222,7 +219,6 @@ public class MaturationActivity extends JPanel
 		brin.setLocation(bx, by);
 		add(brin);
 		repaint();
-		System.out.println(brin);
 
 	}
 	
@@ -301,7 +297,6 @@ public class MaturationActivity extends JPanel
 	{
 		public void run() 
 		{
-			System.out.println(builder.getTaille());
 			builder.retirerNuclCp();
 			
 			while(builder.getNuclCpAt(builder.getTaille() - 1).getX() > builder.getTaille() * ParaADN.LARGEUR_NUCL)
@@ -325,16 +320,12 @@ public class MaturationActivity extends JPanel
 				}
 			}
 			
-			
-			System.out.println(builder);
-
 			for(int i = 0 ; i < builder.getTaille() ; i++)
 			{
 				NuclComp tmp = builder.getNuclCpAt(i);
 				
 				tmp.setLocation(i * ParaADN.LARGEUR_NUCL, tmp.getY());
 			}
-			
 		}	
 	}
 	
@@ -362,7 +353,7 @@ public class MaturationActivity extends JPanel
 		parent.removeAll();
 		commandes.removeAll();
 		
-		parent.add(new MaturationActivity(commandes, dim));
+		parent.add(new MaturationActivity(modele, commandes));
 		
 		parent.revalidate();
 		parent.repaint();

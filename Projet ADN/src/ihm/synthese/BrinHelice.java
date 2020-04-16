@@ -230,6 +230,7 @@ public class BrinHelice extends JLabel
 		if(this.nuclList == null)
 			return;
 		
+		/*
 		for(i = 0 ; i < getTaille() - 3 ; i += 3)
 		{
 			if(pos >= -i && (pos < (6 - i) || pos >= (15 - i)))
@@ -237,6 +238,28 @@ public class BrinHelice extends JLabel
 				
 				n1 = getNuclCpAt((i + 3) - ((i + pos) % 3) - 1);
 				n2 = getNuclCpAt((i + 3) - ((i + pos) % 3));
+				
+				System.out.println("Dessine lien " + ((i + 3) - ((i + pos) % 3)) + "/" + getTaille() + " : " + n1 + " --- " + n2);
+
+				
+				x1 = n1.getX() + ParaADN.LARGEUR_NUCL;
+				y1 = n1.getY() + (n1.getOrientation() ? 3 : 85);
+				x2 = n2.getX();
+				y2 = n2.getY() + (n2.getOrientation() ? 3 : 85);
+				
+				//g.drawArc(x1 - (x1+x2) / 2, y1 - 88, (x1+x2) / 2, (y1+y2) / 2, 36, 88);
+				g.drawLine(x1, y1, x2, y2);
+			}	
+		}
+		*/
+		
+		for(i = 0 ; i < getTaille() - 1 ; i += 3)
+		{
+			if(pos >= -i && (pos < (6 - i) || pos >= (15 - i)))
+			{
+				
+				n1 = getNuclCpAt((i + 3) - ((i + pos) % 3) - 1);
+				n2 = getNuclCpAt((i + 3) - ((i + pos) % 3) < getTaille() ? (i + 3) - ((i + pos) % 3) : (i + 3) - ((i + pos) % 3) - 1);
 				
 				//System.out.println("Dessine lien " + ((i + 3) - ((i + pos) % 3)) + "/" + getTaille() + " : " + n1 + " --- " + n2);
 
@@ -250,6 +273,32 @@ public class BrinHelice extends JLabel
 				g.drawLine(x1, y1, x2, y2);
 			}	
 		}
+		
+		/*
+		for(i = 0 ; i < getTaille() - 1 ; i++)
+		{
+			if((pos < (6 - i) || pos >= (15 - i)))
+			{
+				//if(i + pos)
+				int j = i + 1;
+				n1 = getNuclCpAt(i);
+				n2 = getNuclCpAt(j);
+
+				System.out.println("Dessine lien " + ((i + 3) - ((i + pos) % 3)) + "/" + getTaille() + " : " + n1 + " --- " + n2);
+
+
+				x1 = n1.getX() + ParaADN.LARGEUR_NUCL;
+				y1 = n1.getY() + (n1.getOrientation() ? 3 : 85);
+				x2 = n2.getX();
+				y2 = n2.getY() + (n2.getOrientation() ? 3 : 85);
+
+				//g.drawArc(x1 - (x1+x2) / 2, y1 - 88, (x1+x2) / 2, (y1+y2) / 2, 36, 88);
+				g.drawLine(x1, y1, x2, y2);
+			}
+			
+		}*/
+		
+		
 	}
 	
 	public NuclComp getNuclCpAt(int index)

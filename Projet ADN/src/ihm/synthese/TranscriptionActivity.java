@@ -21,39 +21,52 @@ import javax.swing.SwingUtilities;
 
 import ARN.BrinADN;
 import ARN.BrinARN;
+import ARN.ModelSynthese;
 import ihm.ParaADN;
 
+/**
+ * TranscriptionActivity est la classe qui gère le panel de l'activité Transcription
+ * 
+ * @author Daniel
+ */
 @SuppressWarnings("serial")
 public class TranscriptionActivity extends JPanel
 {
-	private Dimension dim;
 	private JPanel commandes;
-	private BrinADN brinCodant;
-	private int brVisible;
 	private Thread activityThread;
-	private JButton play, suivant, recommencer;
-	private boolean stop;
-	private JLabel brinL, brinComplL, brinArnL;
-	private CommentLabel comment;
+	
+	//Elements graphiques de la transcription
 	private BrinHelice helice1, helice2;
-	private int posADN, posARN, posHelice;
+	private JLabel brinArnL;
+	private CommentLabel comment;
+	private JButton play, suivant, recommencer;
 	private Image noyau, polymerase;
+	
+	//Données necessaires à l'animation
+	private int posARN, posHelice, brVisible;
 	private float alpha;
-	private TranscriptionActivity pan = this;
+	private boolean stop;
+
+	//Données du noyau
+	private BrinADN brinCodant;
+	private ModelSynthese modele;
 
 	
-	public TranscriptionActivity(JPanel commandes, Dimension dim)
+	/**
+	 * Constructeur de la classe TranscriptionActivity.
+	 * 
+	 * Ce construteur définit les dimensions du panel, met à jour le modèle et démarre l'activité
+	 */
+	public TranscriptionActivity(ModelSynthese modele, JPanel commandes)
 	{
 		super(null);
+		this.modele = modele;
 		this.commandes = commandes;
+		
 		this.stop = true;
 		this.alpha = 0.0f;
 		
-		this.dim = dim;
-		this.setSize(dim);
-		
-		//this.setBounds(0, 0, 1080, 700);
-
+		this.setBounds(0, 0, ParaADN.LARGEUR_CONTENU, ParaADN.HAUTEUR_CONTENU);
 		this.setBackground(Color.WHITE);
 		
 		try
@@ -67,18 +80,22 @@ public class TranscriptionActivity extends JPanel
 			e.printStackTrace();
 		}
 		
+		this.modele.transcription();
 		transcription();
 	}
 	
 
+	/**
+	 * Cette méthode est la méthode principale du panel. Elle definit la disposition des éléments graphiques de l'activité
+	 * et initialise les commandes necéssaires au déclenchement des animations
+	 */
 	public void transcription()
 	{
 		commandes.setBackground(new Color(204, 204, 255));
 		
-		//TACTGATGCTccaccagccgtGATAACGTA
-		this.brinCodant = new BrinADN("TACTGATGCTccaccagccgtGATAACG");
-		posHelice = 24;
+		this.brinCodant = modele.getBrinADN();
 		
+		posHelice = 24;
 		helice1 = new BrinHelice(brinCodant, true);
 		helice1.creerHelice(posHelice, 0);
 		this.add(helice1);
@@ -87,17 +104,7 @@ public class TranscriptionActivity extends JPanel
 		helice2.creerHelice(posHelice, 0);	
 		this.add(helice2);
 		
-
-		/*
-		BrinBuilder builder = new BrinBuilder(brinCodant);
-		brinL = builder.creerBrin(3, -2);
-		this.add(brinL);
-		
-		builder = new BrinBuilder(brinCodant.getBrinComplem(), false);
-		brinComplL = builder.creerBrin(3, 1);
-		this.add(brinComplL);
-		*/
-		BrinARN brinArn = brinCodant.transcrire();
+		BrinARN brinArn = modele.getBrinARN();
 		
 		ARNmBuilder builder2 = new ARNmBuilder(brinArn, false);
 		brinArnL = builder2.creerARN(14, -3);
@@ -105,54 +112,21 @@ public class TranscriptionActivity extends JPanel
 
 		brinArnL.setSize(brVisible * ParaADN.LARGEUR_NUCL, ParaADN.HAUTEUR_NUCL);
 			
-		System.out.println("ARN visible : " + brinArnL.getBounds());
 		
 		comment = new CommentLabel("<html>1ère étape : La Transcription</html>", 0);
 		this.add(comment);
-
 		
-		play = new JButton("Lancer l'animation");
-		play.addActionListener(new PlayListener());
-		commandes.add(play);
-		
-		suivant = new JButton("Suivant");
-		suivant.setEnabled(false);
-		suivant.addActionListener(new PlayListener());
-		commandes.add(suivant);
-		
-		recommencer = new JButton("Recommencer");
-		recommencer.setEnabled(false);
-		recommencer.addActionListener(new PlayListener());
-		commandes.add(recommencer);
-
+		initCommandes();
 	}
 	
-	
+	/**
+	 * Dessine les éléments de fond, images et légende, du panel
+	 */
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
-        /*
-		//g2d.scale(0.5, 0.5);
-        double zoom = 0.5;
-
-        double width = getWidth();
-        double height = getHeight();
-
-        double zoomWidth = width * zoom;
-        double zoomHeight = height * zoom;
-
-        double anchorx = (width - zoomWidth) / 2;
-        double anchory = (height - zoomHeight) / 2;
-
-        
-		super.paintComponent(g2d);
-
-		g2d.translate(anchorx, anchory);
-        g2d.scale(zoom, zoom);
-        */
         
 		super.paintComponent(g2d);
 
@@ -169,18 +143,37 @@ public class TranscriptionActivity extends JPanel
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		
 	}
 	
-	public synchronized void relancer() throws InterruptedException
-	{
-		notify();
-	}
 	
-	public synchronized void pause() throws InterruptedException
-	{
-		wait();
-	}
+	//------------------------------- GESTION COMMANDES ------------------------------//
 
+	/**
+	 * Cette méthode initialise les commandes necéssaires au déclenchement des animations
+	 */
+	public void initCommandes()
+	{
+		play = new JButton("Lancer l'animation");
+		play.addActionListener(new PlayListener());
+		commandes.add(play);
+		
+		suivant = new JButton("Suivant");
+		suivant.setEnabled(false);
+		suivant.addActionListener(new PlayListener());
+		commandes.add(suivant);
+		
+		recommencer = new JButton("Recommencer");
+		recommencer.setEnabled(false);
+		recommencer.addActionListener(new PlayListener());
+		commandes.add(recommencer);
+	}
 	
-	class PlayListener implements ActionListener
+	/**
+	 * Ecouteur associé aux boutons "play", "suivant" et "recommencer" du panneau de commandes.
+	 *
+	 * Le bouton "play" démarre le thread contenant les animations de l'activité.
+	 * Le bouton "suivant" relance le thread lorsque celui-ci est en pause.
+	 * Le bouton "recommencer" permet de redémarrer l'activité
+	 */
+	private class PlayListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) 
 		{
@@ -189,7 +182,7 @@ public class TranscriptionActivity extends JPanel
 				if(stop)
 				{				
 					stop = false;
-					activityThread = new Thread(new Animation2());
+					activityThread = new Thread(new Animation());
 					activityThread.start();
 				}
 			}
@@ -214,23 +207,23 @@ public class TranscriptionActivity extends JPanel
 		}
 	}
 	
-	public void resetPanel()
-	{		
-		JPanel parent = (JPanel) SwingUtilities.getUnwrappedParent(this);
-		
-		System.out.println(parent);
-		parent.removeAll();
-		commandes.removeAll();
-		
-		parent.add(new TranscriptionActivity(commandes, dim));
-		
-		parent.revalidate();
-		parent.repaint();
+	public synchronized void relancer() throws InterruptedException
+	{
+		notify();
+	}
+	
+	public synchronized void pause() throws InterruptedException
+	{
+		wait();
 	}
 
 	
+	//------------------------------- ANIMATIONS DE L'ACTIVITÉ ------------------------------//
 	
-	class Animation2 implements Runnable
+	/**
+	 * Cette classe interne gère tous les traitements nécessaires aux animations de l'activité
+	 */
+	private class Animation implements Runnable
 	{
 		public void run() 
 		{
@@ -240,6 +233,10 @@ public class TranscriptionActivity extends JPanel
 			comment.setComment("<html>La transcription commence avec un ARN polymérase qui vient diviser les deux brins d'ADN</html>", 1);
 			recommencer.setEnabled(true);
 			
+			/* 
+			 * Apparition progressive de l'ARN Polymérase et déplacement des 2 hélices de l'ADN jusqu'à son niveau.
+			 * Les deux hélices continuent leur déplacement vers la gauche tandis que le brin d'ARN se forme progressivement
+			 */
 			while(helice1.getX() > ParaADN.LARGEUR_NUCL * helice1.getDecalage() - helice1.getWidth())
 			{				
 				helice1.deplacerGauche(precision);
@@ -250,7 +247,6 @@ public class TranscriptionActivity extends JPanel
 				
 				repaint();
 				
-				//System.out.println(posARN + " " + helice1.getDecalage());
 				
 				if(helice1.getX() == 17 * ParaADN.LARGEUR_NUCL)
 				{
@@ -273,7 +269,6 @@ public class TranscriptionActivity extends JPanel
 					brVisible = (posARN - helice1.getX()) / ParaADN.LARGEUR_NUCL;
 					brinArnL.setSize(brVisible * ParaADN.LARGEUR_NUCL, ParaADN.HAUTEUR_NUCL);
 					brinArnL.setLocation(brinArnL.getX() - (ParaADN.LARGEUR_NUCL / precision), brinArnL.getY());
-					//System.out.println(brVisible);
 					
 					if(brVisible == brinCodant.getTaille())
 						comment.setComment("<html>... afin de former le brin d'ARN messager correspondant au gène transcrit</html>", 1);
@@ -292,7 +287,6 @@ public class TranscriptionActivity extends JPanel
 			}
 			
 			posARN = brinArnL.getX();
-			System.out.println(alpha);
 			
 			suivant.setEnabled(true);
 
@@ -307,6 +301,9 @@ public class TranscriptionActivity extends JPanel
 			
 			comment.setComment("<html>Le brin d'ARN formé n'est pas encore prêt à quitter le noyau</html>", 0);
 			
+			/* 
+			 * Le brin d'ARN formé se déplace horizontalement jusqu'à ce qu'il soit entièrement visible puis il descend
+			 */
 			while(brinArnL.getX() < ParaADN.LARGEUR_NUCL / 2)
 			{
 				//posARN++;
@@ -348,64 +345,21 @@ public class TranscriptionActivity extends JPanel
 		}
 	}	
 	
-	/*
-	class Animation implements Runnable
-	{
-		public void run() 
-		{
-			int precision = 18;
-			posADN = 29 * precision;
-			posARN = 20 * precision;
-			
-			while(posADN > (-(brinCodant.getTaille() - 3) * precision))
-			{
-				posADN--;
-				brinL.setLocation(posADN * (36 / precision), 330 + (-2 * 75));
-				brinComplL.setLocation(posADN * (36 / precision), 330 + (1 * 75));
-				
-				if(posADN < 20 * precision && brVisible < (brinCodant.getTaille()) * precision)
-				{
-					posARN = posADN;
-					brVisible++;
-					brinArnL.setSize(brVisible * (36 / precision), 88);
-					brinArnL.setLocation(posARN * (36 / precision), 330 + (-1 * 75));
-					System.out.println(posARN);
-				}
-
-				try
-				{
-					Thread.sleep(120 / precision);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-			
-			while(posARN < 3 * precision)
-			{
-				posARN++;
-				brinArnL.setLocation(posARN * (36 / precision), 330 + (-1 * 75));
-				System.out.println(posARN);
-				
-				if(posARN > -3 * precision)
-				{
-					posADN--;
-					brinL.setLocation(posADN * (36 / precision), 330 + (-2 * 75));
-					brinComplL.setLocation(posADN * (36 / precision), 330 + (1 * 75));
-				}
-
-				try
-				{
-					Thread.sleep(120 / precision);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
+	/**
+	 * Cette méthode permet de redémarrer l'activité
+	 */
+	public void resetPanel()
+	{		
+		JPanel parent = (JPanel) SwingUtilities.getUnwrappedParent(this);
+		
+		System.out.println(parent);
+		parent.removeAll();
+		commandes.removeAll();
+		
+		parent.add(new TranscriptionActivity(modele, commandes));
+		
+		parent.revalidate();
+		parent.repaint();
 	}
-	*/
 	
 }

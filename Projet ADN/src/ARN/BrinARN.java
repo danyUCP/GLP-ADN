@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class BrinARN 
 {
 	private ArrayList<Nucleotide> nucleotides;
+	private boolean mature;
 	
 	public BrinARN()
 	{
 		this.nucleotides = new ArrayList<Nucleotide>();
+		this.mature = false;
 	}
 	
 	
@@ -22,6 +24,11 @@ public class BrinARN
 		return this.nucleotides.get(index);
 	}
 	
+	public boolean isMature() 
+	{
+		return mature;
+	}
+
 	public int getTaille()
 	{
 		return this.nucleotides.size();
@@ -34,6 +41,7 @@ public class BrinARN
 			if(this.getNuclAt(i).estExon() == false)
 				this.nucleotides.remove(i);
 		}
+		this.mature = true;
 	}
 	
 	public void genererIntrons()
@@ -44,7 +52,7 @@ public class BrinARN
 		if(nbNucl > 21)
 			nbIntrons = nbNucl - 21;
 		else
-			nbIntrons = nbNucl % 3;
+			nbIntrons = nbNucl % 3; 
 
 		for(int i = 0 ; i < nbIntrons ; i++)
 		{

@@ -24,6 +24,7 @@ import ARN.ARNm;
 import ARN.BrinADN;
 import ARN.BrinARN;
 import ARN.ChaineAA;
+import ARN.ModelSynthese;
 import ihm.ParaADN;
 
 public class SyntheseActivity extends JPanel
@@ -31,7 +32,6 @@ public class SyntheseActivity extends JPanel
 	private BrinARN brinArn;
 	private ARNm brinMess;
 	private ChaineAA chaine;
-	private Dimension dim;
 	private JPanel commandes;
 	private JLabel brinARNM;
 	private ChaineLabel chaineLabel;
@@ -43,25 +43,19 @@ public class SyntheseActivity extends JPanel
 	private Image cellule, ribosome;
 	private ArrayList<ARNtManager> managerList;
 	private float alpha;
+	private ModelSynthese modele;
 
 
-	public SyntheseActivity(JPanel commandes, Dimension dim)
+	public SyntheseActivity(ModelSynthese modele, JPanel commandes)
 	{
 		super(null);
+		this.modele = modele;
 		this.commandes = commandes;
 		
 		this.stop = true;
 		this.alpha = 0.0f;
 
-
-		this.dim = dim;
-		this.setSize(dim);
-		
-		System.out.println(this.getBounds());
-
-		System.out.println(dim);
-
-
+		this.setBounds(0, 0, ParaADN.LARGEUR_CONTENU, ParaADN.HAUTEUR_CONTENU);
 		this.setBackground(Color.WHITE);
 		
 		try
@@ -74,6 +68,7 @@ public class SyntheseActivity extends JPanel
 			e.printStackTrace();
 		}
 		
+		modele.synthese();
 		synthese();
 	}
 	
@@ -82,27 +77,17 @@ public class SyntheseActivity extends JPanel
 	{
 		commandes.setBackground(new Color(204, 204, 255));
 
-		brinArn = new BrinADN("TACTGATGCTccaccagccgtGATAACG").transcrire();
-		brinArn.genererIntrons();
-		brinArn.retirerIntrons();
-		brinMess = new ARNm(brinArn);
+		brinMess = modele.getBrinMess();
 		
 		builder = new ARNmBuilder(brinMess, false);
 		brinARNM = builder.creerARNmessager(27, 1);
 		this.add(brinARNM);
 		
-		chaine = new ChaineAA(brinMess);
+		chaine = modele.getChaineAcide();
 		chaineLabel = new ChaineLabel();
 		this.add(chaineLabel);
-		//this.add(new AcideComp(new AcideAmine("Tyr", new Codon("UUU")), 10, 30));
 		
-		System.out.println(builder);
-		System.out.println(chaine);
-
-
-
 		initManagerList();
-
 
 		comment = new CommentLabel("<html>3ème étape : La Synthèse</html>", 0);
 		this.add(comment);
@@ -133,7 +118,6 @@ public class SyntheseActivity extends JPanel
 			managerList.get(i).start();
 		}
 		
-		//System.out.println(managerList);
 	}
 	
 	
@@ -265,9 +249,7 @@ public class SyntheseActivity extends JPanel
 				if(i > 1 && i < managerList.size() + 2)
 					m3 = managerList.get(i - 2);
 				
-				System.out.println(i + ", " + (i - 1) + ", " + (i - 2));
-				System.out.println(m1 + ", " + m2 + ", " + m3);
-
+				//System.out.println(m1 + ", " + m2 + ", " + m3);
 
 				try 
 				{
@@ -403,7 +385,7 @@ public class SyntheseActivity extends JPanel
 		parent.removeAll();
 		commandes.removeAll();
 		
-		parent.add(new SyntheseActivity(commandes, dim));
+		parent.add(new SyntheseActivity(modele, commandes));
 		
 		parent.revalidate();
 		parent.repaint();

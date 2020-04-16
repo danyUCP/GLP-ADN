@@ -11,6 +11,12 @@ public class ChaineAA
 	private static HashMap<String, AcideAmine> codeGenetique;
 	private ArrayList<AcideAmine> chaine;
 	
+	public ChaineAA()
+	{
+		if(codeGenetique == null)
+			remplirCodeMap();
+	}
+	
 	public ChaineAA(ARNm messager)
 	{		
 		if(codeGenetique == null)

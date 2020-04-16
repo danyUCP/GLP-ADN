@@ -57,12 +57,21 @@ public class CommentLabel extends JLabel
 				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
 				break;
 			case 2:
-				this.setBounds(0, 50, 1065, 100);
-
+				this.setBounds(50, 70, ParaADN.LARGEUR_CONTENU - 100, 70);
+				this.setForeground(new Color(64, 149, 204));
+				this.setFont(new Font("Comic sans MS", Font.BOLD, 45));
 				break;
 			case 3:
-				
 				this.setBounds(0, 0, 1065, 100);
+				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+				break;
+			case 20:
+				this.setBounds(50, 200, ParaADN.LARGEUR_CONTENU / 2 - 50, 200);
+				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+				break;
+			case 21:
+				this.setBounds(50, ParaADN.HAUTEUR_CONTENU - 120, ParaADN.LARGEUR_CONTENU - 100, 80);
+				this.setForeground(new Color(238, 26, 36));
 				this.setFont(new Font("Comic sans MS", Font.BOLD, 20));
 				break;
 		}

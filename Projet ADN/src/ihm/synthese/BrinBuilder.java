@@ -56,7 +56,7 @@ public class BrinBuilder
 		this.brinLabel.setSize(nuclList.size() * ParaADN.LARGEUR_NUCL, ParaADN.HAUTEUR_NUCL);
 		
 		this.brinLabel.setLocation(x * ParaADN.LARGEUR_NUCL, 330 + (y * (ParaADN.HAUTEUR_NUCL - 13)));
-		this.brinLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+		//this.brinLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
 		
 		for(int i = 0 ; i < nuclList.size() ; i++)
 			this.brinLabel.add(this.nuclList.get(i));
