@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -34,10 +36,11 @@ public class SyntheseActivity extends JPanel
 	//Elements graphiques de la transcription
 	private ArrayList<ARNtManager> managerList;
 	private ARNmBuilder builder;
-	private JLabel brinARNM;
+	private JLabel brinARNM, leg;
 	private ChaineLabel chaineLabel;
 	private CommentLabel comment;
 	private BoutonCommande play, suivant, recommencer;
+	private JCheckBox legende;
 	private Image cellule, ribosome;
 	
 	//Données necessaires à l'animation
@@ -103,6 +106,11 @@ public class SyntheseActivity extends JPanel
 		comment = new CommentLabel("<html>3ème étape : La Synthèse</html>", 0);
 		this.add(comment);
 		
+		leg = new JLabel(new ImageIcon("ressources/synthese/leg2.png"));
+		leg.setBounds(20, 20, 686, 292);
+		leg.setVisible(false);
+		this.add(leg);
+		
 		initCommandes();
 	}
 	
@@ -160,6 +168,14 @@ public class SyntheseActivity extends JPanel
 	 */
 	public void initCommandes()
 	{
+		legende = new JCheckBox("Légende");
+		legende.setOpaque(false);
+		legende.setBorder(null);
+		legende.setFont(new Font("Verdana", Font.PLAIN, 20));
+		legende.setForeground(Color.WHITE);
+		legende.addActionListener(new PlayListener());
+		commandes.add(legende);
+		
 		play = new BoutonCommande("Lancer l'animation");
 		play.addActionListener(new PlayListener());
 		commandes.add(play);
@@ -213,6 +229,13 @@ public class SyntheseActivity extends JPanel
 				recommencer.setEnabled(false);
 				stop = true;
 				resetPanel();
+			}
+			else if(e.getSource() == legende)
+			{
+				if(legende.isSelected())
+					leg.setVisible(true);
+				else
+					leg.setVisible(false);
 			}
 		}
 	}

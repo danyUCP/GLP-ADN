@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -37,9 +39,10 @@ public class TranscriptionActivity extends JPanel
 	
 	//Elements graphiques de la transcription
 	private BrinHelice helice1, helice2;
-	private JLabel brinArnL;
+	private JLabel brinArnL, leg;
 	private CommentLabel comment;
 	private BoutonCommande play, suivant, recommencer;
+	private JCheckBox legende;
 	private Image noyau, polymerase;
 	
 	//Données necessaires à l'animation
@@ -115,6 +118,11 @@ public class TranscriptionActivity extends JPanel
 		comment = new CommentLabel("<html>1ère étape : La Transcription</html>", 0);
 		this.add(comment);
 		
+		leg = new JLabel(new ImageIcon("ressources/synthese/leg.png"));
+		leg.setBounds(20, 20, 356, 405);
+		leg.setVisible(false);
+		this.add(leg);
+		
 		initCommandes();
 	}
 	
@@ -150,6 +158,14 @@ public class TranscriptionActivity extends JPanel
 	 */
 	public void initCommandes()
 	{
+		legende = new JCheckBox("Légende");
+		legende.setOpaque(false);
+		legende.setBorder(null);
+		legende.setFont(new Font("Verdana", Font.PLAIN, 20));
+		legende.setForeground(Color.WHITE);
+		legende.addActionListener(new PlayListener());
+		commandes.add(legende);
+		
 		play = new BoutonCommande("Lancer l'animation");
 		play.addActionListener(new PlayListener());
 		commandes.add(play);
@@ -203,6 +219,13 @@ public class TranscriptionActivity extends JPanel
 				recommencer.setEnabled(false);
 				stop = true;
 				resetPanel();
+			}
+			else if(e.getSource() == legende)
+			{
+				if(legende.isSelected())
+					leg.setVisible(true);
+				else
+					leg.setVisible(false);
 			}
 		}
 	}

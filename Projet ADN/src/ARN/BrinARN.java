@@ -3,7 +3,7 @@ package ARN;
 import java.util.ArrayList;
 
 /**
- * Classe de traitement du brin d'ARN
+ * Classe de traitement du brin d'ARN.
  * 
  * BrinARN effectue les traitements sur les nucléotides. Elle permet de générer aléatoirement des introns
  * au sein du brin et de les supprimer pour la maturation.
