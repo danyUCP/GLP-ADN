@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ADN.Chromosome;
+import ihm.BoutonCommande;
 import ADN.Chaine;
 
 public class MicrotubuleActivity extends JPanel implements Runnable {

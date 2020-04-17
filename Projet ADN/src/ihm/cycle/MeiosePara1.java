@@ -1,30 +1,31 @@
-package ihm;
+package ihm.cycle;
 
-public class MeiosePara2 {
+public class MeiosePara1 {
 
-	/**PARAMETRE DE Meiose cellule2*/
 	
-	/**--Positions de centrioles---*/
+	/**PARAMETRE DE Meiose cellule1*/
+	
+	/**---Positions de centrioles---*/
 	public static int centri1posX = 540;
     public static int centri1posY = 100;
 	public static int centri2posX =520;
 	public static int centri2posY= 100;
 	
-	/**--Positions centrioles migrantes---*/
+	/**---Positions centrioles migrantes---*/
 	public static int centri1finalX=150;
 	public static int centri2finalX=850;
 	
 	public static int micentriX=405;
 	public static int mi2centriX=360;
 	
-	/**--Positions des centrioles répliquées---*/
+	/**---Positions des centrioles répliquées---*/
 	public static int centri1bisposX = 850;
     public static int centri1bisposY = 240;
 	public static int centri2bisposX =150;
 	public static int centri2bisposY= 380;
 	
 	
-	/**--Position début des microtubules---*/
+	/**---Position début des microtubules---*/
 	/**---Positions X de gauche---*/
 	public static int mt1posX = 230;
 	public static int mt2posX =230;
@@ -48,7 +49,7 @@ public class MeiosePara2 {
     public static int mt3bisposY = 390;
 	public static int mt4bisposY= 415;
 	
-	/**--Positions de fin des microtubules---*/
+	/**---Positions de fin des microtubules---*/
 	/**---Position X mtgauche---*/
 	public static int finalmtposX = 485;
 	
@@ -61,14 +62,14 @@ public class MeiosePara2 {
 	public static int finalmtposY3=400;
 	public static int finalmtposY4=495;
 	
-	/**--Postitions de la membrane cellulaire et de la cellule---*/
+	/**---Postitions de la membrane cellulaire et de la cellule---*/
 	public static int membraneposX = 150;
     public static int membraneposY = 100;
     
     public static int cellposX = 150;
     public static int cellposY = 100;
     
-    	/**--ADN---*/
+    	/**---ADN---*/
     
     /**---Enveloppe Noyaux---*/
     public static int nucleaireX= 420;
@@ -98,7 +99,7 @@ public class MeiosePara2 {
     
     	/**---Condensés alignés--*/
     
-    	/**--chromosomes---*/
+    	/**---chromosomes---*/
     public static int alignchroX= 520-65;
     public static int alignchrobisX= 550;
     
@@ -107,27 +108,27 @@ public class MeiosePara2 {
     public static int alignchro3Y= 370;
     public static int alignchro4Y= 465;
     
-    	/**--Chromatides---*/
+    	/**---Chromatides---*/
     public static int alignchromatideX= 470;
     public static int alignchromatidebisX= 510;
     
     /**---Positions finale Mt et Chro---*/
     
-    	/**--Gauche---*/
+    	/**---Gauche---*/
 	public static int finaltmtchroX =250;
 	public static int finalchroX2 = 350;
 	
 	public static int finalmtchroY =280;
 	public static int finalmtchroY2 = 415;
     
-    	/**--Droite---*/
+    	/**---Droite---*/
 	public static int finalbistmtchroX =800;
 	public static int finalbischroX2 =700;
 	
 	public static int finalbismtchroY =280;
 	public static int finalbismtchroY2 = 415;
 	
-	/**--final mt post-migration---*/
+	/**---final mt post-migration---*/
 
 	
 	public static int retourmtposX =230;
@@ -141,11 +142,11 @@ public class MeiosePara2 {
 	public static int retourmtposY4= 415;
 	
 	
-	/**---Anneau d'actine---*/
+	/**----Anneau d'actine---*/
     public static int actineX = 500;
 	public static int actineY= 100;
 	
-	/**--Commentaires---*/
+	/**---Commentaires---*/
 	
 	/**--gauche--*/
 	public static int InitheightLabel1=500;
@@ -157,7 +158,7 @@ public class MeiosePara2 {
 	
 	
 	/**Permet un reset des parametres*/
-	public static void resetMeiosePara2() {
+	public static void resetMeiosePara1() {
 		/**PARAMETRE DE Meiose cellule1*/
 		
 		/**---Positions de centrioles---*/

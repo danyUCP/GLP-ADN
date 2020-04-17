@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import ADN.Chaine;
 import ADN.Chromatide;
 import ARN.BrinADN;
+import ihm.BoutonCommande;
 import ihm.synthese.BrinBuilder;
 
 public class ReplicationActivity extends JPanel implements Runnable {

@@ -1,4 +1,4 @@
-package ihm;
+package ihm.heritage;
 
 import java.awt.Color;
 import java.awt.Graphics;

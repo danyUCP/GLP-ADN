@@ -1,4 +1,4 @@
-package ihm;
+package ihm.heritage;
 
 import java.awt.Component;
 import java.util.ArrayList;

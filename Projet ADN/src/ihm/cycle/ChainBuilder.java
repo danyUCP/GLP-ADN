@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ADN.Chaine;
-import ihm.Microtubs;
 import ihm.ParaADN;
+import ihm.cycle.Microtubs;
 
 public class ChainBuilder {
 	private ArrayList<Microtubs> poly;

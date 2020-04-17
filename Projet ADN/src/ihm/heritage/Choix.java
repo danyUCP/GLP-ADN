@@ -1,4 +1,4 @@
-package ihm;
+package ihm.heritage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

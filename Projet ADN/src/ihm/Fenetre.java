@@ -24,6 +24,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import ihm.cycle.CyclePanel;
+import ihm.heritage.HeritagePanel;
 import ihm.synthese.ARNPanel;
 
 /**

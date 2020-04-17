@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import ADN.Chromatide;
 import ARN.BrinADN;
+import ihm.BoutonCommande;
 import ihm.synthese.BrinBuilder;
 
 public class CrossingOver extends JPanel implements Runnable {

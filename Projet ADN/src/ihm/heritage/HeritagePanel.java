@@ -1,4 +1,4 @@
-package ihm;
+package ihm.heritage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +27,10 @@ import heritage.Gametes;
 import heritage.GametesU;
 import heritage.Gene;
 import heritage.Personne;
+import ihm.BoutonCommande;
+import ihm.BoutonMenu;
+import ihm.BoutonNav;
+import ihm.Fenetre;
 import ihm.synthese.CommentLabel;
 
 

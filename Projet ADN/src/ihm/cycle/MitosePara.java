@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 public class MitosePara {
 

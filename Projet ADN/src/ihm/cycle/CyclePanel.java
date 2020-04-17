@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import ihm.BoutonMenu;
+import ihm.BoutonNav;
+import ihm.Fenetre;
 
 
 @SuppressWarnings("serial")

@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 import java.awt.Color;
 import java.awt.Font;

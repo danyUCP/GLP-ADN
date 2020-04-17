@@ -1,4 +1,4 @@
-package ihm;
+package ihm.cycle;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import ihm.BoutonCommande;
+import ihm.CommentLabel;
 
 
 
