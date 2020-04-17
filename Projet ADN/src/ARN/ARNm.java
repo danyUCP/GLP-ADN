@@ -2,6 +2,14 @@ package ARN;
 
 import java.util.ArrayList;
 
+/**
+ * Classe de traitement du brin d'ARN messager
+ * 
+ * ARNm effectue les traitements sur les codons. Elle permet d'ajouter et d'ordonner dans une
+ * ArrayList de codons les nucléotides d'un brin d'ARN
+ * 
+ * @author Daniel
+ */
 public class ARNm 
 {
 	private ArrayList<Codon> codons;

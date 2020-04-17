@@ -9,9 +9,14 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 import ARN.BrinADN;
-import ihm.NuclComp;
 import ihm.ParaADN;
 
+/**
+ * BrinHelice est la classe gère la représentation d'un brin d'ADN sous forme d'une hélice
+ * 
+ * @author Daniel
+ */
+@SuppressWarnings("serial")
 public class BrinHelice extends JLabel
 {
 	private ArrayList<NuclComp> nuclList;
@@ -23,14 +28,13 @@ public class BrinHelice extends JLabel
 	private int decalage;
 	private int ecart;
 	
-	public BrinHelice(BrinADN brin)
-	{
-		this.brin = brin;
-		this.orientation = true;
-		
-		initList();
-	}
 	
+	/**
+	 * Contructeur de la classe BrinHelice.
+	 * 
+	 * A la construction d'un objet BrinHelice, la liste de NuclComp est créée en fonction de 
+	 * chaque nucléotide contenu dans le brin d'ADN
+	 */
 	public BrinHelice(BrinADN brin, boolean orientation)
 	{
 		this.brin = brin;
@@ -42,19 +46,20 @@ public class BrinHelice extends JLabel
 		initList();		
 	}
 	
+	/**
+	 * Cette méthode permet d'initialiser la liste de NuclComp correspondant aux nucléotides que contient le brin
+	 */
 	private void initList()
 	{
 		this.nuclList = new ArrayList<NuclComp>();
 		
 		for(int i = 0 ; i < brin.getTaille() ; i++)
 			this.nuclList.add(new NuclComp(brin.getNuclAt(i), i, -1, orientation));
-		
-		System.out.println("Liste de nucléotides composantes initialisée");	
-		
-		//System.out.println(nuclList);
-
 	}
 	
+	/**
+	 * Cette méthode contient l'algorithme permettant de placer chaque nucléotide de l'hélice en fonction de la position de celle-ci
+	 */
 	private void placerNucleotides(int x)
 	{
 		int i = 0, j = 0, k = 0;
@@ -106,7 +111,6 @@ public class BrinHelice extends JLabel
 				k--;
 			
 			//System.out.println(i + " ; " + j + " ; " + k + " ; " + decalage);
-			//this.nuclList.add(new NuclComp(brin.getNuclAt(i), j, k + hauteur -  (hauteur / 2) - 1, k < 0 ? true : false));
 			
 			if(pos > 18)
 				ecart = (pos - 13) / 3 + 1;
@@ -119,33 +123,9 @@ public class BrinHelice extends JLabel
 			else
 				ecart = (pos - 2) / 3;
 			
-			/*
-			if(pos > 21)
-				ecart = 4;
-			else if(pos > 18)
-				ecart = 3;
-			else if(pos > 6)
-				ecart = 2;
-			else if(pos > 3)
-				ecart = 1;
-			else if(pos >= 0)
-				ecart = 0;
-			else if(pos > -4)
-				ecart = -1;
-			else if(pos > -7)
-				ecart = -2;
-			*/
 			
 			this.getNuclCpAt(i).placer(j + ecart, k + hauteur -  (hauteur / 2) - 1);
-
-
-			//if(orientation == true)
-				//this.getNuclCpAt(i).setOrientation(k < 0 ? true : false);
-			//else
-			this.getNuclCpAt(i).setOrientation(k < 0 ? true : false);
-			
-			//System.out.println(this.getNuclCpAt(i).getOrientation());
-			
+			this.getNuclCpAt(i).setOrientation(k < 0 ? true : false);			
 			this.getNuclCpAt(i).rotation();
 			
 			this.add(this.nuclList.get(i));
@@ -157,42 +137,25 @@ public class BrinHelice extends JLabel
 
 	}
 	
+	/**
+	 * Cette méthode renvoie le JLabel du brin dimensionné et positionné et contenant tous les NuclComp
+	 */
 	public void creerHelice(int x, int y)
-	{	
+	{			
+		this.setLayout(null);
+		
 		placerNucleotides(x);
 		
-		this.setLayout(null);
 		this.setSize((nuclList.size() + decalage) * ParaADN.LARGEUR_NUCL, hauteur * ParaADN.HAUTEUR_NUCL);
-		
 		this.setLocation(x * ParaADN.LARGEUR_NUCL, 330 + ((y - (hauteur / 2)) * (ParaADN.HAUTEUR_NUCL - 13)));
-				
-		//for(int i = 0 ; i < nuclList.size() ; i++)
-			//this.add(this.nuclList.get(i));
 		
 		//this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
-		System.out.println(this.getBounds());
-		
 	}
 	
-	public void deplacerDroite()
-	{
-		int echelle = 36;
-		int position = this.getX() / echelle;
-		//pos = this.getX() / 36;
-		
-		System.out.println("Position de l'hélice : " + position);
-		
-		pos = position + 1;
-		System.out.println("Position : " + pos);
-
-		
-		this.setLocation(position * echelle, getY());
-		
-		
-		placerNucleotides(pos);
-		
-	}
 	
+	/**
+	 * Cette méthode permet de déplacer l'hélice et de repositionner ses nucléotides selon sa position
+	 */
 	public void deplacerGauche(int fluidite)
 	{
 		int echelle = 36;
@@ -208,35 +171,34 @@ public class BrinHelice extends JLabel
 
 		
 		this.setLocation(getX() - precision, getY());
-		//getX() - precision
-		
 		placerNucleotides(getX() / echelle);
-		
 	}
 	
-	public void paintComponent(Graphics g1)
+	/**
+	 * Dessine les liens entre chaque bloc de nucléotides de l'hélice
+	 */
+	public void paintComponent(Graphics g)
 	{	
-		Graphics2D g = (Graphics2D)g1;
+		Graphics2D g2d = (Graphics2D)g;
 		
-		g.setColor(new Color(185, 122, 87));
-		g.setStroke(new BasicStroke(3.0f));
+		g2d.setColor(new Color(185, 122, 87));
+		g2d.setStroke(new BasicStroke(3.0f));
 		
-		super.paintComponent(g);
+		super.paintComponent(g2d);
 		int x1, y1, x2, y2;
 		int i = 0;
-		int nbBlocs = getTaille() / 3;
 		NuclComp n1, n2;
 		
 		if(this.nuclList == null)
 			return;
 		
-		for(i = 0 ; i < getTaille() - 3 ; i += 3)
+		for(i = 0 ; i < getTaille() - 1 ; i += 3)
 		{
 			if(pos >= -i && (pos < (6 - i) || pos >= (15 - i)))
 			{
 				
 				n1 = getNuclCpAt((i + 3) - ((i + pos) % 3) - 1);
-				n2 = getNuclCpAt((i + 3) - ((i + pos) % 3));
+				n2 = getNuclCpAt((i + 3) - ((i + pos) % 3) < getTaille() ? (i + 3) - ((i + pos) % 3) : (i + 3) - ((i + pos) % 3) - 1);
 				
 				//System.out.println("Dessine lien " + ((i + 3) - ((i + pos) % 3)) + "/" + getTaille() + " : " + n1 + " --- " + n2);
 
@@ -247,9 +209,10 @@ public class BrinHelice extends JLabel
 				y2 = n2.getY() + (n2.getOrientation() ? 3 : 85);
 				
 				//g.drawArc(x1 - (x1+x2) / 2, y1 - 88, (x1+x2) / 2, (y1+y2) / 2, 36, 88);
-				g.drawLine(x1, y1, x2, y2);
+				g2d.drawLine(x1, y1, x2, y2);
 			}	
 		}
+		
 	}
 	
 	public NuclComp getNuclCpAt(int index)

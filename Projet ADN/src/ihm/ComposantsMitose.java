@@ -1,3 +1,4 @@
+
 package ihm;
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -5,15 +6,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import ADN.Chromosome;
 
@@ -22,14 +19,14 @@ public class ComposantsMitose extends JLabel implements Runnable {
 	private ComposantsMitose instance=this;
 	private Telophase telophase1= new Telophase();
 	
-	/*----Execution---*/
+	/**----Execution---*/
 	private boolean stop;
 	private boolean suite;
 	private boolean suite2;
 	private static final int duplicadn = 2000;
 	private static final int timing = 300;
 	
-	/*---Opacité---*/
+	/**---Opacite---*/
 	private float alpha = 1.0f;
     private float delta = 0.01f;
     
@@ -42,6 +39,15 @@ public class ComposantsMitose extends JLabel implements Runnable {
     private float dchrom = 0.01f;
     private float microtub = 1.0f;
     private float indice = 0.01f;
+    
+    private float com1 = 1.0f;
+    private float com1b = 1.0f;
+    private float com2 = 0.01f;
+    private float com3 = 0.01f;
+    private float com4 = 0.01f;
+    private float com5 = 0.01f;
+    
+    
     
     public Image img1;
     public Image img2;
@@ -62,39 +68,50 @@ public class ComposantsMitose extends JLabel implements Runnable {
     private Font font = new Font(Font.MONOSPACED, Font.BOLD, 20);
 	
     
+    /**@see ADN.Chromosome
+     * recupere les chromosomes*/
+    Chromosome chro1= new Chromosome("Chrom1");
+    Chromosome chro2= new Chromosome("Chrom2");
+    Chromosome chro3= new Chromosome("Chrom3");
+    Chromosome chro4= new Chromosome("Chrom4");
     
-    Chromosome chromosome1= new Chromosome("Chrom1");
-	//private String cellule = new JLabel("Cellule et sa membrane");
-	private JLabel microtubules = new JLabel("Microtubule");
-	private JLabel centrioles = new JLabel("Centriole");
-	private JLabel nucleaire = new JLabel("Enveloppe nucléaire");
-	
+    Chromosome chro1b= new Chromosome("Chrom1 replique");
+    Chromosome chro2b= new Chromosome("Chrom2 replique");
+    Chromosome chro3b= new Chromosome("Chrom3 replique");
+    Chromosome chro4b= new Chromosome("Chrom4 replique");
+    
+    
+   
+    
+ 
+    /**Constructeur*/
 	public ComposantsMitose() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.chromosome1=chromosome1;
 		this.stop = true;
 		this.suite=false;
 		this.suite2=false;	
 		this.setBounds(0, 0, 1080, 700);
-		
+		repaint();
+		revalidate();
 
 		
 	}	
 
+	/**affichage des elements organiques*/
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
 		 Graphics2D g2d = (Graphics2D)g;
 		 
-		 /**--Ensemble des éléments Mitotique--*/		 
+		 /**--Ensemble des elements Mitotique--*/		 
 		 
-		/*-------Cellule et sa Membrane--------*/
+		/**-------Cellule et sa Membrane--------*/
 		g2d.setFont(font);
 		
 		/**---Indice Cellule--*/
 		g2d.setColor(Color.BLACK);
-		g2d.drawString("Cellule et sa membrane", MitosePara.membraneposX+50, MitosePara.membraneposY-50);
+		g2d.drawString("Cellulse et sa membrane", MitosePara.membraneposX+50, MitosePara.membraneposY-50);
 		 
 		g2d.setColor(new Color(253, 208, 234));
 		g2d.fillOval(MitosePara.membraneposX-50, MitosePara.membraneposY-20, MitosePara.membraneposX+790,MitosePara.membraneposY+420);
@@ -104,24 +121,24 @@ public class ComposantsMitose extends JLabel implements Runnable {
 	    
 	    try {
 	    	
-	    	/*---Centrioles---*/
+	    	/**---Centrioles---*/
 	    	
 	    	 img1 = ImageIO.read(new File("centriole.png"));
 	    	 img2 = ImageIO.read(new File("centriole2.png"));
 	    	
-	    	/*---Décondensé---*/
+	    	/**---Decondense---*/
 		    
-	    	/**---Membrane nucléaire---*/
+	    	/**---Membrane nucleaire---*/
 	    	
 	    	 img3 = ImageIO.read(new File("membnucl.png"));
 	    	
-	    	/**---ADN décondensé---*/
+	    	/**---ADN decondense---*/
 	    	
 	    	img4 = ImageIO.read(new File("noncond.png"));
 	    	
 	        img5 = ImageIO.read(new File("noncond2.png"));
 	      
-	        /*---Condensé---*/
+	        /**---Condense---*/
 	        
 	        /**---Chromosomes gauches---*/
 	        
@@ -140,47 +157,63 @@ public class ComposantsMitose extends JLabel implements Runnable {
 	      }
 	    
 	    
-	    /*--------Centrioles au centre AU DEPART--------*/
+	    /**--------Centrioles au centre AU DEPART--------*/
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(centriop));
+	    
+	    /**--Indice centriole--*/
+	    g2d.setColor(Color.BLACK);
+		g2d.drawString("Centrioles",MitosePara.centri1posX-120, MitosePara.centri1posY+160);
+
 	    g2d.drawImage(img1, MitosePara.centri1posX, MitosePara.centri1posY+140,80,140, this);
 	    g2d.drawImage(img2, MitosePara.centri2posX, (MitosePara.centri2posY*2)+180, 140, 80, this);
 	    
-	    /*---Centrioles Répliquées---*/
+	    /**---Centrioles Repliquees---*/
 	    
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(centriop2));
 	    
-	    	/**--Indice centriole--*/
-	    g2d.setColor(Color.BLACK);
-		g2d.drawString("Centrioles",MitosePara.centri1bisposX+70, MitosePara.centri2bisposY);
-	    	/**---CentriRep 2---*/
+	       	/**---CentriRep 2---*/
 	    g2d.drawImage(img2, MitosePara.centri2bisposX, MitosePara.centri2bisposY, 140, 80, this);
 
 	    	/**---CentriRep1---*/
 	    g2d.drawImage(img1, MitosePara.centri1bisposX, MitosePara.centri1bisposY,80,140, this);        
 	    
-	    /*---Chromosomes décondensés---*/
+	    /**---Chromosomes decondenses---*/
 	    
 	    	/**---Membrane nucleaire---*/
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(membranenuc));	
 	    g2d.drawImage(img3, MitosePara.decondensX, MitosePara.decondensY1, this);
 	    
-	    	/**---Décondensé 1---*/
+	    	/**---Decondense 1---*/
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(decond1));
 	    g2d.drawImage(img4, MitosePara.decondensX+15, MitosePara.decondensY1+10, this);
 	    
-	     	/**---Décondensé répliqué---*/
+	     	/**---Decondense replique---*/
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(decond2));	
 	    g2d.drawImage(img5, MitosePara.decondensX+5, MitosePara.decondensY2, this);
 		      
-	    		/**--Indice ADN non condensé--*/
+	    		/**--Indice ADN non condense--*/
+	    
 	    g2d.setColor(Color.BLACK);
-		g2d.drawString("ADN décondensé", MitosePara.decondensX+330, MitosePara.decondensY2);
+		g2d.drawString("ADN decondense", MitosePara.decondensX+330, MitosePara.decondensY2-40);
+	    
+	    g2d.setColor(Color.BLACK);
+		g2d.drawString("ADN decondense Replique", MitosePara.decondensX+330, MitosePara.decondensY2+20);
 
 		
-	    /*---Chromosomes condensés----**/
+	    /**---Chromosomes condenses----**/
 	       
 	    	/**---Chromosomes gauche--*/
-	    g2d.setComposite(AlphaComposite.SrcOver.derive(dchrom));	    
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(dchrom));	 
+	    
+	    	/**--Indices chromosomique gauche--*/
+	    g2d.setColor(Color.BLACK);
+	    /**appel des chromosomes via @see Chromosome.getName()*/
+		g2d.drawString(chro1.getName(), MitosePara.condensX+5, MitosePara.alignchro1Y-10);
+		g2d.drawString(chro2.getName(), MitosePara.condensX2+5, MitosePara.condensY2-10);
+		g2d.drawString(chro3.getName(), MitosePara.condensX3+5, MitosePara.condensY3-10);
+		g2d.drawString(chro4.getName(), MitosePara.condensX+5, MitosePara.condensY4-10);
+
+	    
 	    g2d.drawImage(img6, MitosePara.condensX,MitosePara.alignchro1Y,100,65, this);
 	    g2d.drawImage(img6, MitosePara.condensX2, MitosePara.condensY2,100,65, this);
 	    g2d.drawImage(img7, MitosePara.condensX3, MitosePara.condensY3,100,65, this);
@@ -189,13 +222,20 @@ public class ComposantsMitose extends JLabel implements Runnable {
 	    
 	    	/**---Chromosomes droite---*/
 	    
+	    	/**--Indice chromosomique droit--*/
+	    
+		g2d.drawString(chro1b.getName(), MitosePara.condensbisX+5, MitosePara.condensbY1-10);
+		g2d.drawString(chro2b.getName(), MitosePara.condensbisX2+5, MitosePara.condensbY2-10);
+		g2d.drawString(chro3b.getName(), MitosePara.condensbisX2+5, MitosePara.condensbY3-10);
+		g2d.drawString(chro4b.getName(), MitosePara.condensbisX+5, MitosePara.condensbY4-10);
+	    
 	    g2d.drawImage(img8, MitosePara.condensbisX,MitosePara.condensbY1,100,65, this);
 	    g2d.drawImage(img8, MitosePara.condensbisX2, MitosePara.condensbY2,100,65, this);
 	    g2d.drawImage(img9, MitosePara.condensbisX2, MitosePara.condensbY3,100,65, this);
 	    g2d.drawImage(img8, MitosePara.condensbisX, MitosePara.condensbY4,100,65, this);
 	     
 	    
-	    /*---------Microtubules schematises--------------*/
+	    /**---------Microtubules schematises--------------*/
 	    
 	    
 	    	/**--Indice microtubule--*/
@@ -233,10 +273,39 @@ public class ComposantsMitose extends JLabel implements Runnable {
 	    	    	
 	    	/**--Indice nucleaire---*/
 	    g2d.setColor(Color.BLACK);
-		g2d.drawString("Enveloppe nucléire", MitosePara.finaltmtchroX-70, MitosePara.finalmtchroY-90);
-	  } 
+		g2d.drawString("Noyaux1", MitosePara.finaltmtchroX-70, MitosePara.finalmtchroY-90);
+	    g2d.drawString("Noyaux2", MitosePara.finalbistmtchroX-170, MitosePara.finalbismtchroY-90);
+	    
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(com1));
+	    g2d.drawString(" INTERPHASE:",0, MitosePara.centri2bisposY+150);
+	    g2d.drawString(" phase G1: Separation des centrioles",0, MitosePara.centri2bisposY+180);
+	    g2d.drawString(" phase S: Duplication des centrioles et de l'ADN non condense",0, MitosePara.centri2bisposY+210);
+	    g2d.drawString(" G2: Controle de bonne replication, sinon: Anomalies, cancer...",0, MitosePara.centri2bisposY+250);
+	    
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(com2));
+	    g2d.drawString(" PROPHASE:",0, MitosePara.centri2bisposY+150);
+	    g2d.drawString("Condensation des chromosomes",0, MitosePara.centri2bisposY+180);
+	     
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(com3));
+	    g2d.drawString(" PROMETAPHASE:",0, MitosePara.centri2bisposY+120);
+	    g2d.drawString(" Suppression membrane nucleaire",0, MitosePara.centri2bisposY+150);
+	    g2d.drawString(" Alignement chromosomique",0, MitosePara.centri2bisposY+180);
+	    g2d.drawString(" METHAPHASE",0, MitosePara.centri2bisposY+225);
+	    g2d.drawString(" Signale des microtubules",0, MitosePara.centri2bisposY+250);
 	
-	 
+	    
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(com4));
+	    g2d.drawString(" ANAPHASE:",0, MitosePara.centri2bisposY+210);
+	    g2d.drawString(" Migration des chromosomes vers les poles",0, MitosePara.centri2bisposY+240);
+	    
+	    g2d.setComposite(AlphaComposite.SrcOver.derive(com5));
+	    g2d.drawString(" TELOPHASE:",0, MitosePara.centri2bisposY+150);
+	    g2d.drawString(" Deux noyaux apparaissent",0, MitosePara.centri2bisposY+180);
+	    g2d.drawString(" Cytokynese: apparition d'anneau d'actine qui coupe la cellule en deux ",0, MitosePara.centri2bisposY+210);
+	
+	} 
+	
+	/**Permet duplication des centrioles*/ 
 	public void duplicCentri() {
 		centriop2=alpha;
 		indice=1.0f;
@@ -244,6 +313,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 		
 	}
 	
+	/**Affiche ADN decondense et enveloppe nucleaire*/
 	public void adndecondens() {
 		
 			if (MitosePara.centri1posX==MitosePara.micentriX-45) {	
@@ -258,6 +328,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 			
 			if (MitosePara.centri1posX==MitosePara.mi2centriX-60) {
 				decond2=alpha;
+				
 				try {
 					Thread.sleep(duplicadn);
 				} catch (InterruptedException e) {
@@ -265,7 +336,8 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				}
 			 }
 		}
-
+		
+		/**Condensation des chromosomes*/
 		public void prophase() {
 			decond1=0.01f;
 			decond2=0.01f;
@@ -273,7 +345,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				
 		}
 
-		
+		/**deplament centrioles pendant interphase*/
 		public void deplCentrioles() {
 			
 			if (MitosePara.centri1posX!=MitosePara.centri1finalX) {
@@ -286,7 +358,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 			repaint();
 		}
 		
-		
+		/**methaphase*/
 		public void deplaceChromosomes() {
 				/*---Chromosomes gauches---*/
 			if((MitosePara.condensX>MitosePara.alignchroX)) {
@@ -310,7 +382,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.condensX3-=20;
 			}
 			
-				/*---Chromosomes droites---*/
+				/**---Chromosomes droites---*/
 			
 			if((MitosePara.condensbisX<=MitosePara.alignchrobisX)) {
 				MitosePara.condensbisX+=10;
@@ -320,9 +392,9 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.condensbisX2+=10;
 			}
 			
-				/*---Positions ordonnées---*/
+				/**---Positions ordonnees---*/
 					
-					/*--gauche--*/
+					/**--gauche--*/
 			if(MitosePara.condensY2>MitosePara.alignchro2Y) {
 				MitosePara.condensY2--;
 			}			
@@ -335,7 +407,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.condensY4+=5;
 			}
 			
-					/*--Droite--*/
+					/**--Droite--*/
 			if(MitosePara.condensbY2>MitosePara.alignchro2Y) {
 				MitosePara.condensbY2--;
 			}
@@ -351,6 +423,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 			
 		}
 		
+		/**Anaphase*/
 		public void migreChromosome() {
 			/*---Chromosomes gauches---*/
 			if((MitosePara.condensX>=MitosePara.finaltmtchroX)) {
@@ -365,7 +438,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.condensX3-=20;
 			}
 			
-			/*---Chromosomes droites---*/
+			/**---Chromosomes droites---*/
 			
 			if((MitosePara.condensbisX<MitosePara.finalbistmtchroX)) {
 				MitosePara.condensbisX+=20;
@@ -375,9 +448,9 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.condensbisX2+=10;
 			}
 			
-			/*---Positions ordonnées---*/
+			/**---Positions ordonnees---*/
 			
-				/*--Gauche--*/
+				/**--Gauche--*/
 			
 			if(MitosePara.alignchro1Y<=MitosePara.finalmtchroY) {
 				MitosePara.alignchro1Y+=10;
@@ -413,8 +486,10 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.condensbY4-=10;
 			}
 			
-			/**----Passage à la télophase---*/
+			/**----Passage a  la telophase---*/
 			if((MitosePara.condensX<MitosePara.finaltmtchroX)) {
+				com4=delta;
+				com5=alpha;
 				centriop=delta;
 				centriop2=delta;
 				actine=alpha;
@@ -424,79 +499,14 @@ public class ComposantsMitose extends JLabel implements Runnable {
 
 		}
 		
-		public void retourMt() {
-			/*--Cote gauche--*/
-			if ((MitosePara.mt1posX>=MitosePara.retourmtposX) ){
-				MitosePara.mt1posX-=20;
-			}
-			if (MitosePara.mt1posY<=MitosePara.retourmtposY1) {
-				MitosePara.mt1posY+=2;
-			}
-			
-			if ((MitosePara.mt2posX>=MitosePara.retourmtposX)) {
-				MitosePara.mt2posX-=20;				
-			}
-			if (MitosePara.mt2posY>=MitosePara.retourmtposY2) {
-				MitosePara.mt2posY-=5;
-			}
-			
-			if ((MitosePara.mt3posX>=MitosePara.retourmt2posX)) {
-				MitosePara.mt3posX-=20;
-			}
-			if (MitosePara.mt3posY>=MitosePara.retourmtposY3) {
-				MitosePara.mt3posY+=2;
-			}
-			
-			if ((MitosePara.mt4posX>=MitosePara.retourmt2posX)) {
-				MitosePara.mt4posX-=20;
-			}
-			if (MitosePara.mt4posY>=MitosePara.retourmtposY4){
-				MitosePara.mt4posY-=5;
-			}
-			
-			/*--Coté droit--*/
-		
-			if ((MitosePara.mt1bisposX<MitosePara.retourmtbisposX)) {
-				MitosePara.mt1bisposX+=20;
-				
-			}
-			if (MitosePara.mt1bisposY<MitosePara.retourmtposY1) {
-				MitosePara.mt1bisposY+=2;
-			}
-			
-			if ((MitosePara.mt2bisposX<MitosePara.retourmtbisposX)) {
-				MitosePara.mt2bisposX+=20;		
-			}
-			if (MitosePara.mt2bisposY<MitosePara.retourmtposY2) {
-				MitosePara.mt2bisposY-=5;
-			}
-			
-			if ((MitosePara.mt3bisposX<MitosePara.retourmt2bisposX)) {
-				MitosePara.mt3bisposX+=20;
-			}
-			if (MitosePara.mt3bisposY<MitosePara.retourmtposY3) {
-				MitosePara.mt3bisposY+=2;
-			}
-			
-			if ((MitosePara.mt4bisposX<MitosePara.retourmt2bisposX)) {
-				MitosePara.mt4bisposX+=20;
-				
-			}
-			if (MitosePara.mt4bisposY<MitosePara.retourmtposY4) {
-				MitosePara.mt4bisposY-=5;
-			}
-
-			
-			repaint();
-		}
-		
+		/**@see migreChromosome()*/
 		public void anaphase() {
 			migreChromosome();
-			retourMt();
 		}
 		
+		/**Signale passage à anaphase*/
 		public void deplaceMt() {
-			/*--Coté gauche--*/
+			/*--Cote gauche--*/
 			if ((MitosePara.mt1posX<MitosePara.finalmtposX) ){
 				MitosePara.mt1posX+=20;
 			}
@@ -525,7 +535,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.mt4posY+=5;
 			}
 			
-			/*--Coté droit--*/
+			/*--Cote droit--*/
 		
 			if ((MitosePara.mt1bisposX>MitosePara.finalmtbposX)) {
 				MitosePara.mt1bisposX-=20;
@@ -557,7 +567,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 				MitosePara.mt4bisposY+=5;
 			}
 			
-			/**---Permet le passage à l'anaphase---*/
+			/**---Permet le passage Ã  l'anaphase---*/
 			if (MitosePara.mt1posY<=MitosePara.finalmtposY1) {
 				indice=0.01f;
 				microtub=0.01f;
@@ -568,22 +578,35 @@ public class ComposantsMitose extends JLabel implements Runnable {
 		}
 		
 		
-		
+		/**Lance l'animation
+		 * @see deplCentrioles();
+		 *@see prophase();
+		 *@see deplaceChromosomes();		
+		 *@see deplaceMt();
+		 *@see anaphase()
+		 */
 		public void run() {
 			
 			while(stop) {
+
 				deplCentrioles();
 				if (MitosePara.centri2posX==MitosePara.centri2finalX) {
 					duplicCentri();
+					com1=delta;
+					com2=alpha;
 					prophase();
+					com2=delta;
 					
+					com3=alpha;
 					if(dchrom==alpha) {
 						deplaceChromosomes();		
 						deplaceMt();
+						
 						if(suite==true) {
+							com3=delta;
+							com4=alpha;
 							anaphase();
 						}
-						
 					}
 				}
 				try {

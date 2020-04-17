@@ -16,7 +16,6 @@ import heritage.ChromatideU;
 import heritage.Gametes;
 import heritage.GametesU;
 import heritage.Personne;
-import ihm.synthese.CommentLabel;
 
 public class Arbre extends JPanel implements Runnable  {
 	private Personne pere;

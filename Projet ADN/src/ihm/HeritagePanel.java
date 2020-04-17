@@ -27,7 +27,6 @@ import heritage.Gametes;
 import heritage.GametesU;
 import heritage.Gene;
 import heritage.Personne;
-import ihm.synthese.CommentLabel;
 
 
 public class HeritagePanel extends JPanel {

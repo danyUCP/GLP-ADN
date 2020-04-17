@@ -1,37 +1,36 @@
 package ihm.synthese;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.ARNm;
 import ARN.BrinARN;
-import ihm.CodonComp;
-import ihm.NuclComp;
 import ihm.ParaADN;
 
+/**
+ * ARNmBuilder est la classe gère la représentation d'un brin d'ARN ou d'ARNm sous forme de composant graphique
+ * 
+ * @author Daniel
+ */
 public class ARNmBuilder 
 {
 	private ArrayList<NuclComp> nuclList;
-	private ArrayList<CodonComp> codonList;
-	private JLabel brinLabel, ARNmLabel;
 	private BrinARN brin;
+
+	private ArrayList<CodonComp> codonList;
 	private ARNm brinMessager;
+
+	private JLabel brinLabel, ARNmLabel;
 	private boolean orientation;
 	
-	public ARNmBuilder(BrinARN brin)
-	{
-		this.brin = brin;
-		this.orientation = true;
-		
-		initNuclList();
-		
-		this.brinLabel = new JLabel();
-		this.ARNmLabel = new JLabel();
-	}
 	
+	/**
+	 * Premier contructeur de la classe ARNmBuilder.
+	 * 
+	 * A la construction d'un objet ARNmBuilder, la liste de NuclComp est créée en fonction de chaque nucléotide contenu dans le brin
+	 * d'ARN et un JLabel prêt à accueillir la chaine de NuclComp 
+	 */
 	public ARNmBuilder(BrinARN brin, boolean orientation)
 	{
 		this.brin = brin;
@@ -42,6 +41,12 @@ public class ARNmBuilder
 		this.brinLabel = new JLabel();
 	}
 	
+	/**
+	 * Second contructeur de la classe ARNmBuilder.
+	 * 
+	 * A la construction d'un objet ARNmBuilder, la liste de CodonComp est créée en fonction de chaque codon contenu dans le brin
+	 * d'ARNm et un JLabel prêt à accueillir la chaine de CodonComp 
+	 */
 	public ARNmBuilder(ARNm brinMessager, boolean orientation)
 	{
 		this.brinMessager = brinMessager;
@@ -52,17 +57,20 @@ public class ARNmBuilder
 		this.ARNmLabel = new JLabel();
 	}
 	
+	/**
+	 * Cette méthode permet d'initialiser la liste de NuclComp correspondant aux nucléotides que contient le brin d'ARN
+	 */
 	private void initNuclList()
 	{
 		this.nuclList = new ArrayList<NuclComp>();
 		
 		for(int i = 0 ; i < brin.getTaille() ; i++)
-			this.nuclList.add(new NuclComp(brin.getNuclAt(i), i, -1, orientation));
-		
-		System.out.println("Liste de nucléotides composantes ARN initialisée");	
-		//System.out.println(nuclList);
+			this.nuclList.add(new NuclComp(brin.getNuclAt(i), i, -1, orientation));		
 	}
 	
+	/**
+	 * Cette méthode renvoie le JLabel du brin d'ARN dimensionné et positionné et contenant tous les NuclComp
+	 */
 	public JLabel creerARN(int x, int y)
 	{
 		this.brinLabel.setLayout(null);
@@ -73,13 +81,14 @@ public class ARNmBuilder
 
 		for(int i = 0 ; i < nuclList.size() ; i++)
 			this.brinLabel.add(this.nuclList.get(i));
-		
-		System.out.println(brinLabel.getBounds());
-		
+				
 		
 		return brinLabel;
 	}
 	
+	/**
+	 * Cette méthode permet de retirer un NuclComp du brin d'ARN
+	 */
 	public void retirerNuclCp()
 	{
 		for(int i = getTaille() - 1 ; i >= 0 ; i--)
@@ -89,27 +98,21 @@ public class ARNmBuilder
 		}
 	}
 	
-	public NuclComp getNuclCpAt(int index)
-	{
-		return this.nuclList.get(index);
-	}
 	
-	
+	/**
+	 * Cette méthode permet d'initialiser la liste de CodonComp correspondant aux codons que contient le brin d'ARNm
+	 */
 	public void initCodonList()
 	{
 		this.codonList = new ArrayList<CodonComp>();
 		
 		for(int i = 0 ; i < brinMessager.getTaille() ; i++)
 			this.codonList.add(new CodonComp(brinMessager.getCodonAt(i), i, -1, orientation));
-		
-		System.out.println("Liste de codons composants ARNm initialisée");	
 	}
 	
-	public CodonComp getCodCpAt(int index)
-	{
-		return this.codonList.get(index);
-	}
-	
+	/**
+	 * Cette méthode renvoie le JLabel du brin d'ARNm dimensionné et positionné et contenant tous les CodonComp
+	 */
 	public JLabel creerARNmessager(int x, int y)
 	{
 		this.ARNmLabel.setLayout(null);
@@ -120,17 +123,27 @@ public class ARNmBuilder
 
 		for(int i = 0 ; i < codonList.size() ; i++)
 			this.ARNmLabel.add(this.getCodCpAt(i));
-		
-		System.out.println(ARNmLabel.getBounds());
-		
+				
 		
 		return ARNmLabel;
+	}
+	
+	
+	public NuclComp getNuclCpAt(int index)
+	{
+		return this.nuclList.get(index);
+	}
+	
+	public CodonComp getCodCpAt(int index)
+	{
+		return this.codonList.get(index);
 	}
 	
 	public int getTaille()
 	{
 		return this.nuclList.size();
 	}
+	
 	
 	public String toString()
 	{

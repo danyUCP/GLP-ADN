@@ -1,21 +1,23 @@
 package ADN;
 
-public class Beta extends Polymere{
+public class Beta extends Polymeres{
 
-	private Polymere comp;
-	
+	private Polymeres comp;
+	/**Constructeur Beta herite de Polymere: c'est un type de polymere*/
 	public Beta() {
 		// TODO Auto-generated constructor stub
 		super ("Beta");
 		this.comp=comp;
 	}
 
-	public Polymere getComp() {
+	/**Retourne le polymere Alpha complementaire de beta:*/
+	public Polymeres getComp() {
 		this.comp= new Alpha();
 		return comp;
 	}
-
-	public void setComp(Polymere comp) {
+	
+	
+	public void setComp(Polymeres comp) {
 		this.comp = comp;
 	}
 	

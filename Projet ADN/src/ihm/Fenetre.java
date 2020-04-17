@@ -26,16 +26,24 @@ import javax.swing.JPanel;
 
 import ihm.synthese.ARNPanel;
 
+/**
+ * Fenetre principale du programme
+ */
 @SuppressWarnings("serial")
 public class Fenetre extends JFrame
 {
 	private JPanel global, header;
 	private AccueilPanel accueil;
-	//private Panneau paneCentre;
 	private BoutonMenu cycle, proteine, heritage;
 	private JLabel texte;
 	private Image img;
 	
+	
+	/**
+	 * Constructeur de la classe Fenetre.
+	 * 
+	 * Ce constructeur gère la disposition des éléments de l'accueil
+	 */
 	public Fenetre()
 	{
 		this.setTitle("ADN");
@@ -52,16 +60,9 @@ public class Fenetre extends JFrame
 		global.setBackground(Color.CYAN);
 		global.setLayout(new BorderLayout());
 		this.setContentPane(global);
-		/*
-		//-------------- PARTIE HEADER ------------------//
-		header = new JPanel();
-		header.setPreferredSize(new Dimension(this.getWidth(), 40));
-		header.setBackground(Color.BLUE);
-		header.setLayout(new FlowLayout());
-		global.add(header, BorderLayout.NORTH);
-		*/
 		
-		//-------------- PARTIE GAUCHE ------------------//
+		
+		//-------------- PAGE D'ACCUEIL ------------------//
 		accueil = new AccueilPanel();
 		accueil.setBackground(Color.WHITE);
 		accueil.setLayout(new GridLayout(3, 1, 200, 200));
@@ -74,26 +75,19 @@ public class Fenetre extends JFrame
 		global.add(accueil, BorderLayout.CENTER);
 
 		
-		/*
-		//-------------- PARTIE DROITE CENTRE ------------------//
-		paneCentre = new Panneau();
-		paneCentre.setBackground(Color.BLUE);
-		paneCentre.setLayout(new FlowLayout());
-		paneDroite.add(paneCentre, BorderLayout.CENTER);
-		*/
-		
-		
 		cycle.addActionListener(new BoutonListener());
 		proteine.addActionListener(new BoutonListener());
 		heritage.addActionListener(new BoutonListener());
 
-
+		
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Cette méthode permet de réinitialiser l'accueil
+	 */
 	public void resetAccueil()
 	{
-		System.out.println("On réinitialise la page d'accueil");
 		global.removeAll();
 		
 		accueil = new AccueilPanel();
@@ -115,24 +109,10 @@ public class Fenetre extends JFrame
 		this.revalidate();
 	}
 	
-	private class BoutonListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e) 
-		{
-			global.removeAll();
-			
-			if(e.getSource() == cycle)
-				global.add(new CyclePanel(), BorderLayout.CENTER);
-			else if(e.getSource() == proteine)
-				global.add(new ARNPanel(), BorderLayout.CENTER);
-			else if(e.getSource() == heritage)
-				global.add(new HeritagePanel(),BorderLayout.CENTER);
-
-			global.revalidate();	
-		}
-		
-	}
 	
+	/**
+	 * Cette classe interne gère la personnalisation du panel central "accueil"
+	 */
 	private class AccueilPanel extends JPanel
 	{
 		private Image img;
@@ -156,11 +136,13 @@ public class Fenetre extends JFrame
 
 			super.paintComponent(g2d);
 
-
 			g2d.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), accueil);
 		}
 	}
 
+	/**
+	 * Cette classe interne gère la personnalisation des boutons de l'accueil
+	 */
 	private class BoutonMenu extends JButton implements MouseListener
 	{
 		public BoutonMenu(String nom)
@@ -191,7 +173,27 @@ public class Fenetre extends JFrame
 		public void mouseReleased(MouseEvent e) {}
 	}
 	
+	/**
+	 * Ecouteur associé aux boutons "cycle", "proteine" et "heritage" du panneau de commandes.
+	 * 
+	 * Chacun des boutons déclenche l'affichage du panel d'accès aux activités
+	 */
+	private class BoutonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e) 
+		{
+			global.removeAll();
+			
+			if(e.getSource() == cycle)
+				global.add(new CyclePanel(), BorderLayout.CENTER);
+			else if(e.getSource() == proteine)
+				global.add(new ARNPanel(), BorderLayout.CENTER);
+			else if(e.getSource() == heritage)
+				global.add(new HeritagePanel(),BorderLayout.CENTER);
 
-	
+			global.revalidate();	
+		}
+	}
+
 }
 

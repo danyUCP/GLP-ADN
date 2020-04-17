@@ -1,20 +1,27 @@
 package ihm.synthese;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import ARN.ChaineAA;
 import ihm.ParaADN;
 
+/**
+ * ChaineLabel est la classe gère la représentation de la chaîne d'acides aminés (protéine) sous forme de composant graphique
+ * 
+ * @author Daniel
+ */
+@SuppressWarnings("serial")
 public class ChaineLabel extends JLabel
 {
 	private ArrayList<AcideComp> acideList;
-	private ChaineAA chaine;
 	
-	
+	/**
+	 * Contructeur de la classe ChaineLabel.
+	 * 
+	 * A la construction d'un objet ChaineLabel, la liste d'AcideComp est créée et prête à accueillir chaque acide 
+	 * que lui enverra un ARNtManager 
+	 */
 	public ChaineLabel()
 	{
 		super();
@@ -24,6 +31,10 @@ public class ChaineLabel extends JLabel
 		//this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
 	}
 	
+	
+	/**
+	 * Cette méthode permet d'ajouter un AcideComp à la chaine
+	 */
 	public void ajouterAcide(AcideComp acide)
 	{
 		this.acideList.add(acide);
@@ -32,12 +43,12 @@ public class ChaineLabel extends JLabel
 		this.setSize(this.getWidth() + ParaADN.LARGEUR_ACIDE, ParaADN.HAUTEUR_ACIDE);
 	}
 	
-	public AcideComp getNuclCpAt(int index)
+	public AcideComp getAcideCpAt(int index)
 	{
 		return this.acideList.get(index);
 	}
 	
-	public void viderHelice()
+	public void viderChaine()
 	{
 		this.acideList.clear();
 	}

@@ -1,5 +1,10 @@
 package ARN;
 
+/**
+ * Classe de donnée du nucléotide Thymine
+ * 
+ * @author Daniel
+ */
 public class Thymine extends Nucleotide
 {
 	private Nucleotide complem;
@@ -14,13 +19,14 @@ public class Thymine extends Nucleotide
 		super("T", bool);
 	}
 	
-
+	//Complémentaire dans l'ADN
 	public Nucleotide getComplementaire()
 	{
 		this.complem = new Adenine();
 		return complem;
 	}
 	
+	//Complémentaire dans l'ARN
 	public Nucleotide getComplementaireARN()
 	{
 		this.complem = new Adenine();

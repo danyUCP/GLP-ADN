@@ -1,9 +1,16 @@
 package ARN;
 
+/**
+ * Classe de donnée d'un codon. 
+ * Chaque codon est une composition de 3 nucléotides
+ * 
+ * @author Daniel
+ */
 public class Codon 
 {
 	private Nucleotide[] triplet;
 	
+	//Constructeur à partir des nucléotides
 	public Codon(Nucleotide n1, Nucleotide n2, Nucleotide n3)
 	{
 		this.triplet = new Nucleotide[3];
@@ -13,6 +20,7 @@ public class Codon
 		triplet[2] = n3;
 	}
 	
+	//Constructeur à partir d'une chaine de 3 caractères
 	public Codon(String c)
 	{
 		this.triplet = new Nucleotide[3];

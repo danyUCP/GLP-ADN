@@ -2,7 +2,6 @@ package ihm.synthese;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,53 +14,58 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import ARN.ARNm;
-import ARN.BrinADN;
-import ARN.BrinARN;
 import ARN.ChaineAA;
+import ARN.ModelSynthese;
+import ihm.BoutonCommande;
+import ihm.CommentLabel;
 import ihm.ParaADN;
 
+@SuppressWarnings("serial")
 public class SyntheseActivity extends JPanel
 {
-	private BrinARN brinArn;
-	private ARNm brinMess;
-	private ChaineAA chaine;
-	private Dimension dim;
 	private JPanel commandes;
+	private Thread activityThread;
+
+	//Elements graphiques de la transcription
+	private ArrayList<ARNtManager> managerList;
+	private ARNmBuilder builder;
 	private JLabel brinARNM;
 	private ChaineLabel chaineLabel;
 	private CommentLabel comment;
-	private JButton play, suivant, recommencer;
-	private boolean stop;
-	private Thread activityThread;
-	private ARNmBuilder builder;
+	private BoutonCommande play, suivant, recommencer;
 	private Image cellule, ribosome;
-	private ArrayList<ARNtManager> managerList;
+	
+	//Données necessaires à l'animation
 	private float alpha;
+	private boolean stop;
+
+	//Données du noyau
+	private ARNm brinMess;
+	private ChaineAA chaine;
+	private ModelSynthese modele;
 
 
-	public SyntheseActivity(JPanel commandes, Dimension dim)
+	/**
+	 * Constructeur de la classe SyntheseActivity.
+	 * 
+	 * Ce construteur définit les dimensions du panel, met à jour le modèle et démarre l'activité
+	 */
+	public SyntheseActivity(ModelSynthese modele, JPanel commandes)
 	{
 		super(null);
+		this.modele = modele;
 		this.commandes = commandes;
+		this.commandes.setBackground(new Color(28, 28, 28));
 		
 		this.stop = true;
 		this.alpha = 0.0f;
 
-
-		this.dim = dim;
-		this.setSize(dim);
-		
-		System.out.println(this.getBounds());
-
-		System.out.println(dim);
-
-
+		this.setBounds(0, 0, ParaADN.LARGEUR_CONTENU, ParaADN.HAUTEUR_CONTENU);
 		this.setBackground(Color.WHITE);
 		
 		try
@@ -74,69 +78,37 @@ public class SyntheseActivity extends JPanel
 			e.printStackTrace();
 		}
 		
+		modele.synthese();
 		synthese();
 	}
 	
-
+	/**
+	 * Cette méthode est la méthode principale du panel. Elle definit la disposition des éléments graphiques de l'activité
+	 * et initialise la liste des managers ainsi que les commandes necéssaires au déclenchement des animations
+	 */
 	public void synthese()
 	{
-		commandes.setBackground(new Color(204, 204, 255));
-
-		brinArn = new BrinADN("TACTGATGCTccaccagccgtGATAACG").transcrire();
-		brinArn.genererIntrons();
-		brinArn.retirerIntrons();
-		brinMess = new ARNm(brinArn);
+		brinMess = modele.getBrinMess();
 		
 		builder = new ARNmBuilder(brinMess, false);
 		brinARNM = builder.creerARNmessager(27, 1);
 		this.add(brinARNM);
 		
-		chaine = new ChaineAA(brinMess);
+		chaine = modele.getChaineAcide();
 		chaineLabel = new ChaineLabel();
 		this.add(chaineLabel);
-		//this.add(new AcideComp(new AcideAmine("Tyr", new Codon("UUU")), 10, 30));
 		
-		System.out.println(builder);
-		System.out.println(chaine);
-
-
-
 		initManagerList();
-
 
 		comment = new CommentLabel("<html>3ème étape : La Synthèse</html>", 0);
 		this.add(comment);
 		
-		play = new JButton("Lancer l'animation");
-		play.addActionListener(new PlayListener());
-		commandes.add(play);
-		
-		suivant = new JButton("Suivant");
-		suivant.setEnabled(false);
-		suivant.addActionListener(new PlayListener());
-		commandes.add(suivant);
-		
-		recommencer = new JButton("Recommencer");
-		recommencer.setEnabled(false);
-		recommencer.addActionListener(new PlayListener());
-		commandes.add(recommencer);
+		initCommandes();
 	}
 	
-	public void initManagerList()
-	{
-		this.managerList = new ArrayList<ARNtManager>();
-		
-		for(int i = 0 ; i < brinMess.getTaille() ; i++)
-		{
-			managerList.add(new ARNtManager(builder.getCodCpAt(i), chaine.getAcideAt(i)));
-			this.add(managerList.get(i).creerARNt(0, 0));
-			managerList.get(i).start();
-		}
-		
-		//System.out.println(managerList);
-	}
-	
-	
+	/**
+	 * Dessine les éléments de fond, images et légende, du panel
+	 */
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;
@@ -164,18 +136,52 @@ public class SyntheseActivity extends JPanel
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 
 	}
-
-	public synchronized void relancer() throws InterruptedException
+	
+	/**
+	 * Cette méthode initialise la liste des ARNtManager 
+	 */
+	public void initManagerList()
 	{
-		notify();
+		this.managerList = new ArrayList<ARNtManager>();
+		
+		for(int i = 0 ; i < brinMess.getTaille() ; i++)
+		{
+			managerList.add(new ARNtManager(builder.getCodCpAt(i), chaine.getAcideAt(i)));
+			this.add(managerList.get(i).creerARNt(0, 0));
+			managerList.get(i).start();
+		}
+		
 	}
 	
-	public synchronized void pause() throws InterruptedException
-	{
-		wait();
-	}
+	//------------------------------- GESTION COMMANDES ------------------------------//
 
+	/**
+	 * Cette méthode initialise les commandes necéssaires au déclenchement des animations
+	 */
+	public void initCommandes()
+	{
+		play = new BoutonCommande("Lancer l'animation");
+		play.addActionListener(new PlayListener());
+		commandes.add(play);
+		
+		suivant = new BoutonCommande("Suivant");
+		suivant.setEnabled(false);
+		suivant.addActionListener(new PlayListener());
+		commandes.add(suivant);
+		
+		recommencer = new BoutonCommande("Recommencer");
+		recommencer.setEnabled(false);
+		recommencer.addActionListener(new PlayListener());
+		commandes.add(recommencer);
+	}
 	
+	/**
+	 * Ecouteur associé aux boutons "play", "suivant" et "recommencer" du panneau de commandes.
+	 *
+	 * Le bouton "play" démarre le thread contenant les animations de l'activité.
+	 * Le bouton "suivant" relance le thread lorsque celui-ci est en pause.
+	 * Le bouton "recommencer" permet de redémarrer l'activité
+	 */
 	private class PlayListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) 
@@ -185,6 +191,7 @@ public class SyntheseActivity extends JPanel
 				if(stop)
 				{				
 					stop = false;
+					play.setEnabled(false);
 					activityThread = new Thread(new Animation());
 					activityThread.start();
 				}
@@ -209,14 +216,31 @@ public class SyntheseActivity extends JPanel
 			}
 		}
 	}
+
+	public synchronized void relancer() throws InterruptedException
+	{
+		notify();
+	}
 	
+	public synchronized void pause() throws InterruptedException
+	{
+		wait();
+	}
+
+	
+	/**
+	 * Cette classe interne gère tous les traitements nécessaires aux animations de l'activité
+	 */
 	private class Animation implements Runnable
 	{
 		public synchronized void run()
 		{
 			comment.setComment("<html>L'assemblage des acides aminés se fait dans un ribosome, constitué de 2 sous-unités. Il se fixe sur l'ARNm</html>", 1);
 			recommencer.setEnabled(true);
-
+ 
+			/*
+			 * Etape 1 : Le brin d'ARNm se déplace en direction du ribosome tandis que celui-ci apparait progressivement
+			 */
 			while(brinARNM.getX() > ParaADN.LARGEUR_NUCL * 15)
 			{				
 				
@@ -252,11 +276,13 @@ public class SyntheseActivity extends JPanel
 			
 			comment.setComment("<html>Pour chacun des codons, le ribosome fixe un ARNt correspondant </html>", 0);
 			
+			/*
+			 * Etape 2 : Donne le signal de départ de chaque thread de managerList qui déplace chaque ARNt
+			 * vers son codon correspondant et qui transfère son acide aminé à la chaine protéique avant de repartir
+			 */
 			for(int i = 0 ; i < managerList.size() + 2 ; i++)
 			{			
-				ARNtManager m1 = null;
-				ARNtManager m2 = null, m3 = null;
-				
+				ARNtManager m1 = null, m2 = null, m3 = null;
 				
 				if(i > -1 && i < managerList.size())
 					m1 = managerList.get(i);
@@ -265,16 +291,14 @@ public class SyntheseActivity extends JPanel
 				if(i > 1 && i < managerList.size() + 2)
 					m3 = managerList.get(i - 2);
 				
-				System.out.println(i + ", " + (i - 1) + ", " + (i - 2));
-				System.out.println(m1 + ", " + m2 + ", " + m3);
-
+				//System.out.println(m1 + ", " + m2 + ", " + m3);
 
 				try 
 				{
 					if(m1 != null)
-						m1.relancer(); System.out.println(m1 + " arrive");
+						m1.relancer(); //System.out.println(m1 + " arrive");
 					if(m3 != null)
-						m3.relancer(); System.out.println(m3 + " repart");
+						m3.relancer(); //System.out.println(m3 + " repart");
 
 				} 
 				catch (InterruptedException e) 
@@ -305,12 +329,13 @@ public class SyntheseActivity extends JPanel
 				if(i == 5)
 					comment.setComment("<html>La chaîne protéique s'allonge avec de nouveaux acides aminés</html>", 0);
 
+				
 
 			}
 			
 
 			suivant.setEnabled(true);					
-			comment.setComment("<html>La lecture s'interrompt lorsque le ribosome arrive à la terminaison du brin d'ARNm</html>", 1);
+			comment.setComment("<html>La traduction s'interrompt lorsque le ribosome arrive à la terminaison du brin d'ARNm</html>", 1);
 
 			try 
 			{
@@ -324,7 +349,9 @@ public class SyntheseActivity extends JPanel
 			alpha = 1.0f;
 			comment.setComment("<html>La synthèse est achevée, la protéine est relachée dans la cellule</html>", 0);
 
-			
+			/*
+			 * Etape 3 : Déplacement de la chain vers le centre et disparition des autres éléments
+			 */
 			while(brinARNM.getX() > -ParaADN.LARGEUR_ARNT * brinMess.getTaille() || chaineLabel.getX() < getWidth() / 2 - chaineLabel.getWidth() / 2)
 			{				
 				
@@ -352,6 +379,9 @@ public class SyntheseActivity extends JPanel
 									
 		}
 		
+		/**
+		 * Cette méthode permet de décaler l'ARNm la chaine d'acides aminés et les ARNt d'un cran vers la gauche 
+		 */
 		public void decalageGauche(ARNtManager m1, ARNtManager m2, ARNtManager m3)
 		{
 			int pas = ParaADN.LARGEUR_ARNT / 12;
@@ -379,7 +409,6 @@ public class SyntheseActivity extends JPanel
 				}
 
 				brinARNM.setLocation(brinARNM.getX() - pas, brinARNM.getY());
-				//chaineLabel.setLocation(chaineLabel.getX() - pas, chaineLabel.getY());
 
 				try
 				{
@@ -394,16 +423,17 @@ public class SyntheseActivity extends JPanel
 
 	}
 	
-	
+	/**
+	 * Cette méthode permet de redémarrer l'activité
+	 */
 	public void resetPanel()
 	{		
 		JPanel parent = (JPanel) SwingUtilities.getUnwrappedParent(this);
 		
-		System.out.println(parent);
 		parent.removeAll();
 		commandes.removeAll();
 		
-		parent.add(new SyntheseActivity(commandes, dim));
+		parent.add(new SyntheseActivity(modele, commandes));
 		
 		parent.revalidate();
 		parent.repaint();
