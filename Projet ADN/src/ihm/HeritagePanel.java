@@ -27,15 +27,15 @@ import heritage.Gametes;
 import heritage.GametesU;
 import heritage.Gene;
 import heritage.Personne;
-import heritage.PhenotypeYeux;
 import ihm.synthese.CommentLabel;
 
 
 public class HeritagePanel extends JPanel {
 	private JPanel section, contenu, menu, header, footer;
 	private JLabel tester;
-	private JButton arbres ,base,phenotype; 
-	private JButton mainMenu, aPropos,enfanter,Nucleotide,Gene,Chromosome,Homo,gpere,gmere,couleur;
+	private BoutonMenu arbres ,base,phenotype; 
+	private BoutonNav mainMenu, aPropos;
+	private BoutonCommande enfanter,Nucleotide,Gene,Chromosome,Homo,gpere,gmere,couleur;
 	private Dimension dim;
 	private Personne pere,mere;
 	private CommentLabel resum;
@@ -120,7 +120,7 @@ public class HeritagePanel extends JPanel {
 		citrouille= new Color(223,109,20);
 		//-------------- PARTIE HEADER ------------------//
 		header = new JPanel();
-		header.setBackground(Color.BLUE);
+		header.setBackground(new Color(28, 28, 28));
 		header.setPreferredSize(new Dimension(dim.width, 40));
 		header.setLayout(new FlowLayout());
 		initNavigateur();
@@ -134,7 +134,7 @@ public class HeritagePanel extends JPanel {
 		
 		//-------------- PARTIE MENU --------------------//
 		menu = new JPanel();
-		menu.setBackground(Color.BLUE);
+		menu.setBackground(new Color(28, 28, 28));
 		menu.setPreferredSize(new Dimension(1200 / 10, dim.height - (100)));
 		menu.setLayout(new FlowLayout());
 		
@@ -165,24 +165,24 @@ public class HeritagePanel extends JPanel {
 		
 		//-------------- PARTIE FOOTER ------------------//
 		footer = new JPanel();
-		footer.setBackground(citrouille);
+		footer.setBackground(new Color(28, 28, 28));
 		footer.setPreferredSize(new Dimension(this.getPreferredSize().width, 60));
 		footer.setLayout(new FlowLayout());
 		this.add(footer, BorderLayout.SOUTH);
 		
-		Nucleotide = new JButton("Nucleotide / ADN");
+		Nucleotide = new BoutonCommande("Nucleotide / ADN");
 		footer.add(Nucleotide);
 		Nucleotide.addActionListener(new NavListener());
 		
-		Gene = new JButton("Gene / Allèle");
+		Gene = new BoutonCommande("Gene / Allèle");
 		footer.add(Gene);
 		Gene.addActionListener(new NavListener());
 		
-		Chromosome = new JButton("Chromatide / Chromosome");
+		Chromosome = new BoutonCommande("Chromatide / Chromosome");
 		footer.add(Chromosome);
 		Chromosome.addActionListener(new NavListener());
 		
-		Homo = new JButton("Homozygote / Hétérozygote");
+		Homo = new BoutonCommande("Homozygote / Hétérozygote");
 		footer.add(Homo);
 		Homo.addActionListener(new NavListener());
 	}
@@ -192,9 +192,9 @@ public class HeritagePanel extends JPanel {
 	public void initMenu()
 	{
 		menu.setLayout(new GridLayout(3, 1, 0, 100));
-		arbres = new JButton("Arbres généalogiques");
-		base = new JButton("Les bases");
-		phenotype= new JButton("Phenotype");
+		arbres = new BoutonMenu("Arbres généalogiques", "ressources/mini_synthese.png");
+		base = new BoutonMenu("Les bases", "ressources/mini_synthese.png");
+		phenotype= new BoutonMenu("Phenotype", "ressources/mini_synthese.png");
 		menu.add(arbres);
 		menu.add(base);	
 		menu.add(phenotype);
@@ -210,8 +210,8 @@ public class HeritagePanel extends JPanel {
 	public void initNavigateur()
 	{
 		header.setLayout(new GridLayout(1, 3, 0, 3));
-		mainMenu = new JButton("Retour à l'accueil");
-		aPropos = new JButton("À propos");
+		mainMenu = new BoutonNav("Retour à l'accueil", "ressources/home.png");
+		aPropos = new BoutonNav("À propos", "ressources/propos.png");
 		header.add(mainMenu);
 		header.add(aPropos);
 		
@@ -383,9 +383,9 @@ public class HeritagePanel extends JPanel {
 				footer.setLayout(new FlowLayout());
 				
 				contenu.add(new Arbre(pere,mere));
-				enfanter = new JButton("faire un enfant");
-				gmere=new JButton("afficher les gamètes de la mère");
-				gpere=new JButton("afficher les gamètes du père");
+				enfanter = new BoutonCommande("faire un enfant");
+				gmere=new BoutonCommande("afficher les gamètes de la mère");
+				gpere=new BoutonCommande("afficher les gamètes du père");
 				footer.add(enfanter);
 				footer.add(gmere);
 				footer.add(gpere);
@@ -451,7 +451,7 @@ public class HeritagePanel extends JPanel {
 				contenu.revalidate();
 				
 				contenu.repaint();
-				couleur = new JButton("Couleur des yeux");
+				couleur = new BoutonCommande("Couleur des yeux");
 				footer.add(couleur);
 				couleur.addActionListener(new NavListener());
 				footer.revalidate();
