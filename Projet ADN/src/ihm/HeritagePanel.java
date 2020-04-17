@@ -27,13 +27,15 @@ import heritage.Gametes;
 import heritage.GametesU;
 import heritage.Gene;
 import heritage.Personne;
+import heritage.PhenotypeYeux;
+import ihm.synthese.CommentLabel;
 
 
 public class HeritagePanel extends JPanel {
 	private JPanel section, contenu, menu, header, footer;
 	private JLabel tester;
 	private JButton arbres ,base,phenotype; 
-	private JButton mainMenu, aPropos,enfanter,Nucleotide,Gene,Chromosome,Homo,gpere,gmere;
+	private JButton mainMenu, aPropos,enfanter,Nucleotide,Gene,Chromosome,Homo,gpere,gmere,couleur;
 	private Dimension dim;
 	private Personne pere,mere;
 	private CommentLabel resum;
@@ -43,6 +45,8 @@ public class HeritagePanel extends JPanel {
 	
 	private ChromatideU test ;
 	private ChromatideU testm ;
+	private Personne personne;
+	private PersonneA pheno;
 	
 	private Gametes ovuleU;
 	private Gametes sperU;
@@ -67,20 +71,45 @@ public class HeritagePanel extends JPanel {
 		Allele aa= new Allele("albinism","al",20);
 		Allele aA= new Allele("albinism","Al",60);
 		
+		Gene nez=new Gene("forme du nez");
+		Allele crochu=new Allele("forme du nez","C",70);
+		Allele fin=new Allele("forme du nez","F",20);
+		
 		Chromatide c1c1 = new Chromatide(o,aA);
 		Chromatide c1c2 = new Chromatide(a,aa);
+		Chromatide c1c3 = new Chromatide(b,aa);
+		Chromatide c1c4 = new Chromatide(o,aa);
 		Chromatide c2c1 = new Chromatide(polyp);
 		Chromatide c2c2= new Chromatide (polyP);
 		Chromatide c3c1= new Chromatide (blue);
 		Chromatide c3c2= new Chromatide (brown);
+		Chromatide c4c1=new Chromatide (crochu);
+		Chromatide c4c2=new Chromatide (fin);
 		
 		
 		
 		Chromosome c1= new Chromosome(c1c1,c1c2);
 		Chromosome c2 = new Chromosome(c2c1,c2c2);
 		Chromosome c3 = new Chromosome(c3c1,c3c2);
-		this.pere = new Personne (c1,c2,c3,c1,"pere");
-		this.mere = new Personne (c1,c2,c3,c1,"mere");
+		Chromosome c4=new Chromosome(c4c1,c4c2);
+		Chromosome c5 = new Chromosome(c1c3,c1c4);
+		Chromosome c6=new Chromosome(c3c1,c3c1);
+		Chromosome c7=new Chromosome(c4c2,c4c2);
+		pere = new Personne (c1,c2,c3,c4,"pere");
+		mere = new Personne (c5,c2,c6,c7,"mere");
+		
+		this.test = new ChromatideU(pere);
+		this.testm = new ChromatideU(mere);
+		
+		ovuleU=new Gametes();
+		sperU=new Gametes();
+		
+		GametesU ovule= new GametesU(testm,ovuleU);
+		GametesU spermatozoide= new GametesU(test,sperU);
+		
+		pheno = new PersonneA(personne,0,0);
+		
+		personne=new Personne(ovule,spermatozoide,"Personne");
 		
 		
 		this.dim = new Dimension(1200, 900);
@@ -259,11 +288,11 @@ public class HeritagePanel extends JPanel {
 				CommentLabel expli=new CommentLabel("<html>Lors de la mitose,les divisions cellulaires successives permettent une distribution"
 						+ " aléatoire des chromatides dans les gamètes. Cette distribution aléatoire entraîne une multitude de combinaisons possibles "
 						+ " lors le la création des gamètes: ceci est la base de la diversité au sein des espèces</html>",12);
-				ChromatideU test = new ChromatideU(pere);
-				ChromatideU testm = new ChromatideU(mere);
+				//ChromatideU test = new ChromatideU(pere);
+				//ChromatideU testm = new ChromatideU(mere);
 				
 				Gametes ovuleU=new Gametes();
-				Gametes sperU=new Gametes();
+				
 				
 				GametesU ovule= new GametesU(testm,ovuleU);
 				GametesU ovule1= new GametesU(testm,ovuleU);
@@ -289,23 +318,23 @@ public class HeritagePanel extends JPanel {
 			else if(e.getSource() == gpere) {
 				contenu.removeAll();
 				PersonneA mers=new PersonneA(pere,1,100);
-				CommentLabel expliquer=new CommentLabel("<html>Cependant lors de la mitose, il peut aussi arriver qu'une division se passe mal"
+				CommentLabel expliquer=new CommentLabel("<html>Cependant lors de la meiose, il peut aussi arriver qu'une division se passe mal"
 						+ " et qu'on se retrouve avec une paire de chromosome à la place d'une chromatide dans les gamètes. "
 						+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",11);
 				
 				CommentLabel expli=new CommentLabel("<html>Lors de la mitose,les divisions cellulaires successives permettent une distribution"
 						+ " aléatoire des chromatides dans les gamètes. Cette distribution aléatoire entraîne une multitude de combinaisons possibles "
 						+ " lors le la création des gamètes: ceci est la base de la diversité au sein des espèces</html>",12);
-				ChromatideU test = new ChromatideU(pere);
-				ChromatideU testm = new ChromatideU(mere);
+				//ChromatideU test = new ChromatideU(pere);
+				//ChromatideU testm = new ChromatideU(mere);
 				
-				Gametes ovuleU=new Gametes();
+				
 				Gametes sperU=new Gametes();
 				
-				GametesU spermatozoide= new GametesU(testm,sperU);
-				GametesU spermatozoide1= new GametesU(testm,sperU);
-				GametesU spermatozoide2= new GametesU(testm,sperU);
-				GametesU spermatozoide3= new GametesU(testm,sperU);
+				GametesU spermatozoide= new GametesU(test,sperU);
+				GametesU spermatozoide1= new GametesU(test,sperU);
+				GametesU spermatozoide2= new GametesU(test,sperU);
+				GametesU spermatozoide3= new GametesU(test,sperU);
 				
 				GametesA ov= new GametesA(spermatozoide,320,0);
 				GametesA ov1= new GametesA(spermatozoide1,320,160);
@@ -322,9 +351,21 @@ public class HeritagePanel extends JPanel {
 				contenu.revalidate();
 				
 				contenu.repaint();
-footer.revalidate();
+				footer.revalidate();
 				
 				footer.repaint();
+			}
+			else if(e.getSource() == couleur) {
+				
+				CommentLabel expliquer=new CommentLabel("",12);
+				
+				contenu.removeAll();
+				contenu.add(expliquer);
+				
+				contenu.revalidate();
+				
+				contenu.repaint();
+				
 			}
 			
 		}
@@ -360,6 +401,7 @@ footer.revalidate();
 				footer.repaint();
 				
 			}
+		
 			else if(e.getSource()==base) {
 				activity=2;
 				contenu.removeAll();
@@ -394,11 +436,24 @@ footer.revalidate();
 						+ "caractères spécifiques à une personne tel que la couleur des cheveux, des yeux, la taille et bien d'autres. "
 						+ " </html>",12);
 				
-				contenu.add(explip);
 				
+				GametesU ovule= new GametesU(testm,ovuleU);
+				GametesU spermatozoide= new GametesU(test,sperU);
+				
+				pheno = new PersonneA(personne,0,0);
+				
+				personne=new Personne(ovule,spermatozoide,"Personne");
+				PhenotypeA affichage=new PhenotypeA(personne,0,200);
+				
+				contenu.add(explip);
+				contenu.add(pheno);
+				contenu.add(affichage);
 				contenu.revalidate();
 				
 				contenu.repaint();
+				couleur = new JButton("Couleur des yeux");
+				footer.add(couleur);
+				couleur.addActionListener(new NavListener());
 				footer.revalidate();
 				
 				footer.repaint();

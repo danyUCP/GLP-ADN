@@ -27,7 +27,7 @@ public class ChromatideU  {
 		
 		this.g4 = new ArrayList<Chromatide>();
 		this.g4.add(p.getPaire4().getPart1());
-		this.g4.add(p.getPaire4().getPart1());
+		this.g4.add(p.getPaire4().getPart2());
 		
 		
 	}

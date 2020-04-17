@@ -31,20 +31,32 @@ public class Test {
 		Allele aa= new Allele("albinism","al",20);
 		Allele aA= new Allele("albinism","Al",60);
 		
+		Gene nez=new Gene("forme du nez");
+		Allele crochu=new Allele("forme du nez","C",70);
+		Allele fin=new Allele("forme du nez","F",20);
+		
 		Chromatide c1c1 = new Chromatide(o,aA);
 		Chromatide c1c2 = new Chromatide(a,aa);
+		Chromatide c1c3 = new Chromatide(b,aa);
+		Chromatide c1c4 = new Chromatide(o,aa);
 		Chromatide c2c1 = new Chromatide(polyp);
 		Chromatide c2c2= new Chromatide (polyP);
 		Chromatide c3c1= new Chromatide (blue);
 		Chromatide c3c2= new Chromatide (brown);
+		Chromatide c4c1=new Chromatide (crochu);
+		Chromatide c4c2=new Chromatide (fin);
 		
 		
 		
 		Chromosome c1= new Chromosome(c1c1,c1c2);
 		Chromosome c2 = new Chromosome(c2c1,c2c2);
 		Chromosome c3 = new Chromosome(c3c1,c3c2);
-		Personne pere = new Personne (c1,c2,c3,c1,"pere");
-		Personne mere = new Personne (c1,c2,c3,c1,"mere");
+		Chromosome c4=new Chromosome(c4c1,c4c2);
+		Chromosome c5 = new Chromosome(c1c3,c1c4);
+		Chromosome c6=new Chromosome(c3c1,c3c1);
+		Chromosome c7=new Chromosome(c4c2,c4c2);
+		Personne pere = new Personne (c1,c2,c3,c4,"pere");
+		Personne mere = new Personne (c5,c2,c6,c7,"mere");
 		
 		ChromatideU test = new ChromatideU(pere);
 		ChromatideU testm = new ChromatideU(mere);
