@@ -5,15 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import ADN.Chromatide;
 
@@ -99,32 +95,32 @@ public class ComposantsMeiose1 extends JLabel implements Runnable {
 	    
 	    
 	    try {
-	        img1 = ImageIO.read(new File("centriole.png"));   
+	        img1 = ImageIO.read(new File("ressources/cycle/centriole.png"));   
 	    
 	    	/*---Centriole2---*/
 
-	        img2 = ImageIO.read(new File("centriole2.png"));
+	        img2 = ImageIO.read(new File("ressources/cycle/centriole2.png"));
 
 	    	/*---Décondensé---*/
 	    
 	    	/**---Membrane nucléaire---*/
 
-	        img3 = ImageIO.read(new File("membnucl.png"));
+	        img3 = ImageIO.read(new File("ressources/cycle/membnucl.png"));
 
 	    	/*---Chromosomes---*/
 
-	        img6 = ImageIO.read(new File("chromatide1.png"));
+	        img6 = ImageIO.read(new File("ressources/cycle/chromatide1.png"));
 
-	        img7 = ImageIO.read(new File("chromatide2.png")); 
+	        img7 = ImageIO.read(new File("ressources/cycle/chromatide2.png")); 
 	    
 	    	/*---Chromosomes droites---*/
 
-	        img8 = ImageIO.read(new File("chromatide3.png"));
-	        img9 = ImageIO.read(new File("chromatide4.png"));
+	        img8 = ImageIO.read(new File("ressources/cycle/chromatide3.png"));
+	        img9 = ImageIO.read(new File("ressources/cycle/chromatide4.png"));
 	        
 	        /*---Anneau d'actine---*/
 	        
-	        img10 = ImageIO.read(new File("actine.png")); 
+	        img10 = ImageIO.read(new File("ressources/cycle/actine.png")); 
 	        
 	     } catch (IOException e) {
 	       e.printStackTrace();

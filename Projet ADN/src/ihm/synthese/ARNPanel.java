@@ -231,7 +231,11 @@ public class ARNPanel extends JPanel
 			else if(e.getSource() == aPropos)
 			{
 				JOptionPane.showMessageDialog(null,
-	    		          "Créateur : \nLicence : \nCopyright : ",
+	    		          "Créateurs : Anissa BELARBIA, Daniel FRANCOIS et Françoise de Salles TOMEGAH\n"
+	    		          + "Dans le cadre d'un projet en Génie Logiciel\n"
+	    		          + "L2 Informatique\n"	  
+	    		          + "Cergy-Pontoise Université \n\n"
+	    		          + "Remerciements à M.LIU qui nous a supervisé tout au long du semestre",
 	    		          "Informations", JOptionPane.NO_OPTION);
 			}
 				

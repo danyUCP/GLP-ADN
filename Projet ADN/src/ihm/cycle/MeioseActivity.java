@@ -45,7 +45,7 @@ public class MeioseActivity extends JPanel {
 		
 		this.stop = true;
 		
-	//	this.add(mitose1);
+		this.add(mitose1);
 		this.commentaire1=new CommentLabel("<html>Meiose1<br> Pertmet d'avoir des cellules<br> "
 				+ "genetiquement differentes</html>", 4);
 		commentaire1.setBackground(null);
@@ -86,7 +86,7 @@ public class MeioseActivity extends JPanel {
 
 		private Thread thread2;
 		public void run() {
-/*			thread2=new Thread(mitose1);
+			thread2=new Thread(mitose1);
 			thread2.start();
 			while(thread2.isAlive()) {
 				try {
@@ -131,7 +131,7 @@ public class MeioseActivity extends JPanel {
 				repaint();
 			}
 			remove(meiose2);
-		*/	add(telo2);
+			add(telo2);
 			repaint();
 			revalidate(); 
 		}

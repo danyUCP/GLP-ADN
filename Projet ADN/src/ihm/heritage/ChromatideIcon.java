@@ -30,10 +30,10 @@ public class ChromatideIcon extends JLabel {
 		Chromatide c3= new Chromatide();
 		Chromatide c4= new Chromatide();
 		
-		iconMap.put(c1, new ImageIcon("c1c1.png"));
-		iconMap.put(c2, new ImageIcon("c2c1.png"));
-		iconMap.put(c3, new ImageIcon("c3c1.png"));
-		iconMap.put(c4, new ImageIcon("c4c1.png"));
+		iconMap.put(c1, new ImageIcon("ressources/heritage/c1c1.png"));
+		iconMap.put(c2, new ImageIcon("ressources/heritage/c2c1.png"));
+		iconMap.put(c3, new ImageIcon("ressources/heritage/c3c1.png"));
+		iconMap.put(c4, new ImageIcon("ressources/heritage/c4c1.png"));
 		
 		System.out.println("IconMap initialisée");	
 		System.out.println(iconMap);

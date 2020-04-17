@@ -60,7 +60,7 @@ public class ChaineAA
 		
 		try
 		{
-			br = new BufferedReader(new FileReader("codeGen.dany"));
+			br = new BufferedReader(new FileReader("ressources/codeGen.dany"));
 			
 			while((line = br.readLine()) != null)
 			{

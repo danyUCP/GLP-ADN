@@ -27,7 +27,7 @@ public class ArbreFond extends JLabel implements MouseListener {
 		this.posX = posX;
 		this.posY = posY;
 		try {
-			image0 = ImageIO.read(new File("arbrefond.png"));
+			image0 = ImageIO.read(new File("ressources/heritage/arbrefond.png"));
 		} 
 		catch (IOException e) {
 			// TODO Auto-generated catch block

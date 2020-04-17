@@ -88,15 +88,15 @@ public class Telophasesecond extends JLabel {
 		    /**---Chromatides---*/
 		    try {
 		    	
-		    	img3 = ImageIO.read(new File("membnucl.png"));
+		    	img3 = ImageIO.read(new File("ressources/cycle/membnucl.png"));
 		    	
-		        img6 = ImageIO.read(new File("chromatide1.png"));
+		        img6 = ImageIO.read(new File("ressources/cycle/chromatide1.png"));
 
-		        img7 = ImageIO.read(new File("chromatide2.png"));
+		        img7 = ImageIO.read(new File("ressources/cycle/chromatide2.png"));
 		    
-		        img8 = ImageIO.read(new File("chromatide3.png"));
+		        img8 = ImageIO.read(new File("ressources/cycle/chromatide3.png"));
 
-		        img9 = ImageIO.read(new File("chromatide4.png"));
+		        img9 = ImageIO.read(new File("ressources/cycle/chromatide4.png"));
 		       
 		     } catch (IOException e) {
 		       e.printStackTrace();

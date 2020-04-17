@@ -50,11 +50,10 @@ public class AccueilCycle extends JLabel {
 		 Graphics2D g2d = (Graphics2D)g;
 		  
 		    try {
-		        img1 = ImageIO.read(new File("fondcycle.png"));   
+		        img1 = ImageIO.read(new File("ressources/cycle/fondcycle.png"));   
 		    } catch (IOException e) {
 			       e.printStackTrace();
 			     }    
-			  
 		    
 		    g2d.drawImage(img1,0,0, 1080, 700, this);
 			   

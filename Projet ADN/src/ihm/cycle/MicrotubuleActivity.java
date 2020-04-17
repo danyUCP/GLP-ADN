@@ -138,9 +138,9 @@ public class MicrotubuleActivity extends JPanel implements Runnable {
 			 Graphics2D g2d = (Graphics2D)g;
 			 
 			 try {
-			    	 img1 = ImageIO.read(new File("alpha.png"));
-			    	 img2 = ImageIO.read(new File("beta.png"));
-			    	 img3 = ImageIO.read(new File("microtubule.png"));
+			    	 img1 = ImageIO.read(new File("ressources/cycle/alpha.png"));
+			    	 img2 = ImageIO.read(new File("ressources/cycle/beta.png"));
+			    	 img3 = ImageIO.read(new File("ressources/cycle/microtubule.png"));
 			      } catch (IOException e) {
 			        e.printStackTrace();
 			      }

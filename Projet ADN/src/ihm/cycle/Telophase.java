@@ -77,18 +77,18 @@ public class Telophase extends JLabel {
 	    g2d.setFont(font);
 	    	
 	    try {
-	        img3 = ImageIO.read(new File("membnucl.png"));
+	        img3 = ImageIO.read(new File("ressources/cycle/membnucl.png"));
 	    	
 	    	/**--Chromosomes gauches---*/
 	    	
-	        img6 = ImageIO.read(new File("chro1mit.png"));
-	        img7 = ImageIO.read(new File("crossing1.png"));
+	        img6 = ImageIO.read(new File("ressources/cycle/chro1mit.png"));
+	        img7 = ImageIO.read(new File("ressources/cycle/crossing1.png"));
  
 	    
 	    	/**--Chromosomes droites---*/
 
-	        img8 = ImageIO.read(new File("chro2mit.png"));
-	        img9 = ImageIO.read(new File("crossing2.png"));
+	        img8 = ImageIO.read(new File("ressources/cycle/chro2mit.png"));
+	        img9 = ImageIO.read(new File("ressources/cycle/crossing2.png"));
 	     } catch (IOException e) {
 	       e.printStackTrace();
 	     }       

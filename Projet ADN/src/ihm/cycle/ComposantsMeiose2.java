@@ -99,32 +99,32 @@ public class ComposantsMeiose2 extends JLabel implements Runnable {
 	    
 	    
 	    try {
-	        img1 = ImageIO.read(new File("centriole.png"));   
+	        img1 = ImageIO.read(new File("ressources/cycle/centriole.png"));   
 	    
 	    	/*---Centriole2---*/
 
-	        img2 = ImageIO.read(new File("centriole2.png"));
+	        img2 = ImageIO.read(new File("ressources/cycle/centriole2.png"));
 
 	    	/*---Décondensé---*/
 	    
 	    	/**---Membrane nucléaire---*/
 
-	        img3 = ImageIO.read(new File("membnucl.png"));
+	        img3 = ImageIO.read(new File("ressources/cycle/membnucl.png"));
 
 	    	/*---Chromosomes---*/
 
-	        img6 = ImageIO.read(new File("chromatide1.png"));
+	        img6 = ImageIO.read(new File("ressources/cycle/chromatide1.png"));
 
-	        img7 = ImageIO.read(new File("chromatide2.png")); 
+	        img7 = ImageIO.read(new File("ressources/cycle/chromatide2.png")); 
 	    
 	    	/*---Chromosomes droites---*/
 
-	        img8 = ImageIO.read(new File("chromatide3.png"));
-	        img9 = ImageIO.read(new File("chromatide4.png"));
+	        img8 = ImageIO.read(new File("ressources/cycle/chromatide3.png"));
+	        img9 = ImageIO.read(new File("ressources/cycle/chromatide4.png"));
 	        
 	        /*---Anneau d'actine---*/
 	        
-	        img10 = ImageIO.read(new File("actine.png")); 
+	        img10 = ImageIO.read(new File("ressources/cycle/actine.png")); 
 	        
 	     } catch (IOException e) {
 	       e.printStackTrace();

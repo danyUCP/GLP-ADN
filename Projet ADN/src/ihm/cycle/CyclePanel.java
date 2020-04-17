@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -115,6 +116,7 @@ public class CyclePanel extends JPanel {
 		header.add(aPropos);
 		
 		mainMenu.addActionListener(new NavListener());
+		aPropos.addActionListener(new NavListener());
 	}
 	
 	private class NavListener implements ActionListener {	
@@ -122,6 +124,15 @@ public class CyclePanel extends JPanel {
 			if(e.getSource() == mainMenu)
 				fermer();
 			else if(e.getSource() == aPropos)
+			{
+				JOptionPane.showMessageDialog(null,
+	    		          "Créateurs : Anissa BELARBIA, Daniel FRANCOIS et Françoise de Salles TOMEGAH\n"
+	    		          + "Dans le cadre d'un projet en Génie Logiciel\n"
+	    		          + "L2 Informatique\n"	  
+	    		          + "Cergy-Pontoise Université \n\n"
+	    		          + "Remerciements à M.LIU qui nous a supervisé tout au long du semestre",
+	    		          "Informations", JOptionPane.NO_OPTION);
+			}
 				
 			
 			contenu.revalidate();
@@ -132,11 +143,11 @@ public class CyclePanel extends JPanel {
 	/**Instanciation et ajout d'elements du menu*/
 	public void initMenu() {
 		menu.setLayout(new GridLayout(5, 1, 0, 10));
-		mitose = new BoutonMenu("Mitose", "ressources/mini_synthese.png");
-		replication = new BoutonMenu("Replication", "ressources/mini_synthese.png");
-		crossing = new BoutonMenu("CrossingOver", "ressources/mini_synthese.png");
-		meiose = new BoutonMenu("Méiose", "ressources/mini_synthese.png");
-		zoommt = new BoutonMenu("Réseau", "ressources/mini_synthese.png");
+		mitose = new BoutonMenu("Mitose", "ressources/mini_activity.png");
+		replication = new BoutonMenu("Replication", "ressources/mini_activity.png");
+		crossing = new BoutonMenu("CrossingOver", "ressources/mini_activity.png");
+		meiose = new BoutonMenu("Méiose", "ressources/mini_activity.png");
+		zoommt = new BoutonMenu("Réseau", "ressources/mini_activity.png");
 		menu.add(mitose);
 		menu.add(replication);
 		menu.add(crossing);

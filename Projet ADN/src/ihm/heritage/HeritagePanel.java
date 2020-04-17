@@ -4,18 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -197,9 +193,9 @@ public class HeritagePanel extends JPanel {
 	public void initMenu()
 	{
 		menu.setLayout(new GridLayout(3, 1, 0, 100));
-		arbres = new BoutonMenu("Arbres généalogiques", "ressources/mini_synthese.png");
-		base = new BoutonMenu("Les bases", "ressources/mini_synthese.png");
-		phenotype= new BoutonMenu("Phenotype", "ressources/mini_synthese.png");
+		arbres = new BoutonMenu("Arbres généalogiques", "ressources/mini_activity.png");
+		base = new BoutonMenu("Les bases", "ressources/mini_activity.png");
+		phenotype= new BoutonMenu("Phenotype", "ressources/mini_activity.png");
 		menu.add(arbres);
 		menu.add(base);	
 		menu.add(phenotype);
@@ -222,6 +218,7 @@ public class HeritagePanel extends JPanel {
 		
 		
 		mainMenu.addActionListener(new NavListener());
+		aPropos.addActionListener(new NavListener());
 	}
 	
 	class NavListener implements ActionListener
@@ -230,11 +227,18 @@ public class HeritagePanel extends JPanel {
 		{
 			if(e.getSource() == mainMenu)
 				fermer();
-			else if(e.getSource() == aPropos) {
-				
+			else if(e.getSource() == aPropos) 
+			{
+				JOptionPane.showMessageDialog(null,
+	    		          "Créateurs : Anissa BELARBIA, Daniel FRANCOIS et Françoise de Salles TOMEGAH\n"
+	    		          + "Dans le cadre d'un projet en Génie Logiciel\n"
+	    		          + "L2 Informatique\n"	  
+	    		          + "Cergy-Pontoise Université \n\n"
+	    		          + "Remerciements à M.LIU qui nous a supervisé tout au long du semestre",
+	    		          "Informations", JOptionPane.NO_OPTION);
 			}
 			else if(e.getSource() == Nucleotide) {
-				JLabel adn = new JLabel( new ImageIcon( "adn.png"));
+				JLabel adn = new JLabel( new ImageIcon( "ressources/heritage/adn.png"));
 				contenu.removeAll();
 				contenu.setLayout(new BorderLayout());
 				contenu.add(resum);
@@ -246,7 +250,7 @@ public class HeritagePanel extends JPanel {
 				
 			}
 			else if(e.getSource() == Gene) {
-				JLabel adn = new JLabel( new ImageIcon( "gene.png"));
+				JLabel adn = new JLabel( new ImageIcon( "ressources/heritage/gene.png"));
 				contenu.removeAll();
 				contenu.setLayout(new BorderLayout());
 				contenu.add(resum);
@@ -258,7 +262,7 @@ public class HeritagePanel extends JPanel {
 				
 			}
 			else if(e.getSource() == Chromosome) {
-				JLabel adn = new JLabel( new ImageIcon( "Chromosome.png"));
+				JLabel adn = new JLabel( new ImageIcon( "ressources/heritage/Chromosome.png"));
 				contenu.removeAll();
 				contenu.setLayout(new BorderLayout());
 				contenu.add(resum);
@@ -270,7 +274,7 @@ public class HeritagePanel extends JPanel {
 				
 			}
 			else if(e.getSource() == Homo) {
-				JLabel adn = new JLabel( new ImageIcon( "homozygote.png"));
+				JLabel adn = new JLabel( new ImageIcon( "ressources/heritage/homozygote.png"));
 				contenu.removeAll();
 				contenu.setLayout(new BorderLayout());
 				contenu.add(resum);

@@ -88,8 +88,8 @@ public class Microtubs extends JLabel {
 	private void initMap() {
 		iconMap = new HashMap<String, ImageIcon>();
 		
-		iconMap.put((new Alpha()).toString(), new ImageIcon("alpha.png"));
-		iconMap.put((new Beta()).toString(), new ImageIcon("beta.png"));
+		iconMap.put((new Alpha()).toString(), new ImageIcon("ressources/cycle/alpha.png"));
+		iconMap.put((new Beta()).toString(), new ImageIcon("ressources/cycle/beta.png"));
 
 		
 	}

@@ -41,26 +41,26 @@ public class PersonneA extends JLabel implements MouseListener{
 		
 		
 		try {
-			image0 = ImageIO.read(new File("c0.png"));
+			image0 = ImageIO.read(new File("ressources/heritage/c0.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			image1 = ImageIO.read(new File("c1.png"));
+			image1 = ImageIO.read(new File("ressources/heritage/c1.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
-			image2 = ImageIO.read(new File("c2.png"));
+			image2 = ImageIO.read(new File("ressources/heritage/c2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			image3 = ImageIO.read(new File("c3.png"));
+			image3 = ImageIO.read(new File("ressources/heritage/c3.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

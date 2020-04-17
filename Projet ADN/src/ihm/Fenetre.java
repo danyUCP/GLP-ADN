@@ -123,7 +123,7 @@ public class Fenetre extends JFrame
 		{
 			try
 			{
-				img = ImageIO.read(new File("adnfond3"));
+				img = ImageIO.read(new File("ressources/adnfond3"));
 			}
 			catch(IOException e)
 			{

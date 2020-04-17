@@ -167,8 +167,8 @@ public class ReplicationActivity extends JPanel implements Runnable {
 			 Graphics2D g2d = (Graphics2D)g;
 			 
 			 try {
-			    	 img1 = ImageIO.read(new File("helicase.png"));
-			    	 img2 = ImageIO.read(new File("liaison.png"));
+			    	 img1 = ImageIO.read(new File("ressources/cycle/helicase.png"));
+			    	 img2 = ImageIO.read(new File("ressources/cycle/liaison.png"));
 			        
 			      } catch (IOException e) {
 			        e.printStackTrace();

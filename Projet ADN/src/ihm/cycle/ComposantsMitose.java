@@ -123,34 +123,34 @@ public class ComposantsMitose extends JLabel implements Runnable {
 	    	
 	    	/**---Centrioles---*/
 	    	
-	    	 img1 = ImageIO.read(new File("centriole.png"));
-	    	 img2 = ImageIO.read(new File("centriole2.png"));
+	    	 img1 = ImageIO.read(new File("ressources/cycle/centriole.png"));
+	    	 img2 = ImageIO.read(new File("ressources/cycle/centriole2.png"));
 	    	
 	    	/**---Decondense---*/
 		    
 	    	/**---Membrane nucleaire---*/
 	    	
-	    	 img3 = ImageIO.read(new File("membnucl.png"));
+	    	 img3 = ImageIO.read(new File("ressources/cycle/membnucl.png"));
 	    	
 	    	/**---ADN decondense---*/
 	    	
-	    	img4 = ImageIO.read(new File("noncond.png"));
+	    	img4 = ImageIO.read(new File("ressources/cycle/noncond.png"));
 	    	
-	        img5 = ImageIO.read(new File("noncond2.png"));
+	        img5 = ImageIO.read(new File("ressources/cycle/noncond2.png"));
 	      
 	        /**---Condense---*/
 	        
 	        /**---Chromosomes gauches---*/
 	        
-	        img6 = ImageIO.read(new File("chro1mit.png"));
-	        img7 = ImageIO.read(new File("crossing1.png"));
+	        img6 = ImageIO.read(new File("ressources/cycle/chro1mit.png"));
+	        img7 = ImageIO.read(new File("ressources/cycle/crossing1.png"));
 	        
 	        /**---Chromosomes droites---*/
 	        
-	        img8 = ImageIO.read(new File("chro2mit.png"));
-	        img9 = ImageIO.read(new File("crossing2.png"));
+	        img8 = ImageIO.read(new File("ressources/cycle/chro2mit.png"));
+	        img9 = ImageIO.read(new File("ressources/cycle/crossing2.png"));
 	        
-	        img10 = ImageIO.read(new File("actine.png"));
+	        img10 = ImageIO.read(new File("ressources/cycle/actine.png"));
 	        
 	      } catch (IOException e) {
 	        e.printStackTrace();
