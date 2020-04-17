@@ -22,10 +22,6 @@ public class Arbre extends JPanel implements Runnable  {
 	private Personne pere;
 	private Personne mere;
 	
-	private BufferedImage image;
-	private BufferedImage image1;
-	private BufferedImage image2;
-	private BufferedImage image3;
 	
 	private CommentLabel explication;
 	
@@ -52,24 +48,20 @@ public class Arbre extends JPanel implements Runnable  {
 		CommentLabel resum=new CommentLabel("<html>Pour une première expérience, "
 				+ "voici le génome de deux parents  </html>",10);
 		this.add(resum);
-		CommentLabel expliquer=new CommentLabel("<html>Chaque personne produit des gamètes: ovule pour les femmes et spermatozoïde pour les hommes"
-				+ " Lors des rapports sexuels, les ovules sont fécondés par les spermatozoides, les paires de chromosomes se forment "
-				+ "en fonction de leurs positions respectifs pour obtenir le génome de l'enfant</html>",11);
+		//CommentLabel expliquer=new CommentLabel("<html>Chaque personne produit des gamètes: ovule pour les femmes et spermatozoïde pour les hommes"
+			//	+ " Lors des rapports sexuels, les ovules sont fécondés par les spermatozoides, les paires de chromosomes se forment "
+				//+ "en fonction de leurs positions respectifs pour obtenir le génome de l'enfant</html>",11);
 		
-		this.add(expliquer);
+		//this.add(expliquer);
 
 		PersonneA pers=new PersonneA(pere,0,100);
 		PersonneA mers=new PersonneA(mere,1,100);
 		GametesA ov= new GametesA(ovule,100,100);
 		GametesA ov1= new GametesA(ovule1,100,300);
 		
-		//Choix merec=new Choix(0,100,"mere");
-		//Choix perec=new Choix(360,100,"pere");
-		//this.add(merec);
 		this.add(pers);
 		this.add(mers);
-		//this.add(ov);
-		//this.add(ov1);
+		
 		Dictionnaire dico=new Dictionnaire(750,230);
 		this.add(dico);
 		

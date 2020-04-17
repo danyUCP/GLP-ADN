@@ -14,7 +14,7 @@ public class PhenotypeNez {
 		this.per = per;
 		
 		part1=per.getPaire4().getPart1().getG1();
-		part2=per.getPaire4().getPart1().getG1();
+		part2=per.getPaire4().getPart2().getG1();
 		
 		if((part1.getNameA()=="F")&(part2.getNameA()=="F")) {
 			poly="La personne a deux allèles F: "
