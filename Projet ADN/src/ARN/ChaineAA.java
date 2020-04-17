@@ -6,10 +6,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Classe de traitement de la chaine d'acides aminés.
+ * 
+ * ChaineAA effectue les traitements sur les acides aminés. Elle permet de traduire, selon le code génétique,
+ * chacun des codons d'un brin d'ARNm en acide aminé et de d'ordonner l'ensemble de ces acides dans une ArrayList.
+ * 
+ * @author Daniel
+ */
 public class ChaineAA 
 {
+	//Code génétique issu d'un fichier externe
 	private static HashMap<String, AcideAmine> codeGenetique;
+	
 	private ArrayList<AcideAmine> chaine;
+	
 	
 	public ChaineAA()
 	{
@@ -17,6 +28,9 @@ public class ChaineAA
 			remplirCodeMap();
 	}
 	
+	/**
+	 * Le constructeur traduit chaque codon de l'ARN messager en acide et ajoute cet acide dans l'ArrayList
+	 */
 	public ChaineAA(ARNm messager)
 	{		
 		if(codeGenetique == null)
@@ -32,6 +46,10 @@ public class ChaineAA
 	}
 	
 	
+	/**
+	 * Cette méthode permet d'extraire les couples codon/acide d'un fichier externe et de stocker
+	 * ces couples dans la HashMap statique codeGenetique
+	 */
 	public void remplirCodeMap()
 	{
 		BufferedReader br = null;
@@ -68,6 +86,7 @@ public class ChaineAA
 			}
 		}
 	}
+	
 	
 	public static HashMap<String, AcideAmine> getCodeGenetique()
 	{

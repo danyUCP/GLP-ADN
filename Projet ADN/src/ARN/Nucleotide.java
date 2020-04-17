@@ -1,5 +1,12 @@
 package ARN;
 
+/**
+ * Classe de donnée de l'ensemble des nucléotides. 
+ * Chaque nucléotide a une lettre, un booléen pour savoir si c'est un exon ainsi qu'un complémentaire
+ * dans l'ADN et l'ARN
+ * 
+ * @author Daniel
+ */
 public abstract class Nucleotide 
 {
 	private String lettre;

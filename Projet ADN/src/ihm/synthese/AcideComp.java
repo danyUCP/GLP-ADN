@@ -22,14 +22,28 @@ import ihm.ParaADN;
 @SuppressWarnings("serial")
 public class AcideComp extends JLabel implements MouseListener
 {
+	//Répertoire d'images
 	private static HashMap<String, Image> acideMap;
-	private AcideAmine acide;
+	
+	//Fichier image
 	private Image imageAA;
+
+	//Position et dimension
 	private int posX;
 	private int posY;
 	private int largeur;
 	private int hauteur;
 	
+	//Données de l'acide aminé à représenter
+	private AcideAmine acide;
+
+	
+	/**
+	 * Contructeur de la classe AcideComp.
+	 * 
+	 * A la construction d'un objet AcideComp, un JLabel est crée et contient l'image correspondant à l'acide aminé 
+	 * avec sa position et ses dimensions
+	 */
 	public AcideComp(AcideAmine acide, int posX, int posY)
 	{
 		super();
@@ -49,6 +63,9 @@ public class AcideComp extends JLabel implements MouseListener
 		this.addMouseListener(this);
 	}
 	
+	/**
+	 * Cette méthode permet d'initialiser le répertoire d'images
+	 */
 	private void initMap()
 	{
 		acideMap = new HashMap<String, Image>();
@@ -83,10 +100,13 @@ public class AcideComp extends JLabel implements MouseListener
 			e.printStackTrace();
 		}
 		
-		System.out.println("AcideMap initialisée");	
-		System.out.println(acideMap);
+		//System.out.println("AcideMap initialisée");	
+		//System.out.println(acideMap);
 	}
 	
+	/**
+	 * Dessine l'acide aminé avec la transparence souhaitée et le nom correspondant en son centre;
+	 */
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;

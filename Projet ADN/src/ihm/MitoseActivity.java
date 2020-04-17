@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import ihm.synthese.CommentLabel;
-
 
 
 public class MitoseActivity extends JPanel {

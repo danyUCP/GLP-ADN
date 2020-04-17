@@ -2,7 +2,6 @@ package ihm.synthese;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -22,6 +20,8 @@ import javax.swing.SwingUtilities;
 import ARN.BrinADN;
 import ARN.BrinARN;
 import ARN.ModelSynthese;
+import ihm.BoutonCommande;
+import ihm.CommentLabel;
 import ihm.ParaADN;
 
 /**
@@ -39,7 +39,7 @@ public class TranscriptionActivity extends JPanel
 	private BrinHelice helice1, helice2;
 	private JLabel brinArnL;
 	private CommentLabel comment;
-	private JButton play, suivant, recommencer;
+	private BoutonCommande play, suivant, recommencer;
 	private Image noyau, polymerase;
 	
 	//Données necessaires à l'animation
@@ -62,6 +62,7 @@ public class TranscriptionActivity extends JPanel
 		super(null);
 		this.modele = modele;
 		this.commandes = commandes;
+		this.commandes.setBackground(new Color(28, 28, 28));
 		
 		this.stop = true;
 		this.alpha = 0.0f;
@@ -90,9 +91,7 @@ public class TranscriptionActivity extends JPanel
 	 * et initialise les commandes necéssaires au déclenchement des animations
 	 */
 	public void transcription()
-	{
-		commandes.setBackground(new Color(204, 204, 255));
-		
+	{		
 		this.brinCodant = modele.getBrinADN();
 		
 		posHelice = 24;
@@ -151,16 +150,16 @@ public class TranscriptionActivity extends JPanel
 	 */
 	public void initCommandes()
 	{
-		play = new JButton("Lancer l'animation");
+		play = new BoutonCommande("Lancer l'animation");
 		play.addActionListener(new PlayListener());
 		commandes.add(play);
 		
-		suivant = new JButton("Suivant");
+		suivant = new BoutonCommande("Suivant");
 		suivant.setEnabled(false);
 		suivant.addActionListener(new PlayListener());
 		commandes.add(suivant);
 		
-		recommencer = new JButton("Recommencer");
+		recommencer = new BoutonCommande("Recommencer");
 		recommencer.setEnabled(false);
 		recommencer.addActionListener(new PlayListener());
 		commandes.add(recommencer);
@@ -182,6 +181,7 @@ public class TranscriptionActivity extends JPanel
 				if(stop)
 				{				
 					stop = false;
+					play.setEnabled(false);
 					activityThread = new Thread(new Animation());
 					activityThread.start();
 				}
@@ -234,7 +234,7 @@ public class TranscriptionActivity extends JPanel
 			recommencer.setEnabled(true);
 			
 			/* 
-			 * Apparition progressive de l'ARN Polymérase et déplacement des 2 hélices de l'ADN jusqu'à son niveau.
+			 * Etape 1 : Apparition progressive de l'ARN Polymérase et déplacement des 2 hélices de l'ADN jusqu'à son niveau.
 			 * Les deux hélices continuent leur déplacement vers la gauche tandis que le brin d'ARN se forme progressivement
 			 */
 			while(helice1.getX() > ParaADN.LARGEUR_NUCL * helice1.getDecalage() - helice1.getWidth())
@@ -302,7 +302,7 @@ public class TranscriptionActivity extends JPanel
 			comment.setComment("<html>Le brin d'ARN formé n'est pas encore prêt à quitter le noyau</html>", 0);
 			
 			/* 
-			 * Le brin d'ARN formé se déplace horizontalement jusqu'à ce qu'il soit entièrement visible puis il descend
+			 * Etape 2 : Le brin d'ARN formé se déplace horizontalement jusqu'à ce qu'il soit entièrement visible puis il descend
 			 */
 			while(brinArnL.getX() < ParaADN.LARGEUR_NUCL / 2)
 			{
@@ -352,7 +352,6 @@ public class TranscriptionActivity extends JPanel
 	{		
 		JPanel parent = (JPanel) SwingUtilities.getUnwrappedParent(this);
 		
-		System.out.println(parent);
 		parent.removeAll();
 		commandes.removeAll();
 		

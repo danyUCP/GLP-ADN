@@ -1,5 +1,11 @@
 package ARN;
 
+/**
+ * Classe de donnée d'un acide aminé. 
+ * Chaque acide aminé a un nom abrégé et un codon associé 
+ * 
+ * @author Daniel
+ */
 public class AcideAmine 
 {
 	private String nom;

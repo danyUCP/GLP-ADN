@@ -1,4 +1,4 @@
-package ihm;
+package ihm.synthese;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -12,11 +12,24 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.Codon;
+import ihm.ParaADN;
 
+/**
+ * CodonComp est la classe gère la représentation des codons sous forme triplet de NuclComp
+ * 
+ * @author Daniel
+ */
+/**
+ * @author danie
+ *
+ */
+@SuppressWarnings("serial")
 public class CodonComp extends JLabel implements MouseListener
 {
+	//Triplet de NuclComp correspondant 
 	private NuclComp[] triplet;
-	private Codon codon;
+	
+	//Position,dimension et orientation
 	private int posX;
 	private int posY;
 	private int largeur;
@@ -24,7 +37,15 @@ public class CodonComp extends JLabel implements MouseListener
 	private boolean orientation;
 	private float alpha = 1.0f;
 
-	
+	//Données du codon à représenter
+	private Codon codon;
+
+	/**
+	 * Contructeur de la classe CodonComp.
+	 * 
+	 * A la construction d'un objet CodonComp, un JLabel est crée et contient trois NuclComp correspondant
+	 * aux trois nucléotides que contient le codon
+	 */
 	public CodonComp(Codon codon, int posX, int posY, boolean orientation)
 	{
 		this.codon = codon;
@@ -52,22 +73,21 @@ public class CodonComp extends JLabel implements MouseListener
 		this.addMouseListener(this);
 	}
 	
+	/**
+	 * Dessine le codon avec la transparence souhaitée
+	 */
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		super.paintComponent(g2d);
-		//System.out.println("On repeint");
-
+		super.paintComponent(g2d); 
 	}    
-	
-	public float getAlpha() 
-	{
-		return alpha;
-	}
 
+	/**
+	 * Mise à jour de la transparence
+	 */
 	public void setAlpha(float alpha) 
 	{
 		this.alpha = alpha;
@@ -75,6 +95,11 @@ public class CodonComp extends JLabel implements MouseListener
 		triplet[1].setAlpha(this.alpha);
 		triplet[2].setAlpha(this.alpha);
 		repaint();
+	}
+	
+	public float getAlpha() 
+	{
+		return alpha;
 	}
 	
 	public int getPosX() 

@@ -20,12 +20,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import ARN.BrinADN;
 import ARN.ModelSynthese;
+import ihm.BoutonCommande;
+import ihm.BoutonMenu;
+import ihm.BoutonNav;
+import ihm.CommentLabel;
 import ihm.Fenetre;
 import ihm.ParaADN;
 
@@ -39,8 +44,9 @@ public class ARNPanel extends JPanel
 {
 	private JPanel section, menu, header, footer;
 	private ContenuPanel contenu;
-	private JButton transcription, maturation, synthese, saisie, generer; 
-	private JButton mainMenu, aPropos;
+	private BoutonMenu transcription, maturation, synthese;
+	private BoutonCommande saisie, generer; 
+	private BoutonNav mainMenu, aPropos;
 	private Dimension dim;
 	
 	private CommentLabel comment1, comment2, comment3;
@@ -81,7 +87,7 @@ public class ARNPanel extends JPanel
 		
 		//-------------- PARTIE MENU --------------------//
 		menu = new JPanel();
-		menu.setBackground(Color.DARK_GRAY);
+		menu.setBackground(new Color(28, 28, 28));
 		menu.setPreferredSize(new Dimension(ParaADN.LARGEUR_MENU, ParaADN.HAUTEUR_MENU));
 		menu.setLayout(new FlowLayout());
 		initMenu();
@@ -104,7 +110,7 @@ public class ARNPanel extends JPanel
 		
 		//-------------- PARTIE FOOTER ------------------//
 		footer = new JPanel();
-		footer.setBackground(new Color(204, 204, 255));
+		footer.setBackground(new Color(28, 28, 28));
 		footer.setPreferredSize(new Dimension(ParaADN.LARGEUR_FENETRE, 60));
 		footer.setLayout(new FlowLayout());
 		initFooter();
@@ -124,10 +130,10 @@ public class ARNPanel extends JPanel
 	 */
 	public void initMenu()
 	{
-		menu.setLayout(new GridLayout(3, 1, 0, 3));
-		transcription = new JButton("Transcription");
-		maturation = new JButton("Maturation");
-		synthese = new JButton("Synthèse");
+		menu.setLayout(new GridLayout(3, 1, 0, 40));
+		transcription = new BoutonMenu("Transcription", "ressources/mini_transcription.png");
+		maturation = new BoutonMenu("Maturation", "ressources/mini_maturation.png");
+		synthese = new BoutonMenu("Synthèse", "ressources/mini_synthese.png");
 		
 		transcription.setEnabled(false);
 		maturation.setEnabled(false);
@@ -192,6 +198,9 @@ public class ARNPanel extends JPanel
 
 			contenu.revalidate();
 			contenu.repaint();
+			
+			footer.revalidate();
+			footer.repaint();
 		}
 	}
 	
@@ -204,12 +213,13 @@ public class ARNPanel extends JPanel
 	public void initNavigateur()
 	{
 		header.setLayout(new GridLayout(1, 3, 0, 3));
-		mainMenu = new JButton("Retour à l'accueil");
-		aPropos = new JButton("À propos");
+		mainMenu = new BoutonNav("Retour à l'accueil", "ressources/home.png");
+		aPropos = new BoutonNav("À propos", "ressources/propos.png");
 		header.add(mainMenu);
 		header.add(aPropos);
 		
 		mainMenu.addActionListener(new NavListener());
+		aPropos.addActionListener(new NavListener());
 	}
 	
 	private class NavListener implements ActionListener
@@ -219,6 +229,11 @@ public class ARNPanel extends JPanel
 			if(e.getSource() == mainMenu)
 				fermer();
 			else if(e.getSource() == aPropos)
+			{
+				JOptionPane.showMessageDialog(null,
+	    		          "Créateur : \nLicence : \nCopyright : ",
+	    		          "Informations", JOptionPane.NO_OPTION);
+			}
 				
 			
 			contenu.revalidate();
@@ -233,8 +248,8 @@ public class ARNPanel extends JPanel
 	 */
 	public void initFooter()
 	{
-		saisie = new JButton("Saisir mon brin ADN");
-		generer = new JButton("Générer aléatoirement");
+		saisie = new BoutonCommande("Saisir mon brin ADN");
+		generer = new BoutonCommande("Générer aléatoirement");
 		footer.add(saisie);
 		footer.add(generer);
 		
@@ -288,7 +303,6 @@ public class ARNPanel extends JPanel
 	 * codons. La saisie d'un brin valide met à jour le modèle, affiche le brin saisie sur le panel "contenu"
 	 * et débloque l'accès aux boutons du menu d'activité.
 	 */
-	@SuppressWarnings("serial")
 	private class SaisieDial extends JDialog
 	{
 		private JTextField sequence;

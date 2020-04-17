@@ -1,15 +1,17 @@
 package ihm.synthese;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import ARN.BrinADN;
-import ihm.NuclComp;
 import ihm.ParaADN;
 
+/**
+ * BrinBuilder est la classe gère la représentation d'un brin d'ADN sous forme de composant graphique
+ * 
+ * @author Daniel
+ */
 public class BrinBuilder
 {
 	private ArrayList<NuclComp> nuclList;
@@ -17,16 +19,13 @@ public class BrinBuilder
 	private BrinADN brin;
 	private boolean orientation;
 	
-	public BrinBuilder(BrinADN brin)
-	{
-		this.brin = brin;
-		this.orientation = true;
-		
-		initList();
-		
-		this.brinLabel = new JLabel();
-	}
 	
+	/**
+	 * Contructeur de la classe BrinBuilder.
+	 * 
+	 * A la construction d'un objet BrinBuilder, la liste de NuclComp est créée en fonction de chaque nucléotide contenu dans le brin
+	 * d'ADN et un JLabel prêt à accueillir la chaine de NuclComp 
+	 */
 	public BrinBuilder(BrinADN brin, boolean orientation)
 	{
 		this.brin = brin;
@@ -38,18 +37,20 @@ public class BrinBuilder
 	}
 	
 	
+	/**
+	 * Cette méthode permet d'initialiser la liste de NuclComp correspondant aux nucléotides que contient le brin
+	 */
 	private void initList()
 	{
 		this.nuclList = new ArrayList<NuclComp>();
 		
 		for(int i = 0 ; i < brin.getTaille() ; i++)
 			this.nuclList.add(new NuclComp(brin.getNuclAt(i), i, -1, orientation));
-		
-		System.out.println("Liste de nucléotides composantes initialisée");	
-		System.out.println(nuclList);
-
 	}
 	
+	/**
+	 * Cette méthode renvoie le JLabel du brin dimensionné et positionné et contenant tous les NuclComp
+	 */
 	public JLabel creerBrin(int x, int y)
 	{
 		this.brinLabel.setLayout(null);
@@ -60,9 +61,7 @@ public class BrinBuilder
 		
 		for(int i = 0 ; i < nuclList.size() ; i++)
 			this.brinLabel.add(this.nuclList.get(i));
-		
-		System.out.println(brinLabel.getBounds());
-		
+				
 		return brinLabel;
 	}
 	

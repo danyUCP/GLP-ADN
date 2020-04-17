@@ -1,7 +1,6 @@
 package ihm.synthese;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,40 +12,55 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import ARN.ARNm;
-import ARN.BrinADN;
 import ARN.BrinARN;
 import ARN.ModelSynthese;
-import ihm.NuclComp;
+import ihm.BoutonCommande;
+import ihm.CommentLabel;
 import ihm.ParaADN;
 
+/**
+ * MaturationActivity est la classe qui gère le panel de l'activité Maturation
+ * 
+ * @author Daniel
+ */
 @SuppressWarnings("serial")
 public class MaturationActivity extends JPanel
 {
-	private BrinARN brinArn;
-	private Dimension dim;
 	private JPanel commandes;
-	private JLabel brin;
-	private CommentLabel comment;
-	private JButton play, suivant, recommencer;
-	private boolean mature, stop;
 	private Thread activityThread;
+
+	//Elements graphiques de la transcription
+	private JLabel brin;
 	private ARNmBuilder builder, builder2;
+	private CommentLabel comment;
+	private BoutonCommande play, suivant, recommencer;
 	private Image noyau;
+	
+	//Données necessaires à l'animation
 	private int noyX = -300;
+	private boolean mature, stop;
+
+	//Données du noyau
+	private BrinARN brinArn;
 	private ModelSynthese modele;
 
 	
+	/**
+	 * Constructeur de la classe MaturationActivity.
+	 * 
+	 * Ce construteur définit les dimensions du panel, met à jour le modèle et démarre l'activité
+	 */
 	public MaturationActivity(ModelSynthese modele, JPanel commandes)
 	{
 		super(null);
 		this.modele = modele;
 		this.commandes = commandes;
+		this.commandes.setBackground(new Color(28, 28, 28));
 		
 		this.mature = false;
 		this.stop = true;
@@ -67,11 +81,12 @@ public class MaturationActivity extends JPanel
 		maturation();
 	}
 	
+	/**
+	 * Cette méthode est la méthode principale du panel. Elle definit la disposition des éléments graphiques de l'activité
+	 * et initialise les commandes necéssaires au déclenchement des animations
+	 */
 	public void maturation()
-	{
-		commandes.setBackground(new Color(204, 204, 255));
-		
-		
+	{	
 		brinArn = modele.getARNmature();
 		
 		builder = new ARNmBuilder(brinArn, false);
@@ -81,22 +96,57 @@ public class MaturationActivity extends JPanel
 		comment = new CommentLabel("<html>2ème étape : La Maturation</html>", 0);
 		this.add(comment);
 		
-		play = new JButton("Lancer l'animation");
+		initCommandes();		
+	}
+	
+	/**
+	 * Dessine les éléments de fond, images et légende, du panel
+	 */
+	public void paintComponent(Graphics g)
+	{
+		Graphics2D g2d = (Graphics2D)g;
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+		super.paintComponent(g2d);
+		g2d.setColor(new Color(255, 255, 255, 200));
+		g2d.setFont(new Font("Comic sans MS", Font.BOLD, 20));
+		
+		g2d.drawImage(noyau, noyX, -520, 1800, 1800, this);
+		g2d.drawString("Noyau", 10, 30);
+
+		g2d.setColor(new Color(0, 0, 255, 100));
+	}
+	
+	//------------------------------- GESTION COMMANDES ------------------------------//
+
+	/**
+	 * Cette méthode initialise les commandes necéssaires au déclenchement des animations
+	 */
+	public void initCommandes()
+	{
+		play = new BoutonCommande("Lancer l'animation");
 		play.addActionListener(new PlayListener());
 		commandes.add(play);
 		
-		suivant = new JButton("Suivant");
+		suivant = new BoutonCommande("Suivant");
 		suivant.setEnabled(false);
 		suivant.addActionListener(new PlayListener());
 		commandes.add(suivant);
 		
-		recommencer = new JButton("Recommencer");
+		recommencer = new BoutonCommande("Recommencer");
 		recommencer.setEnabled(false);
 		recommencer.addActionListener(new PlayListener());
 		commandes.add(recommencer);
-		
 	}
 	
+	/**
+	 * Ecouteur associé aux boutons "play", "suivant" et "recommencer" du panneau de commandes.
+	 *
+	 * Le bouton "play" démarre le thread contenant les animations de l'activité.
+	 * Le bouton "suivant" relance le thread lorsque celui-ci est en pause.
+	 * Le bouton "recommencer" permet de redémarrer l'activité
+	 */
 	private class PlayListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) 
@@ -106,6 +156,7 @@ public class MaturationActivity extends JPanel
 				if(stop)
 				{				
 					stop = false;
+					play.setEnabled(false);
 					activityThread = new Thread(new Animation());
 					activityThread.start();
 				}
@@ -141,30 +192,32 @@ public class MaturationActivity extends JPanel
 		wait();
 	}
 	
+	
+	//------------------------------- ANIMATIONS DE L'ACTIVITÉ ------------------------------//
+	
+	/**
+	 * Cette méthode permet de rendre progressivement transparents les introns du brin d'ARN
+	 */
 	public void excision()
 	{
 		float alpha = 1.0f;
 		
 		if(!mature)
 		{
-			//modele.maturation();
-
-			//brinArn = modele.getARNmature();
 			brinArn.genererIntrons();
 			mature = true;
-			System.out.println(brinArn);
-
 		}
 		
 		comment.setComment("<html>La maturation est l'étape au cours de laquelle l'ARN devient ARNm, le brin est alors amputé de ses introns</html>", 1);
 
-
+		/*
+		 * Mise à jour de la transparence de tous les introns
+		 */
 		while(alpha > 0.0)
 		{
 			alpha = alpha - 0.05f;
 			if(alpha < 0.01)
 				alpha = 0;
-			//System.out.println(alpha);
 
 			for(int i = 0 ; i < brinArn.getTaille() ; i++)
 			{
@@ -183,6 +236,10 @@ public class MaturationActivity extends JPanel
 		}
 	}
 	
+	/**
+	 * Cette méthode déplace le brin vers le centre du panel et déclenche un second thread simultané qui relie les séquences 
+	 * codantes de l'ARN puis affiche le brin d'ARNm 
+	 */
 	public void epissage()
 	{
 		brinArn.retirerIntrons();
@@ -192,9 +249,15 @@ public class MaturationActivity extends JPanel
 		int echelleX = ((ParaADN.LARGEUR_CONTENU / 2 - brinArn.getTaille() * ParaADN.LARGEUR_NUCL / 2) - brin.getX()) / 12;
 		int echelleY = (brin.getY() - 330) / 10;
 		
+		/*
+		 * Déclenchement de l'animation qui recolle les morceaux du brin
+		 */
 		Thread t = new Thread(new LigatureAnimation());
 		t.start();
 
+		/*
+		 * Deplacement du brin vers le centre
+		 */
 		while(brin.getY() > 330)
 		{
 			brin.setLocation(brin.getX() + echelleX / 2, brin.getY() - echelleY / 2);
@@ -212,7 +275,9 @@ public class MaturationActivity extends JPanel
 		int bx = brin.getX();
 		int by = brin.getY();
 
-		
+		/*
+		 * Création et affichage du brin d'ARNm
+		 */
 		builder2 = new ARNmBuilder(new ARNm(brinArn), false);
 		remove(brin);
 		brin = builder2.creerARNmessager(0, 0);
@@ -222,12 +287,18 @@ public class MaturationActivity extends JPanel
 
 	}
 	
+	/**
+	 * Cette classe interne gère tous les traitements nécessaires aux animations de l'activité
+	 */
 	private class Animation implements Runnable
 	{
 		public synchronized void run()
 		{
 			recommencer.setEnabled(true);
 			
+			/*
+			 * Etape 1 : Transparence des introns
+			 */
 			excision();
 
 			suivant.setEnabled(true);
@@ -241,6 +312,9 @@ public class MaturationActivity extends JPanel
 				e1.printStackTrace();
 			}
 			
+			/*
+			 * Etape 2 : Liaisons des exons détachés
+			 */
 			epissage();
 			
 			suivant.setEnabled(true);
@@ -256,6 +330,9 @@ public class MaturationActivity extends JPanel
 			
 			comment.setComment("<html>Maintenant qu'il est mature, l'ARNm peut quitter le noyau</html>", 0);
 
+			/*
+			 * Etape 3 : Déplacement de l'ARNm et de l'arrière-plan pour simuler une sortie du noyau
+			 */
 			while(noyX > -720)
 			{
 				brin.setLocation(brin.getX() + (ParaADN.LARGEUR_NUCL / 4), brin.getY());
@@ -293,12 +370,18 @@ public class MaturationActivity extends JPanel
 		}
 	}
 	
+	/**
+	 * Cette classe interne gère l'animation de la ligature
+	 */
 	private class LigatureAnimation implements Runnable
 	{
 		public void run() 
 		{
 			builder.retirerNuclCp();
 			
+			/*
+			 * Rapprochement des exons déconnectés de l'ARN
+			 */
 			while(builder.getNuclCpAt(builder.getTaille() - 1).getX() > builder.getTaille() * ParaADN.LARGEUR_NUCL)
 			{
 				for(int i = 0 ; i < builder.getTaille() ; i++)
@@ -329,27 +412,15 @@ public class MaturationActivity extends JPanel
 		}	
 	}
 	
-	public void paintComponent(Graphics g)
-	{
-		Graphics2D g2d = (Graphics2D)g;
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
-		super.paintComponent(g2d);
-		g2d.setColor(new Color(255, 255, 255, 200));
-		g2d.setFont(new Font("Comic sans MS", Font.BOLD, 20));
-		
-		g2d.drawImage(noyau, noyX, -520, 1800, 1800, this);
-		g2d.drawString("Noyau", 10, 30);
-
-		g2d.setColor(new Color(0, 0, 255, 100));
-	}
 	
+	
+	/**
+	 * Cette méthode permet de redémarrer l'activité
+	 */
 	public void resetPanel()
 	{		
 		JPanel parent = (JPanel) SwingUtilities.getUnwrappedParent(this);
 		
-		System.out.println(parent);
 		parent.removeAll();
 		commandes.removeAll();
 		

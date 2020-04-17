@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 import ADN.Chromosome;
-import ihm.synthese.CommentLabel;
 
 public class ComposantsMitose extends JLabel implements Runnable {
 	

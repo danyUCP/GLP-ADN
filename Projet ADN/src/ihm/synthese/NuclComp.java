@@ -1,4 +1,4 @@
-package ihm;
+package ihm.synthese;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -22,47 +22,40 @@ import ARN.Guanine;
 import ARN.Nucleotide;
 import ARN.Thymine;
 import ARN.Uracile;
+import ihm.ParaADN;
 
+/**
+ * NuclComp est la classe gère la représentation des nucléotides sous forme de composants graphiques
+ * 
+ * @author Daniel
+ */
 @SuppressWarnings("serial")
 public class NuclComp extends JLabel implements MouseListener
 {
+	//Répertoire d'images
 	private static HashMap<String, ImageIcon> iconMap;
 
+	//Fichier image
 	private ImageIcon iconNucl;
+	
+	//Position,dimension et orientation
 	private int posX;
 	private int posY;
 	private int largeur;
 	private int hauteur;
-	private boolean orientation, orChange;
-	private Nucleotide nucl;
 	private float alpha = 1.0f;
+	private boolean orientation, orChange;
 	
+	//Données du nucléotide à représenter
+	private Nucleotide nucl;
 	
-	public NuclComp(Nucleotide nucl, int posX, int posY) 
-	{		
-		super();
-		
-		if(iconMap == null)
-			initMap();
-		
-		this.nucl = nucl;
-		this.iconNucl = iconMap.get(nucl.getLettre());
-		this.orientation = true;
-		this.orChange = false;
-		
-		if(orientation == false)
-			rotationImage(180, this);
-		
-		this.setIcon(iconNucl);
-		
-		this.posX = posX;
-		this.posY = posY;
-		this.largeur = ParaADN.LARGEUR_NUCL;
-		this.hauteur = ParaADN.HAUTEUR_NUCL;
-		
-		this.setBounds(posX * largeur, posY, largeur, hauteur);
-	}
-	
+
+	/**
+	 * Contructeur de la classe NuclComp.
+	 * 
+	 * A la construction d'un objet NuclComp, un JLabel est crée et contient l'image correspondant au nucléotide 
+	 * avec sa position, ses dimensions et son orientation
+	 */
 	public NuclComp(Nucleotide nucl, int posX, int posY, boolean orientation) 
 	{		
 		super();
@@ -93,6 +86,9 @@ public class NuclComp extends JLabel implements MouseListener
 	}
 
 	
+	/**
+	 * Cette méthode permet d'initialiser le répertoire d'images
+	 */
 	private void initMap()
 	{
 		iconMap = new HashMap<String, ImageIcon>();
@@ -103,10 +99,13 @@ public class NuclComp extends JLabel implements MouseListener
 		iconMap.put((new Cytosine()).toString(), new ImageIcon("ressources/nucleotides/cytosine.png"));
 		iconMap.put((new Uracile()).toString(), new ImageIcon("ressources/nucleotides/uracile.png"));
 		
-		System.out.println("IconMap initialisée");	
-		System.out.println(iconMap);
+		//System.out.println("IconMap initialisée");	
+		//System.out.println(iconMap);
 	}
 	
+	/**
+	 * Dessine le nucléotide avec la transparence souhaitée et la lettre correspondante en son centre;
+	 */
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;
@@ -120,6 +119,9 @@ public class NuclComp extends JLabel implements MouseListener
 	}    
 	
 	
+	/**
+	 * Cette méthode permet d'orienter le nucléotide dans le sens désiré (vers le haut ou vers le bas)
+	 */
 	public void rotationImage(double degre, ImageObserver o)
 	{
 		Image img = iconNucl.getImage();
@@ -132,6 +134,9 @@ public class NuclComp extends JLabel implements MouseListener
 	}
 	
 	
+	/**
+	 * Cette méthode gère les changements d'orientation
+	 */
 	public void rotation()
 	{
 		if(orChange)

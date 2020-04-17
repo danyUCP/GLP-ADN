@@ -2,6 +2,10 @@ package ARN;
 
 import java.util.HashMap;
 
+/**
+ * ModelSynthese est la classe regroupant l'ensemble des traitements nécéssaires du noyau pour la synthèse des protéines
+ * @author Daniel
+ */
 public class ModelSynthese 
 {
 	private BrinADN brinADN, brinComp;
@@ -11,21 +15,13 @@ public class ModelSynthese
 	
 	public ModelSynthese()
 	{		
-		this.genererBrin();
-		
 		this.chaineAcide = new ChaineAA();
-		System.out.println(ChaineAA.getCodeGenetique());
-	}
-	
-	public ModelSynthese(String seq)
-	{		
-		this.setBrinADN(new BrinADN(seq));
-		
-		this.chaineAcide = new ChaineAA();
-		System.out.println(ChaineAA.getCodeGenetique());
+		//System.out.println(ChaineAA.getCodeGenetique());
 	}
 
-
+	/**
+	 * Cette méthode permet de générer aléatoirement un brin d'ADN et de mettre à jour le modèle
+	 */
 	public void genererBrin()
 	{
 		String seq = "TAC";
@@ -54,6 +50,9 @@ public class ModelSynthese
 		this.setBrinADN(new BrinADN(seq));
 	}
 	
+	/**
+	 * Cette méthode permet de mettre à jour le modèle pour la transcription
+	 */
 	public void transcription()
 	{
 		this.setBrinComp(this.brinADN.getBrinComplem());
@@ -61,6 +60,9 @@ public class ModelSynthese
 		this.arnMature = brinADN.transcrire();
 	}
 	
+	/**
+	 * Cette méthode permet de mettre à jour le modèle pour la synthèse
+	 */
 	public void synthese()
 	{
 		if(arnMature == null)

@@ -2,6 +2,14 @@ package ARN;
 
 import java.util.ArrayList;
 
+/**
+ * Classe de traitement du brin d'ARN
+ * 
+ * BrinARN effectue les traitements sur les nucléotides. Elle permet de générer aléatoirement des introns
+ * au sein du brin et de les supprimer pour la maturation.
+ * 
+ * @author Daniel
+ */
 public class BrinARN 
 {
 	private ArrayList<Nucleotide> nucleotides;
@@ -14,36 +22,9 @@ public class BrinARN
 	}
 	
 	
-	public void ajouterNucl(Nucleotide nucl)
-	{
-		this.nucleotides.add(nucl);
-	}
-	
-	public Nucleotide getNuclAt(int index)
-	{
-		return this.nucleotides.get(index);
-	}
-	
-	public boolean isMature() 
-	{
-		return mature;
-	}
-
-	public int getTaille()
-	{
-		return this.nucleotides.size();
-	}
-	
-	public void retirerIntrons()
-	{
-		for(int i = getTaille() - 1 ; i >= 0 ; i--)
-		{
-			if(this.getNuclAt(i).estExon() == false)
-				this.nucleotides.remove(i);
-		}
-		this.mature = true;
-	}
-	
+	/**
+	 * Cette méthode permet de générer aléatoirement des introns au sein du brin d'ARN
+	 */
 	public void genererIntrons()
 	{
 		ArrayList<Integer> introns = new ArrayList<Integer>();
@@ -68,11 +49,46 @@ public class BrinARN
 			}
 		}
 		
-		System.out.println(nbIntrons + " " + introns);
+		//System.out.println(nbIntrons + " " + introns);
 		
 		for(int i = 0 ; i < nbIntrons ; i++)
 			this.getNuclAt(introns.get(i)).setExonBool(false);
 	}
+	
+	/**
+	 * Cette méthode permet de retirer de l'ArrayList tous les nucléotides qui sont des introns
+	 */
+	public void retirerIntrons()
+	{
+		for(int i = getTaille() - 1 ; i >= 0 ; i--)
+		{
+			if(this.getNuclAt(i).estExon() == false)
+				this.nucleotides.remove(i);
+		}
+		this.mature = true;
+	}
+	
+	
+	public void ajouterNucl(Nucleotide nucl)
+	{
+		this.nucleotides.add(nucl);
+	}
+	
+	public Nucleotide getNuclAt(int index)
+	{
+		return this.nucleotides.get(index);
+	}
+	
+	public boolean isMature() 
+	{
+		return mature;
+	}
+
+	public int getTaille()
+	{
+		return this.nucleotides.size();
+	}
+	
 	
 	public String toString() 
 	{

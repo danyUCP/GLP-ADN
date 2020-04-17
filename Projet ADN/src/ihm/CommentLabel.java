@@ -1,4 +1,4 @@
-package ihm.synthese;
+package ihm;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,9 +7,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import ihm.MitosePara;
-import ihm.ParaADN;
-
+/**
+ * CommentLabel est la classe qui gère l'affichage des commentaires descriptifs
+ */
 @SuppressWarnings("serial")
 public class CommentLabel extends JLabel
 {
@@ -42,6 +42,9 @@ public class CommentLabel extends JLabel
 		return format;
 	}
 
+	/**
+	 * Cet methode permet de personnaliser le format des commentaires
+	 */
 	public void setFormat(int format) 
 	{
 		this.format = format;
@@ -88,6 +91,7 @@ public class CommentLabel extends JLabel
 		
 		this.setOpaque(true);
 		this.setHorizontalAlignment(SwingConstants.CENTER);
+		this.setVerticalTextPosition(SwingConstants.CENTER);
 		this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 		this.setBackground(Color.WHITE);
 	}
@@ -97,7 +101,6 @@ public class CommentLabel extends JLabel
 		this.setFormat(format);
 		this.setText(texte);	
 		
-		System.out.println("On met à jour le com");
 		this.repaint();
 	}
 	
