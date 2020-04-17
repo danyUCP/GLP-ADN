@@ -335,7 +335,7 @@ public class SyntheseActivity extends JPanel
 			
 
 			suivant.setEnabled(true);					
-			comment.setComment("<html>La lecture s'interrompt lorsque le ribosome arrive à la terminaison du brin d'ARNm</html>", 1);
+			comment.setComment("<html>La traduction s'interrompt lorsque le ribosome arrive à la terminaison du brin d'ARNm</html>", 1);
 
 			try 
 			{

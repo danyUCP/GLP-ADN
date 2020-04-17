@@ -72,7 +72,7 @@ public class ARNPanel extends JPanel
 		
 		//-------------- PARTIE HEADER ------------------//
 		header = new JPanel();
-		header.setBackground(new Color(204, 204, 255));
+		header.setBackground(new Color(28, 28, 28));
 		header.setPreferredSize(new Dimension(ParaADN.LARGEUR_FENETRE, 40));
 		header.setLayout(new FlowLayout());
 		initNavigateur();

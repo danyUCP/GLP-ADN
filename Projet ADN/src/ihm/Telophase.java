@@ -22,11 +22,6 @@ public class Telophase extends JLabel {
 	private JPanel foot;
 	private Telophase instance=this;
 	
-	/**---Execution---*/
-	private boolean stop;
-	
-	/**--Opacite---*/
- 
 	public Image img3;
     
     public Image img6;
@@ -50,8 +45,7 @@ public class Telophase extends JLabel {
 	public Telophase() {
 		// TODO Auto-generated constructor stub
 		super();	
-		this.setBounds(0, 0, 1080, 700);
-		
+		this.setBounds(0, 0, 1080, 700);		
 	}	
 
 
@@ -152,14 +146,15 @@ public class Telophase extends JLabel {
 	    g2d.drawString(" TELOPHASE:",0, MitosePara.centri2bisposY+150);
 	    g2d.drawString(" Deux cellules apparaissent",0, MitosePara.centri2bisposY+180);
 	   
-	     
-	  } 
+	    
+	} 
 
-
-		
-		
-		
-		
-		
+	
 	}
+		
+		
+		
+		
+		
+	
 

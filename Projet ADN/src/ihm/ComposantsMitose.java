@@ -81,7 +81,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
     Chromosome chro4b= new Chromosome("Chrom4 replique");
     
     
-    private CommentLabel commentaire1;
+   
     
  
     /**Constructeur*/
@@ -92,9 +92,6 @@ public class ComposantsMitose extends JLabel implements Runnable {
 		this.suite=false;
 		this.suite2=false;	
 		this.setBounds(0, 0, 1080, 700);
-		
-		this.commentaire1=new CommentLabel("<html>jnjkll</html>", 4);
-		//	commentaire1.setText(prophase);
 		repaint();
 		revalidate();
 
@@ -293,13 +290,13 @@ public class ComposantsMitose extends JLabel implements Runnable {
 	    g2d.drawString(" PROMETAPHASE:",0, MitosePara.centri2bisposY+120);
 	    g2d.drawString(" Suppression membrane nucleaire",0, MitosePara.centri2bisposY+150);
 	    g2d.drawString(" Alignement chromosomique",0, MitosePara.centri2bisposY+180);
-	    g2d.drawString(" METHAPHASE",0, MitosePara.centri2bisposY+210);
+	    g2d.drawString(" METHAPHASE",0, MitosePara.centri2bisposY+225);
 	    g2d.drawString(" Signale des microtubules",0, MitosePara.centri2bisposY+250);
 	
 	    
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(com4));
-	    g2d.drawString(" ANAPHASE:",0, MitosePara.centri2bisposY+150);
-	    g2d.drawString(" Migration des chromosomes vers les poles",0, MitosePara.centri2bisposY+180);
+	    g2d.drawString(" ANAPHASE:",0, MitosePara.centri2bisposY+210);
+	    g2d.drawString(" Migration des chromosomes vers les poles",0, MitosePara.centri2bisposY+240);
 	    
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(com5));
 	    g2d.drawString(" TELOPHASE:",0, MitosePara.centri2bisposY+150);
@@ -331,7 +328,7 @@ public class ComposantsMitose extends JLabel implements Runnable {
 			
 			if (MitosePara.centri1posX==MitosePara.mi2centriX-60) {
 				decond2=alpha;
-				add(commentaire1);
+				
 				try {
 					Thread.sleep(duplicadn);
 				} catch (InterruptedException e) {
@@ -610,7 +607,6 @@ public class ComposantsMitose extends JLabel implements Runnable {
 							com4=alpha;
 							anaphase();
 						}
-						
 					}
 				}
 				try {

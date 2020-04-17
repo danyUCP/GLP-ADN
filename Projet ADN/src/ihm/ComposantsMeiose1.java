@@ -240,8 +240,8 @@ public class ComposantsMeiose1 extends JLabel implements Runnable {
 	
 	    
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(com2));
-	    g2d.drawString(" ANAPHASE2:",0, MeiosePara1.centri2bisposY+150);
-	    g2d.drawString(" Migration des chromatides vers les poles",0, MeiosePara1.centri2bisposY+180);
+	    g2d.drawString(" ANAPHASE2:",0, MeiosePara1.centri2bisposY+210);
+	    g2d.drawString(" Migration des chromatides vers les poles",0, MeiosePara1.centri2bisposY+240);
 	    
 	    g2d.setComposite(AlphaComposite.SrcOver.derive(com3));
 	    g2d.drawString(" TELOPHASE2:",0, MeiosePara1.centri2bisposY+150);
@@ -259,9 +259,7 @@ public class ComposantsMeiose1 extends JLabel implements Runnable {
 		 *@see anaphase()
 		 */
 		public void run() {
-			System.out.println("TEST");
 			while(stop) {
-				System.out.println("TEST2");
 					deplaceChromosomes();
 					deplaceMt();
 					com1=delta;

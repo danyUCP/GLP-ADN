@@ -27,7 +27,7 @@ public class CrossingOver extends JPanel implements Runnable {
 	
 	/*----Execution---*/
 	private Thread thread;
-	private JButton lancement;
+	private BoutonCommande lancement;
 	private boolean stop;
 	private boolean suite;
 	private static final int duplicadn = 2000;
@@ -83,9 +83,10 @@ public class CrossingOver extends JPanel implements Runnable {
 		this.setBounds(0, 0, 1080, 700);
 		this.setBackground(Color.WHITE);
 		this.foot = foot;
-		foot.setBackground(Color.CYAN);
-		lancement = new JButton("Lancement");
+		foot.setBackground(new Color(28, 28, 28));
+		lancement = new BoutonCommande("Lancement");
 		lancement.addActionListener(new LanceListener());
+		lancement.setSize(35, 170);
 		foot.add(lancement);
 		
 		affichebrins();
@@ -163,11 +164,10 @@ public class CrossingOver extends JPanel implements Runnable {
 		{
 			if (!stop) {
 				stop = true;
-				lancement.setText(" Lancement ");
+				lancement.setText(" Afficher la mutation ");
 				
 			} else {
 				stop = false;
-				lancement.setText("En arrêt");
 				thread = new Thread(instance);				
 				thread.start();
 				}

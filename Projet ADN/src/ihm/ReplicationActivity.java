@@ -28,7 +28,7 @@ public class ReplicationActivity extends JPanel implements Runnable {
 	
 	/*----Execution---*/
 	private Thread thread;
-	private JButton lancement;
+	private BoutonCommande lancement;
 	private boolean stop;
 	private boolean suite;
 	private static final int duplicadn = 2000;
@@ -78,8 +78,8 @@ public class ReplicationActivity extends JPanel implements Runnable {
 		this.setBounds(0, 0, 1080, 700);
 		this.setBackground(Color.WHITE);
 		this.foot = foot;
-		foot.setBackground(Color.CYAN);
-		lancement = new JButton("Lancement");
+		foot.setBackground(new Color(28, 28, 28));
+		lancement = new BoutonCommande("Lancement");
 		lancement.addActionListener(new LanceListener());
 		foot.add(lancement);
 		
@@ -129,7 +129,7 @@ public class ReplicationActivity extends JPanel implements Runnable {
 	public void replication() {
 		
 		if(suite==true) {
-			brinLabel3.setLocation(0, 100);
+			brinLabel3.setLocation(0, 130);
 			brinLabel4.setLocation(0, 400);
 			com=alpha;
 		}
@@ -151,7 +151,6 @@ public class ReplicationActivity extends JPanel implements Runnable {
 				
 			} else {
 				stop = false;
-				lancement.setText("En arrêt");
 				thread = new Thread(instance);				
 				thread.start();
 				}

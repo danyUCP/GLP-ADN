@@ -24,7 +24,7 @@ public class Telophasesecond extends JLabel {
 		private Telophasesecond instance=this;
 		private Font font = new Font(Font.MONOSPACED, Font.BOLD, 20);
 
-		/**---Opacit√©---*/
+		/**---Variables des elements de l'ihm---*/
 		private int witdh=200;
 		private int heidth=250;
 		
@@ -36,7 +36,7 @@ public class Telophasesecond extends JLabel {
 	    public Image img8;
 	    public Image img9;
 	    
-	    /**Insttanciation Chromatide*/
+	    /**Instanciation Chromatide*/
 	    
 	    Chromatide chro1= new Chromatide("Chrom1");
 	    Chromatide chro2= new Chromatide("Chrom2");
@@ -107,15 +107,15 @@ public class Telophasesecond extends JLabel {
 		    
 		    	/**--Paire Haute--*/
 		    
-		    g2d.drawImage(img6,MeiosePara1.alignchroX-150,MeiosePara1.alignchro1Y-120,50,65, this);
-		    g2d.drawImage(img7,MeiosePara1.alignchroX-100,MeiosePara1.alignchro1Y-120,50,65, this); 
+		    g2d.drawImage(img6, MeiosePara1.alignchroX-150, MeiosePara1.alignchro1Y-120, 50,65, this);
+		    g2d.drawImage(img7, MeiosePara1.alignchroX-100, MeiosePara1.alignchro1Y-120, 50,65, this); 
 		    
 		    
 		    	/**--Paire Basse--*/
-		    g2d.drawImage(img6,305,170,50,65, this);
-		    g2d.drawImage(img7,305,170,50,65, this);
+		    g2d.drawImage(img6, MeiosePara1.alignchroX-150, MeiosePara1.alignchro1Y-55, 50,65, this);
+		    g2d.drawImage(img7, MeiosePara1.alignchroX-100, MeiosePara1.alignchro1Y-55, 50, 65, this);
 		    
-		    	/**---Chromosomes cellule 2---*/
+		    	/**---Chromosomes cellule 3---*/
 		    
 		    	/**--Paire Haute--*/
 		    
@@ -126,7 +126,7 @@ public class Telophasesecond extends JLabel {
 		    g2d.drawImage(img6,MeiosePara1.alignchroX-150,MeiosePara1.alignchro3Y+120,50,65, this);
 		    g2d.drawImage(img8,MeiosePara1.alignchroX-100,MeiosePara1.alignchro3Y+120,50,65, this);
 		    
-		   	/**---Chromosomes cellule 3--*/
+		   	/**---Chromosomes cellule 2--*/
 		    
 		    	/**--Paire Haute--*/
 		    
@@ -134,8 +134,8 @@ public class Telophasesecond extends JLabel {
 		    g2d.drawImage(img6, MeiosePara1.alignchrobisX+70,MeiosePara1.alignchro1Y-120,50,65, this); 
 		    
 		    	/**--Paire Basse--*/
-		    g2d.drawImage(img7, 670,170,50,65, this);
-		    g2d.drawImage(img6, 630,170,50,65, this);	     
+		    g2d.drawImage(img7, MeiosePara1.alignchrobisX+120, MeiosePara1.alignchro1Y-55, 50, 65, this);
+		    g2d.drawImage(img6, MeiosePara1.alignchrobisX+70, MeiosePara1.alignchro1Y-55, 50, 65, this);	     
 		    
 		    	/**---Chromosomes cellule 4---*/
 		    	
@@ -157,10 +157,16 @@ public class Telophasesecond extends JLabel {
 		    /**appel des Chromatide vie @see getName()*/
 		    
 		    g2d.setColor(Color.BLACK);
-			g2d.drawString("Noyaux1", MeiosePara1.alignchroX-220, MeiosePara1.finalmtchroY-45);
-		    g2d.drawString("Noyaux2", MeiosePara1.alignchrobisX-20, MeiosePara1.finalbismtchroY-45);
-		    g2d.drawString("Noyaux3", MeiosePara1.alignchroX-220, MeiosePara1.finalmtchroY+60);
-		    g2d.drawString("Noyaux4", MeiosePara1.alignchrobisX-20, MeiosePara1.finalbismtchroY+60);
+		    
+		    g2d.drawString("Noyaux1", MeiosePara1.alignchroX-270, MeiosePara1.finalmtchroY-45);
+		    g2d.drawString("Noyaux2", MeiosePara1.alignchrobisX+130, MeiosePara1.finalbismtchroY-45);
+		    g2d.drawString("Noyaux3", MeiosePara1.alignchroX-270, MeiosePara1.finalmtchroY+260);
+		    g2d.drawString("Noyaux4", MeiosePara1.alignchrobisX+130, MeiosePara1.finalbismtchroY+260);
+		    
+			g2d.drawString("Cellule1", MeiosePara1.alignchroX-270, MeiosePara1.finalmtchroY-25);
+		    g2d.drawString("Cellule2", MeiosePara1.alignchrobisX+130, MeiosePara1.finalbismtchroY-25);
+		    g2d.drawString("Cellule3", MeiosePara1.alignchroX-270, MeiosePara1.finalmtchroY+280);
+		    g2d.drawString("Cellule4", MeiosePara1.alignchrobisX+130, MeiosePara1.finalbismtchroY+280);
 
 		    g2d.drawString(chro1.getName(), MeiosePara1.alignchroX-150, MeiosePara1.alignchro1Y-120);
 		    g2d.drawString(chro2.getName(), MeiosePara1.alignchroX-10, MeiosePara1.alignchro1Y-120);
@@ -186,12 +192,12 @@ public class Telophasesecond extends JLabel {
 		    
 		    /**Commentaire--*/
 		    
-		    g2d.drawString(" TELOPHASE2:",0, MeiosePara1.centri2bisposY+180);
-		    g2d.drawString(" Quatre cellules apparaissent avec ADN differents: utile a†la fecondation",0, MeiosePara1.centri2bisposY+180);
+		    g2d.drawString(" TELOPHASE2:",0, MeiosePara1.centri2bisposY+250);
+		    g2d.drawString(" Quatre cellules apparaissent avec ADN differents: utile a†la fecondation",0, MeiosePara1.centri2bisposY+280);
 		   
+		    
 		} 
-			
-			
-		}
 
+	
+	}
 

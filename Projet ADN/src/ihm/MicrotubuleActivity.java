@@ -26,7 +26,7 @@ public class MicrotubuleActivity extends JPanel implements Runnable {
 	
 	/*----Execution---*/
 	private Thread thread;
-	private JButton lancement;
+	private BoutonCommande lancement;
 	private boolean stop;
 	private boolean suite;
 	private static final int duplicadn = 2000;
@@ -76,8 +76,8 @@ public class MicrotubuleActivity extends JPanel implements Runnable {
 		this.setBounds(0, 0, 1080, 700);
 		this.setBackground(Color.WHITE);
 		this.foot = foot;
-		foot.setBackground(Color.CYAN);
-		lancement = new JButton("Lancement");
+		foot.setBackground(new Color(28, 28, 28));
+		lancement = new BoutonCommande("Lancement");
 		lancement.addActionListener(new LanceListener());
 		foot.add(lancement);
 		
@@ -122,7 +122,6 @@ public class MicrotubuleActivity extends JPanel implements Runnable {
 				
 			} else {
 				stop = false;
-				lancement.setText("En arrêt");
 				thread = new Thread(instance);				
 				thread.start();
 				}
@@ -157,11 +156,11 @@ public class MicrotubuleActivity extends JPanel implements Runnable {
 			g2d.drawString("Ces monomères formants des polymères forment plusieurs piles comme celles ci:",30,220);
 			
 		//	g2d.setComposite(AlphaComposite.SrcOver.derive(partie3));
-			g2d.drawString("Chaque pile s'accolent alors les unes aux autres: 13 piles forment un cylindre de microtubule",30,500);
+			g2d.drawString("Chaque pile s'accolent alors les unes aux autres :",30,500);
 			
 			g2d.setColor(Color.RED);
 			g2d.drawString("13 piles forment un cylindre de microtubule",30,520);
-			g2d.drawString("ALPHA noté alf dans le rond vers clair, et BETA noté bet rond vert fonce",30,50);
+			g2d.drawString("ALPHA noté alpha dans le rond vers clair, et BETA noté beta rond vert fonce",30,50);
 			
 			g2d.drawImage(img3, 280, 520,250,150, this);
 

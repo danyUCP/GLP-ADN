@@ -16,7 +16,7 @@ public class MeioseActivity extends JPanel {
 	
 	/**----Execution---*/
 	private Thread thread;
-	private JButton lancement;
+	private BoutonCommande lancement;
 	private boolean stop;
 	private static final int duplicadn = 2000;
 	private static final int timing = 100;
@@ -42,14 +42,15 @@ public class MeioseActivity extends JPanel {
 		
 		this.stop = true;
 		
-		this.add(mitose1);
+	//	this.add(mitose1);
 		this.commentaire1=new CommentLabel("<html>Meiose1<br> Pertmet d'avoir des cellules<br> "
 				+ "genetiquement differentes</html>", 4);
+		commentaire1.setBackground(null);
 		add(commentaire1);
 		
 		this.foot = foot;
-		foot.setBackground(Color.CYAN);
-		lancement = new JButton("Lancement");
+		foot.setBackground(new Color(28, 28, 28));
+		lancement = new BoutonCommande("Lancement");
 		lancement.addActionListener(new LanceListener());
 		foot.add(lancement);
 	}
@@ -65,10 +66,13 @@ public class MeioseActivity extends JPanel {
 				
 			} else {
 				stop = false;
-				lancement.setText("En arrêt");
 				thread = new Thread(new Animation());				
 				thread.start();
+				if (!stop) {
+					stop = true;
+					
 				}
+			}
 
 		}
 		
@@ -79,11 +83,11 @@ public class MeioseActivity extends JPanel {
 
 		private Thread thread2;
 		public void run() {
-			thread2=new Thread(mitose1);
+/*			thread2=new Thread(mitose1);
 			thread2.start();
 			while(thread2.isAlive()) {
 				try {
-					Thread.sleep(duplicadn-1000);
+					Thread.sleep(duplicadn+3000);
 				} catch (InterruptedException e) {
 					System.out.println(e.getMessage());
 				}
@@ -93,13 +97,6 @@ public class MeioseActivity extends JPanel {
 			remove(mitose1);
 			remove(commentaire1);
 			add(telo1);
-			repaint();
-			revalidate();
-			try {
-				Thread.sleep(duplicadn+3000);
-			} catch (InterruptedException e) {
-				System.out.println(e.getMessage());
-			}
 			remove(telo1);
 			remove(commentaire1);
 			add(meiose1);
@@ -131,7 +128,7 @@ public class MeioseActivity extends JPanel {
 				repaint();
 			}
 			remove(meiose2);
-			add(telo2);
+		*/	add(telo2);
 			repaint();
 			revalidate(); 
 		}

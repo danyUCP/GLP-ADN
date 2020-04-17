@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 
 import ADN.Alpha;
 import ADN.Beta;
-import ADN.Polymere;
+import ADN.Polymeres;
 
 
 public class Microtubs extends JLabel {
@@ -28,11 +28,11 @@ public class Microtubs extends JLabel {
 	private int largeur;
 	private int hauteur;
 	private boolean orientation, orChange;
-	private Polymere mono;
+	private Polymeres mono;
 	private float alpha = 1.0f;
 	
 	
-	public Microtubs(Polymere mono, int posX, int posY) {		
+	public Microtubs(Polymeres mono, int posX, int posY) {		
 		super();
 		
 		if(iconMap == null)
@@ -50,8 +50,8 @@ public class Microtubs extends JLabel {
 		
 		this.posX = posX;
 		this.posY = posY;
-		this.largeur = ParaADN.LARGEUR_NUCL;
-		this.hauteur = ParaADN.HAUTEUR_NUCL;
+		this.largeur = 69;
+		this.hauteur = 74;
 		
 		this.setBounds(posX * largeur, posY, largeur, hauteur);
 	}
@@ -59,7 +59,7 @@ public class Microtubs extends JLabel {
 	/**constructeur instanciant les position, les monomere et l'orientation
 	 * @see initMap()
 	 */
-	public Microtubs(Polymere mono, int posX, int posY, boolean orientation) {		
+	public Microtubs(Polymeres mono, int posX, int posY, boolean orientation) {		
 		super();
 		
 		if(iconMap == null)
@@ -78,8 +78,8 @@ public class Microtubs extends JLabel {
 		
 		this.posX = posX;
 		this.posY = posY;
-		this.largeur = ParaADN.LARGEUR_NUCL;
-		this.hauteur = ParaADN.HAUTEUR_NUCL;
+		this.largeur = 69;
+		this.hauteur = 74;
 		
 		this.setBounds(posX * largeur, (posY + 1) * (hauteur - 13), largeur, hauteur);	
 	}
@@ -178,7 +178,7 @@ public class Microtubs extends JLabel {
 	}
 
 	/**@return le monomere en question*/
-	public Polymere getMon() {
+	public Polymeres getMon() {
 		return mono;
 	}
 
