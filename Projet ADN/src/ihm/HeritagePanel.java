@@ -240,7 +240,43 @@ public class HeritagePanel extends JPanel {
 				
 				contenu.repaint();
 				
-			}	
+			}
+			else if(e.getSource() == Gene) {
+				JLabel adn = new JLabel( new ImageIcon( "gene.png"));
+				contenu.removeAll();
+				contenu.setLayout(new BorderLayout());
+				contenu.add(resum);
+				contenu.add(cliquer);
+				contenu.add(adn);
+				contenu.revalidate();
+				
+				contenu.repaint();
+				
+			}
+			else if(e.getSource() == Chromosome) {
+				JLabel adn = new JLabel( new ImageIcon( "Chromosome.png"));
+				contenu.removeAll();
+				contenu.setLayout(new BorderLayout());
+				contenu.add(resum);
+				contenu.add(cliquer);
+				contenu.add(adn);
+				contenu.revalidate();
+				
+				contenu.repaint();
+				
+			}
+			else if(e.getSource() == Homo) {
+				JLabel adn = new JLabel( new ImageIcon( "homozygote.png"));
+				contenu.removeAll();
+				contenu.setLayout(new BorderLayout());
+				contenu.add(resum);
+				contenu.add(cliquer);
+				contenu.add(adn);
+				contenu.revalidate();
+				
+				contenu.repaint();
+				
+			}
 			else if(e.getSource() == enfanter) {
 				ChromatideU test = new ChromatideU(pere);
 				ChromatideU testm = new ChromatideU(mere);
@@ -257,7 +293,7 @@ public class HeritagePanel extends JPanel {
 				Personne enfant=new Personne(ovule,spermatozoide,"enfant");
 				PersonneA enf=new PersonneA(enfant,100,300);
 				CommentLabel expli=new CommentLabel("<html>Les deux gamètes en gris sont formés"
-						+ " grâce à la mitose en se basant sur le génome respectif des deux parents. "
+						+ " grâce à la meiose en se basant sur le génome respectif des deux parents. "
 						+ "Le génome de l'enfant est ensuite formé: les paires de chromosomes(ici chaque"  
 						+ "paire a la même couleur) se forment en mettant ensemble les chromatides des gamètes</html>",12);
 				
@@ -286,7 +322,7 @@ public class HeritagePanel extends JPanel {
 					//	+ " et qu'on se retrouve avec une paire de chromosome à la place d'une chromatide dans les gamètes. "
 						//+ "Ceci est à l'origine de maladies telles que la trisomie21</html>",11);
 				
-				CommentLabel expli=new CommentLabel("<html>Lors de la mitose,les divisions cellulaires successives permettent une distribution"
+				CommentLabel expli=new CommentLabel("<html>Lors de la meiose,les divisions cellulaires successives permettent une distribution"
 						+ " aléatoire des chromatides dans les gamètes. Cette distribution aléatoire entraîne une multitude de combinaisons possibles "
 						+ " lors le la création des gamètes: ceci est la base de la diversité au sein des espèces</html>",12);
 				//ChromatideU test = new ChromatideU(pere);
