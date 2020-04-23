@@ -250,7 +250,7 @@ public class TranscriptionActivity extends JPanel
 	{
 		public void run() 
 		{
-			int precision = 8;
+			int precision = 4;
 			posARN = brinArnL.getX();
 			
 			comment.setComment("<html>La transcription commence avec un ARN polymérase qui vient diviser les deux brins d'ADN</html>", 1);
@@ -301,7 +301,7 @@ public class TranscriptionActivity extends JPanel
 				
 				try
 				{
-					Thread.sleep(20);
+					Thread.sleep(70);
 				}
 				catch(Exception e)
 				{
@@ -330,7 +330,7 @@ public class TranscriptionActivity extends JPanel
 			while(brinArnL.getX() < ParaADN.LARGEUR_NUCL / 2)
 			{
 				//posARN++;
-				brinArnL.setLocation(brinArnL.getX() + (ParaADN.LARGEUR_NUCL / 12), brinArnL.getY());				
+				brinArnL.setLocation(brinArnL.getX() + (ParaADN.LARGEUR_NUCL / 6), brinArnL.getY());				
 
 				if(alpha > 0.02f)
 					alpha -= 0.02f;
@@ -341,7 +341,7 @@ public class TranscriptionActivity extends JPanel
 				
 				try
 				{
-					Thread.sleep(30);
+					Thread.sleep(50);
 				}
 				catch(Exception e)
 				{

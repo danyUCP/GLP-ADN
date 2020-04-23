@@ -203,13 +203,39 @@ public class BrinHelice extends JLabel
 				//System.out.println("Dessine lien " + ((i + 3) - ((i + pos) % 3)) + "/" + getTaille() + " : " + n1 + " --- " + n2);
 
 				
-				x1 = n1.getX() + ParaADN.LARGEUR_NUCL;
-				y1 = n1.getY() + (n1.getOrientation() ? 3 : 85);
-				x2 = n2.getX();
-				y2 = n2.getY() + (n2.getOrientation() ? 3 : 85);
+				x1 = n1.getX() + ParaADN.LARGEUR_NUCL + 12;
+				y1 = n1.getY() + (n1.getOrientation() ? 3 + 12 : 85 - 12);
+				x2 = n2.getX() - 12;
+				y2 = n2.getY() + (n2.getOrientation() ? 3 + 12 : 85 - 12);
 				
-				//g.drawArc(x1 - (x1+x2) / 2, y1 - 88, (x1+x2) / 2, (y1+y2) / 2, 36, 88);
-				g2d.drawLine(x1, y1, x2, y2);
+				/*
+				if(n1.getOrientation())
+				{
+					g2d.drawArc(x1 - 18, y1 - 1, x2 - x1, y2 - y1, 0, 90);
+					g2d.drawArc(x1 + 18, y1 + 1, x2 - x1, y2 - y1, 180, 90);
+				}
+				if(!n1.getOrientation())
+				{
+					g2d.drawArc(x1 - 18, y2 + 1, x2 - x1, y1 - y2, 270, 90);
+					g2d.drawArc(x1 + 18, y2 - 1, x2 - x1, y1 - y2, 90, 90);
+				}
+				*/
+				if(n2 != n1)
+				{
+					
+					if(n1.getOrientation())
+					{
+						g2d.drawArc(x1 - 24, y1 - 13, 24, 24, 0, 90);
+						g2d.drawArc(x2, y2 - 11, 24, 24, 180, 90);
+					}
+					if(!n1.getOrientation())
+					{
+						g2d.drawArc(x1 - 24, y1 - 11, 24, 24, 270, 90);
+						g2d.drawArc(x2, y2 - 13, 24, 24, 90, 90);
+					}
+					
+					g2d.drawLine(x1, y1, x2, y2);
+				}
 			}	
 		}
 		
